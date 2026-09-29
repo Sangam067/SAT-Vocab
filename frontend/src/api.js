@@ -205,6 +205,8 @@ export async function updateDailyGoal(userId, dailyGoal) {
   if (isGuestUser(userId)) {
     const validGoal = Math.max(5, Math.min(50, parseInt(dailyGoal, 10) || 5));
     localStorage.setItem(GUEST_KEYS.GOAL, String(validGoal));
+    // Clear old guest batch so new goal count generates a fresh batch of that size
+    localStorage.removeItem(GUEST_KEYS.DAILY_BATCH);
     return {
       message: `Daily goal set to ${validGoal} words/day (minimum 5 words enforced).`,
       daily_goal: validGoal,

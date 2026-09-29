@@ -143,7 +143,7 @@ export default function DailyGoalSection({ userId, onOpenAuth }) {
     // record all terms as reviewed before entering quiz
     try {
       await recordCardReview(userId, dailyBatch.map((w) => w.term));
-    } catch (_) {}
+    } catch (_) { }
 
     const questions = dailyBatch.map((word) => {
       const others = allWordsPool.filter(
@@ -229,11 +229,11 @@ export default function DailyGoalSection({ userId, onOpenAuth }) {
         <div style={{ textAlign: 'center', marginBottom: '28px' }}>
           <div style={{ fontSize: '40px', marginBottom: '8px' }}>🎯</div>
           <h1 style={{ fontSize: '26px', fontWeight: '800', color: 'var(--text-main)', letterSpacing: '-0.02em' }}>
-            Daily Learning Goal
+            Set Your Goal Today
           </h1>
           <p style={{ fontSize: '14px', color: 'var(--text-muted)', marginTop: '6px', lineHeight: 1.5 }}>
-            Choose how many SAT vocabulary words you want to learn today.<br />
-            You'll study flashcards first, then test yourself with a quiz.
+            Choose how many words you want to practice today (5–50).<br />
+            After selecting your number, your flashcards learning portal will open.
           </p>
         </div>
 
@@ -324,21 +324,42 @@ export default function DailyGoalSection({ userId, onOpenAuth }) {
           </div>
 
           {/* Start button */}
-          <button
-            onClick={handleStartSession}
-            disabled={startingSession}
-            className="btn-primary"
-            style={{
-              width: '100%',
-              padding: '14px',
-              fontSize: '15px',
-              fontWeight: '700',
-              borderRadius: '10px',
-              boxShadow: '0 4px 16px rgba(37, 99, 235, 0.3)',
-            }}
-          >
-            {startingSession ? 'Generating your batch…' : 'Start Today\'s Session →'}
-          </button>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+            <button
+              onClick={handleStartSession}
+              disabled={startingSession}
+              className="btn-primary"
+              style={{
+                width: '100%',
+                padding: '14px',
+                fontSize: '15px',
+                fontWeight: '700',
+                borderRadius: '10px',
+                boxShadow: '0 4px 16px rgba(37, 99, 235, 0.3)',
+              }}
+            >
+              {startingSession
+                ? 'Opening your flashcards portal…'
+                : `Open Flashcards Portal (${goalInput || 5} Words) →`}
+            </button>
+
+            {dailyBatch.length > 0 && (
+              <button
+                type="button"
+                onClick={() => setPhase('flashcards')}
+                className="btn-secondary"
+                style={{
+                  width: '100%',
+                  padding: '11px',
+                  fontSize: '13px',
+                  fontWeight: '600',
+                  borderRadius: '10px',
+                }}
+              >
+                Resume Current Batch ({dailyBatch.length} Words) →
+              </button>
+            )}
+          </div>
 
           <p style={{ fontSize: '11px', color: 'var(--text-muted)', textAlign: 'center', lineHeight: 1.4 }}>
             💡 After reviewing all flashcards, a quiz will unlock. Correct quiz answers mark words as <strong>Mastered</strong>
