@@ -24,6 +24,7 @@ db.exec(`
     password_hash TEXT,
     salt TEXT,
     role TEXT DEFAULT 'student',
+    daily_goal INTEGER DEFAULT 5,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
   );
 
@@ -63,9 +64,19 @@ db.exec(`
     submitted_by TEXT DEFAULT 'student',
     submitted_at DATETIME DEFAULT CURRENT_TIMESTAMP
   );
+
+  CREATE TABLE IF NOT EXISTS daily_batches (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    date_str TEXT NOT NULL,
+    word_term TEXT NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    UNIQUE(user_id, date_str, word_term)
+  );
 `);
 
-// Migration safeguard for users table columns
+// Migration safeguards for users table columns
 const userCols = db.prepare('PRAGMA table_info(users)').all();
 if (!userCols.some((col) => col.name === 'password_hash')) {
   try {
@@ -78,6 +89,11 @@ if (!userCols.some((col) => col.name === 'password_hash')) {
 if (!userCols.some((col) => col.name === 'role')) {
   try {
     db.exec(`ALTER TABLE users ADD COLUMN role TEXT DEFAULT 'student'`);
+  } catch (e) {}
+}
+if (!userCols.some((col) => col.name === 'daily_goal')) {
+  try {
+    db.exec(`ALTER TABLE users ADD COLUMN daily_goal INTEGER DEFAULT 5`);
   } catch (e) {}
 }
 
@@ -94,12 +110,22 @@ if (!existingAdmin) {
   const salt = crypto.randomBytes(16).toString('hex');
   const password_hash = hashPassword(adminPlainPassword, salt);
   db.prepare(`
-    INSERT INTO users (username, password_hash, salt, role)
-    VALUES (?, ?, ?, 'admin')
+    INSERT INTO users (username, password_hash, salt, role, daily_goal)
+    VALUES (?, ?, ?, 'admin', 10)
   `).run(adminUsername, password_hash, salt);
 } else {
-  // Ensure role is admin
   db.prepare(`UPDATE users SET role = 'admin' WHERE username = ?`).run(adminUsername);
+}
+
+// Ensure a default guest user exists at id = 1 for unregistered visitors
+const userOne = db.prepare('SELECT id FROM users WHERE id = 1').get();
+if (!userOne) {
+  try {
+    db.prepare(`
+      INSERT OR IGNORE INTO users (id, username, password_hash, salt, role, daily_goal)
+      VALUES (1, 'guest_student', 'guest_pwd', 'guest_salt', 'student', 5)
+    `).run();
+  } catch (e) {}
 }
 
 // Seed vocabulary from JSON

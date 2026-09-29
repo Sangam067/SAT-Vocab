@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { submitWord } from '../api';
 import { useAuth } from '../context/AuthContext';
 
-export default function SubmitWordModal({ isOpen, onClose }) {
+export default function SubmitWordModal({ isOpen, onClose, onOpenAuth }) {
   const { currentUser } = useAuth();
   const [term, setTerm] = useState('');
   const [definition, setDefinition] = useState('');
@@ -11,6 +11,62 @@ export default function SubmitWordModal({ isOpen, onClose }) {
   const [loading, setLoading] = useState(false);
 
   if (!isOpen) return null;
+
+  // If user is not logged in, show login requirement screen
+  if (!currentUser) {
+    return (
+      <div
+        style={{
+          position: 'fixed',
+          inset: 0,
+          backgroundColor: 'rgba(0, 0, 0, 0.5)',
+          backdropFilter: 'blur(4px)',
+          zIndex: 100,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: '16px',
+        }}
+        onClick={onClose}
+      >
+        <div
+          className="pro-card"
+          style={{
+            width: '100%',
+            maxWidth: '440px',
+            boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.2)',
+            padding: '32px',
+            textAlign: 'center',
+          }}
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div style={{ fontSize: '36px', marginBottom: '12px' }}>🔒</div>
+          <h2 style={{ fontSize: '18px', fontWeight: '800', color: 'var(--text-main)', marginBottom: '8px' }}>
+            Account Required to Suggest Words
+          </h2>
+          <p style={{ fontSize: '13px', color: 'var(--text-muted)', lineHeight: 1.5, marginBottom: '20px' }}>
+            To keep community submissions clean and attribute credit to student contributors, only logged-in users can suggest new SAT vocabulary words.
+          </p>
+
+          <div style={{ display: 'flex', justifyContent: 'center', gap: '10px' }}>
+            <button type="button" onClick={onClose} className="btn-secondary">
+              Cancel
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                onClose();
+                if (onOpenAuth) onOpenAuth();
+              }}
+              className="btn-primary"
+            >
+              Log In / Sign Up
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -27,14 +83,14 @@ export default function SubmitWordModal({ isOpen, onClose }) {
         term.trim(),
         definition.trim(),
         example.trim(),
-        currentUser ? currentUser.username : 'Student'
+        currentUser.id
       );
       setStatus({ type: 'success', message: res.message });
       setTerm('');
       setDefinition('');
       setExample('');
     } catch (err) {
-      setStatus({ type: 'error', message: err.message || 'Failed to submit word.' });
+      setStatus({ type: 'error', message: err.message || 'Duplicate or invalid submission.' });
     } finally {
       setLoading(false);
     }
@@ -59,16 +115,20 @@ export default function SubmitWordModal({ isOpen, onClose }) {
         className="pro-card"
         style={{
           width: '100%',
-          maxWidth: '480px',
+          maxWidth: '520px',
           boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.2)',
           padding: '28px',
         }}
         onClick={(e) => e.stopPropagation()}
       >
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
-          <h2 style={{ fontSize: '18px', fontWeight: '800', color: 'var(--text-main)' }}>
-            Suggest a New SAT Word
-          </h2>
+        {/* Header */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <span style={{ fontSize: '20px' }}>💡</span>
+            <h2 style={{ fontSize: '18px', fontWeight: '800', color: 'var(--text-main)' }}>
+              Add a High-Yield SAT Word
+            </h2>
+          </div>
           <button
             onClick={onClose}
             style={{
@@ -83,24 +143,44 @@ export default function SubmitWordModal({ isOpen, onClose }) {
           </button>
         </div>
 
-        <p style={{ fontSize: '12px', color: 'var(--text-muted)', marginBottom: '18px' }}>
-          Contribute a vocabulary word. Once reviewed and approved by an admin, it will be added to everyone's active study pool!
-        </p>
+        {/* Guidance Prompt for Students */}
+        <div
+          style={{
+            padding: '12px 14px',
+            borderRadius: '8px',
+            backgroundColor: 'var(--accent-blue-light)',
+            border: '1px solid var(--accent-blue)',
+            marginBottom: '18px',
+            fontSize: '12px',
+            lineHeight: 1.5,
+            color: 'var(--text-main)',
+          }}
+        >
+          <strong style={{ color: 'var(--accent-blue)', display: 'block', marginBottom: '2px' }}>
+            🎯 Community Guidelines:
+          </strong>
+          Please submit <strong>only words you have frequently seen in real SAT questions or practice tests</strong> (e.g. Reading & Writing section). Your contributions directly help fellow students expand their test-ready vocabulary!
+        </div>
 
+        {/* Status Alert Banner (Success or Duplicate Error) */}
         {status && (
           <div
             style={{
-              padding: '10px 14px',
+              padding: '12px 14px',
               borderRadius: '8px',
               backgroundColor: status.type === 'success' ? 'var(--color-success-bg)' : 'var(--color-danger-bg)',
               color: status.type === 'success' ? 'var(--color-success)' : 'var(--color-danger)',
               fontSize: '12px',
-              fontWeight: '600',
+              fontWeight: '700',
               marginBottom: '16px',
               border: `1px solid ${status.type === 'success' ? 'var(--color-success)' : 'var(--color-danger)'}`,
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
             }}
           >
-            {status.message}
+            <span>{status.type === 'success' ? '✓' : '⚠️'}</span>
+            <span>{status.message}</span>
           </div>
         )}
 
@@ -113,7 +193,7 @@ export default function SubmitWordModal({ isOpen, onClose }) {
               type="text"
               value={term}
               onChange={(e) => setTerm(e.target.value)}
-              placeholder="e.g., Ubiquitous, Pernicious, Alacrity"
+              placeholder="e.g., Fastidious, Pragmatic, Inscrutable"
               required
               style={{
                 width: '100%',
@@ -130,13 +210,13 @@ export default function SubmitWordModal({ isOpen, onClose }) {
 
           <div>
             <label style={{ fontSize: '11px', fontWeight: '700', textTransform: 'uppercase', color: 'var(--text-muted)', display: 'block', marginBottom: '6px' }}>
-              Clear Meaning / Definition
+              Meaning / Precise Definition
             </label>
             <textarea
               rows={2}
               value={definition}
               onChange={(e) => setDefinition(e.target.value)}
-              placeholder="Concise and precise SAT definition..."
+              placeholder="Explain the word clearly in simple, test-accurate terms..."
               required
               style={{
                 width: '100%',
@@ -154,13 +234,13 @@ export default function SubmitWordModal({ isOpen, onClose }) {
 
           <div>
             <label style={{ fontSize: '11px', fontWeight: '700', textTransform: 'uppercase', color: 'var(--text-muted)', display: 'block', marginBottom: '6px' }}>
-              Example Sentence in Context
+              Example Sentence in SAT Context
             </label>
             <textarea
               rows={2}
               value={example}
               onChange={(e) => setExample(e.target.value)}
-              placeholder="A sentence illustrating proper grammatical and contextual usage..."
+              placeholder="Write a clear academic or literature sentence demonstrating how the word is used..."
               required
               style={{
                 width: '100%',
@@ -176,9 +256,9 @@ export default function SubmitWordModal({ isOpen, onClose }) {
             />
           </div>
 
-          <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px', marginTop: '8px' }}>
+          <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px', marginTop: '6px' }}>
             <button type="button" onClick={onClose} className="btn-secondary">
-              Cancel
+              Close
             </button>
             <button
               type="submit"
@@ -186,7 +266,7 @@ export default function SubmitWordModal({ isOpen, onClose }) {
               className="btn-primary"
               style={{ opacity: loading ? 0.6 : 1 }}
             >
-              {loading ? 'Submitting...' : 'Submit for Approval'}
+              {loading ? 'Submitting...' : 'Submit for Admin Review'}
             </button>
           </div>
         </form>

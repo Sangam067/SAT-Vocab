@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Sidebar from './components/Sidebar';
 import Header from './components/Header';
 import Dashboard from './components/Dashboard';
+import DailyGoalSection from './components/DailyGoalSection';
 import Flashcards from './components/Flashcards';
 import Quiz from './components/Quiz';
 import Browse from './components/Browse';
@@ -44,6 +45,15 @@ function AppContent() {
                 />
               }
             />
+            <Route
+              path="/daily-goal"
+              element={
+                <DailyGoalSection
+                  userId={effectiveUserId}
+                  onOpenAuth={() => setAuthOpen(true)}
+                />
+              }
+            />
             <Route path="/flashcards" element={<Flashcards userId={effectiveUserId} />} />
             <Route path="/quiz" element={<Quiz userId={effectiveUserId} />} />
             <Route path="/browse" element={<Browse userId={effectiveUserId} />} />
@@ -54,7 +64,11 @@ function AppContent() {
 
       {/* Modals */}
       <AuthModal isOpen={authOpen} onClose={() => setAuthOpen(false)} />
-      <SubmitWordModal isOpen={submitWordOpen} onClose={() => setSubmitWordOpen(false)} />
+      <SubmitWordModal
+        isOpen={submitWordOpen}
+        onClose={() => setSubmitWordOpen(false)}
+        onOpenAuth={() => setAuthOpen(true)}
+      />
     </div>
   );
 }

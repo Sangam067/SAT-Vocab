@@ -44,15 +44,52 @@ export async function fetchCategories() {
   return res.json();
 }
 
-export async function submitWord(term, definition, example, submittedBy) {
+export async function submitWord(term, definition, example, userId) {
   const res = await fetch(`${API_BASE}/words/submit`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ term, definition, example, submitted_by: submittedBy }),
+    body: JSON.stringify({ term, definition, example, user_id: userId }),
   });
   const data = await res.json();
   if (!res.ok) throw new Error(data.error || 'Failed to submit word');
   return data;
+}
+
+export async function fetchDailyGoal(userId) {
+  const res = await fetch(`${API_BASE}/goal/${userId}`);
+  if (!res.ok) throw new Error('Failed to fetch daily goal');
+  return res.json();
+}
+
+export async function updateDailyGoal(userId, dailyGoal) {
+  const res = await fetch(`${API_BASE}/goal/${userId}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ daily_goal: dailyGoal }),
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || 'Failed to update daily goal');
+  return data;
+}
+
+export async function submitDailyQuiz(userId, results) {
+  const res = await fetch(`${API_BASE}/goal/submit-quiz/${userId}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ results }),
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || 'Failed to submit daily quiz');
+  return data;
+}
+
+export async function recordCardReview(userId, terms) {
+  const res = await fetch(`${API_BASE}/goal/record-review/${userId}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ terms }),
+  });
+  return res.json();
 }
 
 export async function fetchPendingWords() {

@@ -468,3 +468,8 @@ body {
 .fc-back {
   transform: rotateY(180deg);
 }
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 4px 16px rgba(37, 99, 235, 0.3); }
+  50% { box-shadow: 0 4px 24px rgba(37, 99, 235, 0.55); }
+}

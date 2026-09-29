@@ -36,6 +36,18 @@ export default function Sidebar({ onOpenAuth, onOpenSubmitWord }) {
             <span>Dashboard</span>
           </NavLink>
 
+          {/* Daily Goal & Routine */}
+          <NavLink
+            to="/daily-goal"
+            className={({ isActive }) => `nav-link-item ${isActive ? 'active' : ''}`}
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+            <span>Daily Goal</span>
+          </NavLink>
+
           <NavLink
             to="/flashcards"
             className={({ isActive }) => `nav-link-item ${isActive ? 'active' : ''}`}
@@ -70,7 +82,7 @@ export default function Sidebar({ onOpenAuth, onOpenSubmitWord }) {
             <span>Browse & Search</span>
           </NavLink>
 
-          {/* Admin Panel Link (Only visible or prominent for admin) */}
+          {/* Admin Panel Link */}
           {isAdmin && (
             <NavLink
               to="/admin"

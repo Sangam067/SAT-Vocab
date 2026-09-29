@@ -102,10 +102,10 @@ app.post('/api/auth/register', (req, res) => {
   const password_hash = hashPassword(password, salt);
 
   const info = db.prepare(
-    'INSERT INTO users (username, password_hash, salt, role) VALUES (?, ?, ?, ?)'
-  ).run(username.trim().toLowerCase(), password_hash, salt, 'student');
+    'INSERT INTO users (username, password_hash, salt, role, daily_goal) VALUES (?, ?, ?, ?, ?)'
+  ).run(username.trim().toLowerCase(), password_hash, salt, 'student', 5);
 
-  const user = db.prepare('SELECT id, username, role, created_at FROM users WHERE id = ?').get(info.lastInsertRowid);
+  const user = db.prepare('SELECT id, username, role, daily_goal, created_at FROM users WHERE id = ?').get(info.lastInsertRowid);
   res.status(201).json(user);
 });
 
@@ -144,8 +144,241 @@ app.post('/api/auth/login', (req, res) => {
     id: user.id,
     username: user.username,
     role: user.role || 'student',
+    daily_goal: user.daily_goal || 5,
     created_at: user.created_at,
   });
+});
+
+// ─── DAILY GOAL & DAILY FLASHCARDS ENDPOINTS ──────────────────────────────────
+
+// GET /api/goal/:userId — get current daily goal and today's dedicated random batch (min 5, unmastered, no duplicates)
+app.get('/api/goal/:userId', (req, res) => {
+  const userId = req.params.userId;
+  const user = db.prepare('SELECT id, username, daily_goal FROM users WHERE id = ?').get(userId);
+  // Enforce minimum 5 words daily goal
+  const goal = Math.max(5, user?.daily_goal || 5);
+
+  const todayDate = new Date().toISOString().split('T')[0];
+
+  // Words already mastered by this user (is_mastered = 1)
+  const masteredRows = db.prepare(
+    'SELECT word_term FROM word_progress WHERE user_id = ? AND is_mastered = 1'
+  ).all(userId);
+  const masteredSet = new Set(masteredRows.map((r) => r.word_term.toLowerCase()));
+
+  // Check existing daily batch for today
+  let batchRows = db.prepare(`
+    SELECT b.id as batch_id, w.id, w.term, w.definition, w.example, w.category
+    FROM daily_batches b
+    JOIN words w ON LOWER(b.word_term) = LOWER(w.term)
+    WHERE b.user_id = ? AND b.date_str = ?
+    ORDER BY b.id ASC
+  `).all(userId, todayDate);
+
+  // If today's batch is less than current target goal, select random unmastered words without duplicates
+  if (batchRows.length < goal) {
+    const needed = goal - batchRows.length;
+    const existingTermsInBatch = new Set(batchRows.map((b) => b.term.toLowerCase()));
+
+    // Get candidate words that are:
+    // 1. NOT mastered by this user
+    // 2. NOT already in today's batch
+    const candidateQuery = `
+      SELECT * FROM words 
+      WHERE LOWER(term) NOT IN (
+        SELECT LOWER(word_term) FROM word_progress WHERE user_id = ? AND is_mastered = 1
+      )
+      AND LOWER(term) NOT IN (
+        SELECT LOWER(word_term) FROM daily_batches WHERE user_id = ? AND date_str = ?
+      )
+      ORDER BY RANDOM()
+      LIMIT ?
+    `;
+    let candidateWords = db.prepare(candidateQuery).all(userId, userId, todayDate, needed);
+
+    // If candidate unmastered words are exhausted, backfill from remaining words not in today's batch
+    if (candidateWords.length < needed) {
+      const stillNeeded = needed - candidateWords.length;
+      const allExisting = new Set([
+        ...Array.from(existingTermsInBatch),
+        ...candidateWords.map((c) => c.term.toLowerCase()),
+      ]);
+
+      const backfillQuery = `
+        SELECT * FROM words
+        WHERE LOWER(term) NOT IN (
+          SELECT LOWER(word_term) FROM daily_batches WHERE user_id = ? AND date_str = ?
+        )
+        ORDER BY RANDOM()
+        LIMIT ?
+      `;
+      const backfillWords = db.prepare(backfillQuery).all(userId, todayDate, stillNeeded);
+      for (const bw of backfillWords) {
+        if (!allExisting.has(bw.term.toLowerCase())) {
+          candidateWords.push(bw);
+          allExisting.add(bw.term.toLowerCase());
+        }
+      }
+    }
+
+    // Insert selected words into daily_batches
+    const insertBatchStmt = db.prepare(`
+      INSERT OR IGNORE INTO daily_batches (user_id, date_str, word_term)
+      VALUES (?, ?, ?)
+    `);
+
+    const insertMany = db.transaction((wordsToInsert) => {
+      for (const w of wordsToInsert) {
+        insertBatchStmt.run(userId, todayDate, w.term);
+      }
+    });
+    insertMany(candidateWords);
+
+    // Re-fetch full batch for today
+    batchRows = db.prepare(`
+      SELECT b.id as batch_id, w.id, w.term, w.definition, w.example, w.category
+      FROM daily_batches b
+      JOIN words w ON LOWER(b.word_term) = LOWER(w.term)
+      WHERE b.user_id = ? AND b.date_str = ?
+      ORDER BY b.id ASC
+    `).all(userId, todayDate);
+  }
+
+  // Slice to current goal if batch had more from previous setting
+  const activeBatch = batchRows.slice(0, goal).map((word) => ({
+    ...word,
+    is_mastered: masteredSet.has(word.term.toLowerCase()),
+  }));
+
+  // Words reviewed today
+  const reviewedTodayRows = db.prepare(`
+    SELECT word_term FROM word_progress 
+    WHERE user_id = ? AND date(last_reviewed_at) = date('now')
+  `).all(userId);
+  const reviewedTodayCount = reviewedTodayRows.length;
+
+  // Quizzes completed today
+  const quizzesToday = db.prepare(`
+    SELECT COUNT(*) as count FROM quiz_results 
+    WHERE user_id = ? AND date(completed_at) = date('now')
+  `).get(userId).count;
+
+  // Count how many of today's batch are already mastered
+  const batchMasteredCount = activeBatch.filter((w) => w.is_mastered).length;
+
+  // Total words in syllabus vs total mastered
+  const totalWords = db.prepare('SELECT COUNT(*) as count FROM words').get().count;
+  const totalMastered = masteredSet.size;
+
+  res.json({
+    daily_goal: goal,
+    today_date: todayDate,
+    daily_batch: activeBatch,
+    reviewed_today: reviewedTodayCount,
+    quizzes_today: quizzesToday,
+    batch_mastered: batchMasteredCount,
+    total_words: totalWords,
+    total_mastered: totalMastered,
+    is_goal_met: batchMasteredCount >= goal || (reviewedTodayCount >= goal && quizzesToday >= 1),
+  });
+});
+
+// PUT /api/goal/:userId — set a new daily target goal (minimum 5)
+app.put('/api/goal/:userId', (req, res) => {
+  const userId = req.params.userId;
+  const { daily_goal } = req.body;
+
+  // Strictly enforce minimum 5 words daily goal
+  const validGoal = Math.max(5, Math.min(50, parseInt(daily_goal, 10) || 5));
+  db.prepare('UPDATE users SET daily_goal = ? WHERE id = ?').run(validGoal, userId);
+
+  res.json({
+    message: `Daily goal set to ${validGoal} words/day (minimum 5 words enforced).`,
+    daily_goal: validGoal,
+  });
+});
+
+// POST /api/goal/submit-quiz/:userId — Submit daily quiz results for today's words
+// Correct answers become MASTERED (is_mastered = 1) and will not come on another day.
+// Wrong answers remain UNMASTERED (is_mastered = 0) and can appear on subsequent days.
+app.post('/api/goal/submit-quiz/:userId', (req, res) => {
+  const userId = req.params.userId;
+  const { results } = req.body; // Array of { term: string, is_correct: boolean }
+
+  if (!Array.isArray(results) || results.length === 0) {
+    return res.status(400).json({ error: 'Quiz results array is required.' });
+  }
+
+  const updateProgressStmt = db.prepare(`
+    INSERT INTO word_progress (user_id, word_term, is_mastered, last_reviewed_at)
+    VALUES (?, ?, ?, CURRENT_TIMESTAMP)
+    ON CONFLICT(user_id, word_term) DO UPDATE SET
+      is_mastered = excluded.is_mastered,
+      last_reviewed_at = CURRENT_TIMESTAMP
+  `);
+
+  const saveResultsTx = db.transaction(() => {
+    let correctCount = 0;
+    const masteredTerms = [];
+    const reviewTerms = [];
+
+    for (const item of results) {
+      if (!item.term) continue;
+      const isCorrect = Boolean(item.is_correct);
+
+      if (isCorrect) {
+        correctCount++;
+        masteredTerms.push(item.term);
+        // Correct answer: mark mastered (1) -> will NOT come another day
+        updateProgressStmt.run(userId, item.term, 1);
+      } else {
+        reviewTerms.push(item.term);
+        // Incorrect answer: mark unmastered (0) -> will be eligible to come next day
+        updateProgressStmt.run(userId, item.term, 0);
+      }
+    }
+
+    // Record quiz attempt
+    db.prepare(`
+      INSERT INTO quiz_results (user_id, score, total_questions)
+      VALUES (?, ?, ?)
+    `).run(userId, correctCount, results.length);
+
+    return { correctCount, masteredTerms, reviewTerms };
+  });
+
+  const { correctCount, masteredTerms, reviewTerms } = saveResultsTx();
+
+  res.json({
+    message: 'Daily quiz completed!',
+    score: correctCount,
+    total_questions: results.length,
+    mastered_terms: masteredTerms,
+    review_terms: reviewTerms,
+  });
+});
+
+// POST /api/goal/record-review/:userId — record that student reviewed cards
+app.post('/api/goal/record-review/:userId', (req, res) => {
+  const userId = req.params.userId;
+  const { terms } = req.body;
+
+  if (Array.isArray(terms)) {
+    const touchStmt = db.prepare(`
+      INSERT INTO word_progress (user_id, word_term, is_mastered, last_reviewed_at)
+      VALUES (?, ?, 0, CURRENT_TIMESTAMP)
+      ON CONFLICT(user_id, word_term) DO UPDATE SET
+        last_reviewed_at = CURRENT_TIMESTAMP
+    `);
+    const tx = db.transaction(() => {
+      for (const t of terms) {
+        touchStmt.run(userId, t);
+      }
+    });
+    tx();
+  }
+
+  res.json({ success: true });
 });
 
 // ─── WORDS ────────────────────────────────────────────────────────────────────
@@ -180,30 +413,40 @@ app.get('/api/words/categories', (req, res) => {
   res.json(categories.map((c) => c.category));
 });
 
-// POST /api/words/submit — Student submits a word for admin review
+// POST /api/words/submit — Registered students only submit words for admin review
 app.post('/api/words/submit', (req, res) => {
-  const { term, definition, example, submitted_by } = req.body;
+  const { term, definition, example, user_id } = req.body;
+
+  // REQUIRE LOGGED IN USER
+  if (!user_id) {
+    return res.status(401).json({ error: 'Authentication required. Please log in to suggest new words.' });
+  }
+
+  const user = db.prepare('SELECT id, username FROM users WHERE id = ?').get(user_id);
+  if (!user) {
+    return res.status(401).json({ error: 'User account not found. Please log in.' });
+  }
 
   if (!term || !definition || !example) {
     return res.status(400).json({ error: 'Term, definition, and example sentence are required.' });
   }
 
   // Check if word already exists in approved words
-  const existsInApproved = db.prepare('SELECT id FROM words WHERE LOWER(term) = LOWER(?)').get(term.trim());
+  const existsInApproved = db.prepare('SELECT id, term FROM words WHERE LOWER(term) = LOWER(?)').get(term.trim());
   if (existsInApproved) {
-    return res.status(409).json({ error: `The word "${term.trim()}" is already in the vocabulary database.` });
+    return res.status(409).json({ error: `Duplicate word: "${existsInApproved.term}" is already in the vocabulary database!` });
   }
 
   // Check if word already submitted in pending
-  const existsInPending = db.prepare('SELECT id FROM pending_words WHERE LOWER(term) = LOWER(?)').get(term.trim());
+  const existsInPending = db.prepare('SELECT id, term FROM pending_words WHERE LOWER(term) = LOWER(?)').get(term.trim());
   if (existsInPending) {
-    return res.status(409).json({ error: `The word "${term.trim()}" is already waiting for admin approval.` });
+    return res.status(409).json({ error: `Duplicate submission: "${existsInPending.term}" is already submitted and awaiting admin approval.` });
   }
 
   const info = db.prepare(`
     INSERT INTO pending_words (term, definition, example, submitted_by)
     VALUES (?, ?, ?, ?)
-  `).run(term.trim(), definition.trim(), example.trim(), submitted_by || 'Student');
+  `).run(term.trim(), definition.trim(), example.trim(), user.username);
 
   res.status(201).json({
     message: 'Word submitted successfully! It will appear across the app once approved by an admin.',
@@ -228,13 +471,11 @@ app.post('/api/admin/approve/:id', (req, res) => {
 
   const category = req.body.category || 'Student Submitted & Community';
 
-  // Insert into words
   db.prepare(`
     INSERT OR REPLACE INTO words (term, definition, example, category)
     VALUES (?, ?, ?, ?)
   `).run(pending.term, pending.definition, pending.example, category);
 
-  // Remove from pending
   db.prepare('DELETE FROM pending_words WHERE id = ?').run(req.params.id);
 
   res.json({ message: `"${pending.term}" approved and added to active vocabulary!` });
