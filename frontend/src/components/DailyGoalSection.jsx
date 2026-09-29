@@ -3,6 +3,32 @@ import { useNavigate } from 'react-router-dom';
 import { fetchDailyGoal, updateDailyGoal, submitDailyQuiz, recordCardReview, fetchWords } from '../api';
 import { useAuth } from '../context/AuthContext';
 
+// ── Session persistence helpers (survives refresh, cleared when tab closes) ──
+function getSessionKey(userId) {
+  const today = new Date().toISOString().split('T')[0];
+  return `sat_daily_session_${userId}_${today}`;
+}
+function loadSession(userId) {
+  try {
+    const raw = sessionStorage.getItem(getSessionKey(userId));
+    if (!raw) return null;
+    const s = JSON.parse(raw);
+    if (Array.isArray(s.reviewedSet)) s.reviewedSet = new Set(s.reviewedSet);
+    return s;
+  } catch (e) { return null; }
+}
+function saveSession(userId, state) {
+  try {
+    sessionStorage.setItem(getSessionKey(userId), JSON.stringify({
+      ...state,
+      reviewedSet: Array.from(state.reviewedSet || []),
+    }));
+  } catch (e) {}
+}
+function clearSession(userId) {
+  try { sessionStorage.removeItem(getSessionKey(userId)); } catch (e) {}
+}
+
 function shuffle(array) {
   const arr = [...array];
   for (let i = arr.length - 1; i > 0; i--) {
@@ -41,7 +67,13 @@ export default function DailyGoalSection({ userId, onOpenAuth }) {
   const [submittingQuiz, setSubmittingQuiz] = useState(false);
   const [quizResult, setQuizResult] = useState(null);
 
-  // ── Initial load: fetch current goal to see if a session already exists today
+  // ── Persist session whenever phase/card/quiz state changes ──────────────
+  useEffect(() => {
+    if (!userId || loading || phase === 'setup') return;
+    saveSession(userId, { phase, cardIdx, reviewedSet, quizQuestions, quizIdx, userAnswers, quizResult });
+  }, [phase, cardIdx, reviewedSet, quizQuestions, quizIdx, userAnswers, quizResult, userId, loading]);
+
+  // ── Initial load: fetch goal data then restore session if one exists ─────
   const loadInitialData = useCallback(async () => {
     if (!userId) return;
     try {
@@ -54,9 +86,19 @@ export default function DailyGoalSection({ userId, onOpenAuth }) {
       setAllWordsPool(wordsRes);
       setGoalInput(String(goalRes.daily_goal || 5));
 
-      // If there's already a batch for today, jump straight to flashcards
-      if (goalRes.daily_batch && goalRes.daily_batch.length > 0) {
-        setPhase('flashcards');
+      // Try to restore an in-progress session from this browser tab
+      const saved = loadSession(userId);
+      if (saved && saved.phase && saved.phase !== 'setup' && goalRes.daily_batch?.length > 0) {
+        setPhase(saved.phase);
+        setCardIdx(saved.cardIdx || 0);
+        setReviewedSet(saved.reviewedSet instanceof Set ? saved.reviewedSet : new Set(saved.reviewedSet || []));
+        setQuizQuestions(saved.quizQuestions || []);
+        setQuizIdx(saved.quizIdx || 0);
+        setUserAnswers(saved.userAnswers || {});
+        setQuizResult(saved.quizResult || null);
+      } else {
+        // No saved session – always show goal selection first
+        setPhase('setup');
       }
     } catch (err) {
       console.error(err);
@@ -85,6 +127,12 @@ export default function DailyGoalSection({ userId, onOpenAuth }) {
       setCardIdx(0);
       setFlipped(false);
       setReviewedSet(new Set());
+      setQuizQuestions([]);
+      setQuizIdx(0);
+      setUserAnswers({});
+      setQuizResult(null);
+      // Clear stale session so we start fresh with new goal
+      clearSession(userId);
       setPhase('flashcards');
     } catch (err) {
       console.error(err);
@@ -182,7 +230,7 @@ export default function DailyGoalSection({ userId, onOpenAuth }) {
         is_correct: userAnswers[i] === q.correctDefinition,
       }));
       const res = await submitDailyQuiz(userId, payload);
-      setQuizResult({
+      const result = {
         score: res.score,
         total: res.total_questions,
         mastered: res.mastered_terms || [],
@@ -194,8 +242,11 @@ export default function DailyGoalSection({ userId, onOpenAuth }) {
           correct: userAnswers[i] === q.correctDefinition,
           picked: userAnswers[i],
         })),
-      });
+      };
+      setQuizResult(result);
       setPhase('results');
+      // Clear persisted session — today's session is fully done!
+      clearSession(userId);
       // refresh data
       const fresh = await fetchDailyGoal(userId);
       setGoalData(fresh);
