@@ -1,0 +1,33 @@
+# Dependencies
+node_modules/
+*/node_modules/
+
+# Local database files
+*.db
+*.db-wal
+*.db-shm
+backend/data/*.db
+backend/data/*.db-wal
+backend/data/*.db-shm
+
+# Build output
+dist/
+build/
+*/dist/
+
+# Logs & temp files
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# IDE & OS files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
