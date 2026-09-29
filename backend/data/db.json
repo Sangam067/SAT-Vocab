@@ -1,0 +1,861 @@
+{
+  "users": [],
+  "words": [
+    {
+      "id": 1,
+      "term": "Empirical",
+      "definition": "Based on direct observation or experiment rather than theory",
+      "example": "The scientist gathered empirical data to support her climate hypothesis.",
+      "category": "Scientific & Research Words (Data & Theories)"
+    },
+    {
+      "id": 2,
+      "term": "Anomaly",
+      "definition": "Something that deviates from what is standard, normal, or expected; an outlier",
+      "example": "The sudden drop in temperature was an anomaly that baffled meteorologists.",
+      "category": "Scientific & Research Words (Data & Theories)"
+    },
+    {
+      "id": 3,
+      "term": "Plausible",
+      "definition": "Seemingly reasonable or probable; believable",
+      "example": "His explanation for being late sounded plausible enough to be true.",
+      "category": "Scientific & Research Words (Data & Theories)"
+    },
+    {
+      "id": 4,
+      "term": "Tenuous",
+      "definition": "Very weak, slight, or unsubstantiated (often used to describe a bad hypothesis)",
+      "example": "The detective realized their connection to the crime scene was extremely tenuous.",
+      "category": "Scientific & Research Words (Data & Theories)"
+    },
+    {
+      "id": 5,
+      "term": "Spurious",
+      "definition": "False, fake, or invalid",
+      "example": "The study relied on spurious correlations that fell apart under strict peer review.",
+      "category": "Scientific & Research Words (Data & Theories)"
+    },
+    {
+      "id": 6,
+      "term": "Corroborate",
+      "definition": "To confirm, support, or provide supporting evidence for a statement or finding",
+      "example": "Three independent witnesses came forward to corroborate his alibi.",
+      "category": "Scientific & Research Words (Data & Theories)"
+    },
+    {
+      "id": 7,
+      "term": "Precursor",
+      "definition": "An event or thing that comes before another and leads up to it",
+      "example": "Mild headaches can sometimes be a precursor to a severe migraine.",
+      "category": "Scientific & Research Words (Data & Theories)"
+    },
+    {
+      "id": 8,
+      "term": "Efficacy",
+      "definition": "The ability to produce a desired or intended result; effectiveness",
+      "example": "Clinical trials proved the high efficacy of the new vaccine.",
+      "category": "Scientific & Research Words (Data & Theories)"
+    },
+    {
+      "id": 9,
+      "term": "Latent",
+      "definition": "Existing but not yet developed, manifest, or hidden",
+      "example": "She discovered a latent talent for painting during her recovery.",
+      "category": "Scientific & Research Words (Data & Theories)"
+    },
+    {
+      "id": 10,
+      "term": "Mutable",
+      "definition": "Liable to change; fickle or adaptable",
+      "example": "Language is a mutable system that evolves constantly over generations.",
+      "category": "Scientific & Research Words (Data & Theories)"
+    },
+    {
+      "id": 11,
+      "term": "Invariable",
+      "definition": "Never changing; remaining constant in all circumstances",
+      "example": "Gravity remains an invariable law of physics.",
+      "category": "Scientific & Research Words (Data & Theories)"
+    },
+    {
+      "id": 12,
+      "term": "Contingent",
+      "definition": "Depending on something else to happen; not certain",
+      "example": "Our weekend camping trip is contingent upon good weather.",
+      "category": "Scientific & Research Words (Data & Theories)"
+    },
+    {
+      "id": 13,
+      "term": "Substantiate",
+      "definition": "To provide evidence to support or prove the truth of something",
+      "example": "Without financial records, he could not substantiate his claims of innocence.",
+      "category": "Argumentation & Debate Words (Author's Intent)"
+    },
+    {
+      "id": 14,
+      "term": "Belie",
+      "definition": "To contradict, misrepresent, or give a false impression of something",
+      "example": "Her calm exterior belied the intense anxiety she felt inside.",
+      "category": "Argumentation & Debate Words (Author's Intent)"
+    },
+    {
+      "id": 15,
+      "term": "Qualify",
+      "definition": "To add limitations, conditions, or restrictions to a claim",
+      "example": "The professor felt compelled to qualify his sweeping statement with a few exceptions.",
+      "category": "Argumentation & Debate Words (Author's Intent)"
+    },
+    {
+      "id": 16,
+      "term": "Concede",
+      "definition": "To admit that something is true or valid after first denying or resisting it",
+      "example": "After seeing the final poll numbers, the candidate had to concede the election.",
+      "category": "Argumentation & Debate Words (Author's Intent)"
+    },
+    {
+      "id": 17,
+      "term": "Refute / Rebut",
+      "definition": "To prove a statement or theory to be wrong or false; to argue against a statement",
+      "example": "The defense attorney used hard evidence to refute the prosecution's claim.",
+      "category": "Argumentation & Debate Words (Author's Intent)"
+    },
+    {
+      "id": 18,
+      "term": "Promulgate",
+      "definition": "To promote or make an idea widely known; broadcast",
+      "example": "The organization works to promulgate awareness about digital privacy.",
+      "category": "Argumentation & Debate Words (Author's Intent)"
+    },
+    {
+      "id": 19,
+      "term": "Vindicate",
+      "definition": "To clear someone of blame or to prove a disputed theory is completely correct",
+      "example": "The new DNA evidence served to completely vindicate the wrongfully accused man.",
+      "category": "Argumentation & Debate Words (Author's Intent)"
+    },
+    {
+      "id": 20,
+      "term": "Undermine",
+      "definition": "To weaken or sabotage an argument or a study's foundation",
+      "example": "Constant criticism can seriously undermine a student's confidence.",
+      "category": "Argumentation & Debate Words (Author's Intent)"
+    },
+    {
+      "id": 21,
+      "term": "Bolster",
+      "definition": "To support, strengthen, or prop up an argument",
+      "example": "The speaker used historical facts to bolster her argument.",
+      "category": "Argumentation & Debate Words (Author's Intent)"
+    },
+    {
+      "id": 22,
+      "term": "Antithetical",
+      "definition": "Directly opposed or contrary to something",
+      "example": "Cruelty to animals is antithetical to everything our shelter stands for.",
+      "category": "Argumentation & Debate Words (Author's Intent)"
+    },
+    {
+      "id": 23,
+      "term": "Misconstrue",
+      "definition": "To interpret something wrongly or misunderstand the meaning",
+      "example": "It is easy to misconstrue tone of voice when reading a text message.",
+      "category": "Argumentation & Debate Words (Author's Intent)"
+    },
+    {
+      "id": 24,
+      "term": "Repudiate",
+      "definition": "To reject or refuse to accept",
+      "example": "The leader was forced to publicly repudiate the extremist group's statements.",
+      "category": "Argumentation & Debate Words (Author's Intent)"
+    },
+    {
+      "id": 25,
+      "term": "Pragmatic",
+      "definition": "Dealing with situations practically and realistically rather than theoretically",
+      "example": "Instead of dreaming big, she took a pragmatic approach to budgeting her startup.",
+      "category": "Human Behavior, Mind & Society"
+    },
+    {
+      "id": 26,
+      "term": "Scrutinize / Scrutiny",
+      "definition": "To examine, inspect, or watch very closely and carefully",
+      "example": "Auditors will scrutinize every single transaction for discrepancies.",
+      "category": "Human Behavior, Mind & Society"
+    },
+    {
+      "id": 27,
+      "term": "Reticent",
+      "definition": "Not revealing one's thoughts or feelings readily; reserved or silent",
+      "example": "He was notoriously reticent when asked about his personal life.",
+      "category": "Human Behavior, Mind & Society"
+    },
+    {
+      "id": 28,
+      "term": "Deference",
+      "definition": "Humble submission and respect toward someone else's authority or opinion",
+      "example": "She spoke to the village elders with deep deference.",
+      "category": "Human Behavior, Mind & Society"
+    },
+    {
+      "id": 29,
+      "term": "Candor",
+      "definition": "The quality of being open, honest, and straightforward in expression",
+      "example": "I appreciated the CEO's refreshing candor during the corporate crisis.",
+      "category": "Human Behavior, Mind & Society"
+    },
+    {
+      "id": 30,
+      "term": "Partisan",
+      "definition": "Strongly supporting one specific political party, cause, or faction",
+      "example": "The bill stalled in Congress due to bitter partisan arguments.",
+      "category": "Human Behavior, Mind & Society"
+    },
+    {
+      "id": 31,
+      "term": "Altruistic",
+      "definition": "Showing a disinterested and selfless concern for the well-being of others",
+      "example": "Her altruistic donation funded the entire community hospital wing.",
+      "category": "Human Behavior, Mind & Society"
+    },
+    {
+      "id": 32,
+      "term": "Capricious",
+      "definition": "Given to sudden and unaccountable changes of mood or behavior; unpredictable",
+      "example": "The capricious weather ruined our plans for an outdoor picnic.",
+      "category": "Human Behavior, Mind & Society"
+    },
+    {
+      "id": 33,
+      "term": "Ambivalent",
+      "definition": "Having mixed feelings or conflicting ideas about something",
+      "example": "She felt ambivalent about accepting the promotion because of the long commute.",
+      "category": "Human Behavior, Mind & Society"
+    },
+    {
+      "id": 34,
+      "term": "Avarice",
+      "definition": "Extreme greed for wealth or material gain",
+      "example": "Driven by pure avarice, the merchant cheated his customers out of their savings.",
+      "category": "Human Behavior, Mind & Society"
+    },
+    {
+      "id": 35,
+      "term": "Indignant",
+      "definition": "Feeling or showing anger at what is perceived as unfair treatment",
+      "example": "The consumer was indignant when told refunds were not permitted.",
+      "category": "Human Behavior, Mind & Society"
+    },
+    {
+      "id": 36,
+      "term": "Reverent",
+      "definition": "Feeling or showing deep and solemn respect",
+      "example": "The crowd maintained a reverent silence inside the memorial hall.",
+      "category": "Human Behavior, Mind & Society"
+    },
+    {
+      "id": 37,
+      "term": "Loath",
+      "definition": "Unwilling or reluctant",
+      "example": "He was loath to admit that he had made a mistake.",
+      "category": "Human Behavior, Mind & Society"
+    },
+    {
+      "id": 38,
+      "term": "Haughty",
+      "definition": "Unfriendly, proud, and arrogant",
+      "example": "Her haughty attitude alienated her colleagues from wanting to work with her.",
+      "category": "Human Behavior, Mind & Society"
+    },
+    {
+      "id": 39,
+      "term": "Inept / Ineptitude",
+      "definition": "Unskilled, lacking ability or proficiency",
+      "example": "His sheer ineptitude at fixing computers caused more damage than good.",
+      "category": "Human Behavior, Mind & Society"
+    },
+    {
+      "id": 40,
+      "term": "Voracity",
+      "definition": "Having a huge appetite or excessive eagerness",
+      "example": "His voracity for historical non-fiction meant he read three books a week.",
+      "category": "Human Behavior, Mind & Society"
+    },
+    {
+      "id": 41,
+      "term": "Idiosyncrasy",
+      "definition": "A unique habit or peculiar behavior belonging to only one person",
+      "example": "One of his charming idiosyncrasies was collecting vintage ticket stubs.",
+      "category": "Human Behavior, Mind & Society"
+    },
+    {
+      "id": 42,
+      "term": "Conceit",
+      "definition": "Excessive pride, or an extended artistic metaphor/idea",
+      "example": "The poem relies on the conceit of comparing human life to changing seasons.",
+      "category": "Human Behavior, Mind & Society"
+    },
+    {
+      "id": 43,
+      "term": "Preclude",
+      "definition": "To prevent from happening; make impossible",
+      "example": "A prior commitment will preclude me from attending the meeting.",
+      "category": "High-Probability Verbs & Actions"
+    },
+    {
+      "id": 44,
+      "term": "Engender",
+      "definition": "To cause, give rise to, or bring about a feeling or situation",
+      "example": "The new policies hope to engender a culture of transparency.",
+      "category": "High-Probability Verbs & Actions"
+    },
+    {
+      "id": 45,
+      "term": "Mitigate / Alleviate / Assuage / Mollify",
+      "definition": "To soothe, relieve, make less severe, or make less angry",
+      "example": "Taking painkillers helped mitigate the throbbing headache.",
+      "category": "High-Probability Verbs & Actions"
+    },
+    {
+      "id": 46,
+      "term": "Obviate",
+      "definition": "To remove a need or difficulty; avoid or prevent by taking proactive steps",
+      "example": "Using online banking can obviate the need to visit physical branches.",
+      "category": "High-Probability Verbs & Actions"
+    },
+    {
+      "id": 47,
+      "term": "Exacerbate",
+      "definition": "To make a problem or negative feeling worse",
+      "example": "Scratching the bug bite will only exacerbate the itching.",
+      "category": "High-Probability Verbs & Actions"
+    },
+    {
+      "id": 48,
+      "term": "Supersede",
+      "definition": "To take the place of something; to substitute or replace",
+      "example": "The new software update will supersede the old version completely.",
+      "category": "High-Probability Verbs & Actions"
+    },
+    {
+      "id": 49,
+      "term": "Augment",
+      "definition": "To make something greater by adding to it; increase",
+      "example": "He took on a part-time job to augment his monthly income.",
+      "category": "High-Probability Verbs & Actions"
+    },
+    {
+      "id": 50,
+      "term": "Curtail",
+      "definition": "To reduce in extent or quantity; impose a restriction on",
+      "example": "Budget cuts forced the library to curtail its operating hours.",
+      "category": "High-Probability Verbs & Actions"
+    },
+    {
+      "id": 51,
+      "term": "Dispel",
+      "definition": "To make a doubt, feeling, or belief disappear or vanish",
+      "example": "The teacher stepped forward to dispel rumors about the upcoming exam.",
+      "category": "High-Probability Verbs & Actions"
+    },
+    {
+      "id": 52,
+      "term": "Eschew",
+      "definition": "To deliberately avoid or abstain from",
+      "example": "As a strict minimalist, she chose to eschew luxury goods.",
+      "category": "High-Probability Verbs & Actions"
+    },
+    {
+      "id": 53,
+      "term": "Impede",
+      "definition": "To slow down, block, or hinder progress",
+      "example": "Heavy snowfall began to impede traffic on the highway.",
+      "category": "High-Probability Verbs & Actions"
+    },
+    {
+      "id": 54,
+      "term": "Thwart",
+      "definition": "To stop or prevent someone from accomplishing something",
+      "example": "Quick-thinking guards managed to thwart the robbery attempt.",
+      "category": "High-Probability Verbs & Actions"
+    },
+    {
+      "id": 55,
+      "term": "Accommodate",
+      "definition": "To fulfill a need or request; to plan ahead or make room for something",
+      "example": "The hotel can easily accommodate large tour groups.",
+      "category": "High-Probability Verbs & Actions"
+    },
+    {
+      "id": 56,
+      "term": "Reconcile",
+      "definition": "To bring two things or opposing sides into agreement",
+      "example": "They managed to reconcile their differences after a long heart-to-heart.",
+      "category": "High-Probability Verbs & Actions"
+    },
+    {
+      "id": 57,
+      "term": "Flout",
+      "definition": "To openly disregard a rule, law, or convention",
+      "example": "Motorists who flout speed limits risk heavy fines.",
+      "category": "High-Probability Verbs & Actions"
+    },
+    {
+      "id": 58,
+      "term": "Coalesce",
+      "definition": "To come together to form one mass or a single whole entity",
+      "example": "Eventually, the separate community groups began to coalesce into a powerful coalition.",
+      "category": "High-Probability Verbs & Actions"
+    },
+    {
+      "id": 59,
+      "term": "Surmount",
+      "definition": "To overcome a difficulty or obstacle",
+      "example": "With hard work, she managed to surmount all language barriers.",
+      "category": "High-Probability Verbs & Actions"
+    },
+    {
+      "id": 60,
+      "term": "Upended",
+      "definition": "Turned upside down",
+      "example": "The sudden news completely upended their travel plans.",
+      "category": "High-Probability Verbs & Actions"
+    },
+    {
+      "id": 61,
+      "term": "Encompasses",
+      "definition": "To include different items in a group",
+      "example": "The school's curriculum encompasses both arts and sciences.",
+      "category": "High-Probability Verbs & Actions"
+    },
+    {
+      "id": 62,
+      "term": "Foregrounded",
+      "definition": "To put something in a primary or prominent position",
+      "example": "The documentary foregrounded the struggles of local farmers.",
+      "category": "High-Probability Verbs & Actions"
+    },
+    {
+      "id": 63,
+      "term": "Contrived",
+      "definition": "Forced, artificial, or unnatural",
+      "example": "The movie's happy ending felt totally contrived and unbelievable.",
+      "category": "High-Probability Verbs & Actions"
+    },
+    {
+      "id": 64,
+      "term": "Accentuate",
+      "definition": "To make something more noticeable",
+      "example": "Wearing dark eyeliner can accentuate your eyes.",
+      "category": "High-Probability Verbs & Actions"
+    },
+    {
+      "id": 65,
+      "term": "Efface",
+      "definition": "To erase or wipe out",
+      "example": "Time will eventually efface the carvings on the ancient stone.",
+      "category": "High-Probability Verbs & Actions"
+    },
+    {
+      "id": 66,
+      "term": "Preempt",
+      "definition": "To act first to stop something before it happens",
+      "example": "The network had to preempt regular programming for breaking news.",
+      "category": "High-Probability Verbs & Actions"
+    },
+    {
+      "id": 67,
+      "term": "Espouse",
+      "definition": "To support or adopt a cause/belief",
+      "example": "The politician proudly chose to espouse environmental reform.",
+      "category": "High-Probability Verbs & Actions"
+    },
+    {
+      "id": 68,
+      "term": "Offset",
+      "definition": "To counterbalance or make up for something",
+      "example": "Extra earnings from freelancing helped offset the high cost of rent.",
+      "category": "High-Probability Verbs & Actions"
+    },
+    {
+      "id": 69,
+      "term": "Excoriate",
+      "definition": "To criticize someone or something harshly",
+      "example": "Movie critics rushed to excoriate the director's disastrous sequel.",
+      "category": "High-Probability Verbs & Actions"
+    },
+    {
+      "id": 70,
+      "term": "Subvert",
+      "definition": "To undermine or weaken power, authority, an idea, or a belief",
+      "example": "The novel tells a story of rebels trying to subvert an oppressive regime.",
+      "category": "High-Probability Verbs & Actions"
+    },
+    {
+      "id": 71,
+      "term": "Rescind",
+      "definition": "To cancel an official order, agreement, or application",
+      "example": "The university threatened to rescind his admission offer if grades dropped.",
+      "category": "High-Probability Verbs & Actions"
+    },
+    {
+      "id": 72,
+      "term": "Mundane",
+      "definition": "Lacking interest or excitement; dull, ordinary, and everyday",
+      "example": "She sought to escape the mundane routine of office life by traveling.",
+      "category": "Descriptive Adjectives & Qualities"
+    },
+    {
+      "id": 73,
+      "term": "Ephemeral",
+      "definition": "Lasting for a very short time; transient",
+      "example": "Internet fame can be quite ephemeral, fading away almost as quickly as it starts.",
+      "category": "Descriptive Adjectives & Qualities"
+    },
+    {
+      "id": 74,
+      "term": "Rudimentary / Inchoate",
+      "definition": "In an early stage; basic, simple, or not yet fully formed",
+      "example": "He only possessed a rudimentary understanding of computer coding.",
+      "category": "Descriptive Adjectives & Qualities"
+    },
+    {
+      "id": 75,
+      "term": "Apocryphal",
+      "definition": "Widely circulated yet doubtful or unverified (often referring to a false story or myth)",
+      "example": "That famous story about George Washington and the cherry tree is entirely apocryphal.",
+      "category": "Descriptive Adjectives & Qualities"
+    },
+    {
+      "id": 76,
+      "term": "Amenable",
+      "definition": "Open, willing to agree, or cooperative",
+      "example": "Fortunately, my supervisor was amenable to changing our shift schedules.",
+      "category": "Descriptive Adjectives & Qualities"
+    },
+    {
+      "id": 77,
+      "term": "Untenable",
+      "definition": "Defenseless; impossible to maintain or defend against criticism",
+      "example": "Due to mounting financial losses, their business model became completely untenable.",
+      "category": "Descriptive Adjectives & Qualities"
+    },
+    {
+      "id": 78,
+      "term": "Canonical",
+      "definition": "Accepted, authorized, or standard within a field",
+      "example": "Shakespeare's plays remain a canonical part of English literature courses.",
+      "category": "Descriptive Adjectives & Qualities"
+    },
+    {
+      "id": 79,
+      "term": "Inscrutable",
+      "definition": "Impossible to understand or interpret",
+      "example": "The poker player kept an inscrutable expression on his face the entire match.",
+      "category": "Descriptive Adjectives & Qualities"
+    },
+    {
+      "id": 80,
+      "term": "Intractable",
+      "definition": "Hard to control or deal with; stubborn",
+      "example": "Poverty and corruption are complex, intractable problems for lawmakers.",
+      "category": "Descriptive Adjectives & Qualities"
+    },
+    {
+      "id": 81,
+      "term": "Haphazard",
+      "definition": "Lacking any clear order, plan, or organization",
+      "example": "His haphazard note-taking made studying for finals twice as difficult.",
+      "category": "Descriptive Adjectives & Qualities"
+    },
+    {
+      "id": 82,
+      "term": "Detrimental",
+      "definition": "Causing high harm, damage, or negative effects",
+      "example": "Smoking has proven detrimental effects on long-term respiratory health.",
+      "category": "Descriptive Adjectives & Qualities"
+    },
+    {
+      "id": 83,
+      "term": "Pervasive",
+      "definition": "Spreading widely throughout an area or group; common and widespread everywhere",
+      "example": "There is a pervasive sense of optimism across the tech startup scene.",
+      "category": "Descriptive Adjectives & Qualities"
+    },
+    {
+      "id": 84,
+      "term": "Imminent",
+      "definition": "Very likely to happen very soon",
+      "example": "Dark clouds on the horizon suggested that a thunderstorm was imminent.",
+      "category": "Descriptive Adjectives & Qualities"
+    },
+    {
+      "id": 85,
+      "term": "Arcane",
+      "definition": "Mysterious, secret, or understood by few",
+      "example": "He spent hours deciphering the arcane legal jargon in the contract.",
+      "category": "Descriptive Adjectives & Qualities"
+    },
+    {
+      "id": 86,
+      "term": "Extraneous",
+      "definition": "Irrelevant or extra; not belonging to the matter at hand",
+      "example": "Please remove any extraneous details from your essay draft.",
+      "category": "Descriptive Adjectives & Qualities"
+    },
+    {
+      "id": 87,
+      "term": "Ubiquitous",
+      "definition": "Appearing everywhere at the same time",
+      "example": "Smartphones have become ubiquitous in modern daily life.",
+      "category": "Descriptive Adjectives & Qualities"
+    },
+    {
+      "id": 88,
+      "term": "Prudent",
+      "definition": "Acting with or showing careful judgment and caution",
+      "example": "It is always prudent to save a portion of your monthly income.",
+      "category": "Descriptive Adjectives & Qualities"
+    },
+    {
+      "id": 89,
+      "term": "Specious",
+      "definition": "Superficial, plausible on the surface, but actually wrong or misleading",
+      "example": "The advertisement made specious claims about rapid weight loss.",
+      "category": "Descriptive Adjectives & Qualities"
+    },
+    {
+      "id": 90,
+      "term": "Strictures",
+      "definition": "Restrictions or limitations",
+      "example": "The strictures of the budget forced them to cut creative programs.",
+      "category": "Descriptive Adjectives & Qualities"
+    },
+    {
+      "id": 91,
+      "term": "Insolvency",
+      "definition": "Being unable to pay debts",
+      "example": "Poor cash flow pushed the retail company straight into insolvency.",
+      "category": "Descriptive Adjectives & Qualities"
+    },
+    {
+      "id": 92,
+      "term": "Startling",
+      "definition": "Extremely surprising or new",
+      "example": "The report revealed startling statistics regarding clean water shortages.",
+      "category": "Descriptive Adjectives & Qualities"
+    },
+    {
+      "id": 93,
+      "term": "Meticulous",
+      "definition": "Extremely careful, doing things with very thin/fine detail",
+      "example": "She was meticulous when organizing her code repository.",
+      "category": "Descriptive Adjectives & Qualities"
+    },
+    {
+      "id": 94,
+      "term": "Indifferent",
+      "definition": "Showing a lack of care or interest",
+      "example": "He remained completely indifferent to whether we won or lost the game.",
+      "category": "Descriptive Adjectives & Qualities"
+    },
+    {
+      "id": 95,
+      "term": "Archetype",
+      "definition": "An original model or thing from which others are formed",
+      "example": "Sherlock Holmes is the literary archetype of the brilliant detective.",
+      "category": "Descriptive Adjectives & Qualities"
+    },
+    {
+      "id": 96,
+      "term": "Obsolete",
+      "definition": "No longer in use",
+      "example": "Floppy disks have become completely obsolete in modern computing.",
+      "category": "Descriptive Adjectives & Qualities"
+    },
+    {
+      "id": 97,
+      "term": "Abiding",
+      "definition": "Lasting a long time; continuing without change",
+      "example": "She holds an abiding passion for astronomy and stargazing.",
+      "category": "Descriptive Adjectives & Qualities"
+    },
+    {
+      "id": 98,
+      "term": "Proprietary",
+      "definition": "Private or exclusively owned",
+      "example": "The company protects its proprietary software algorithms under strict patents.",
+      "category": "Descriptive Adjectives & Qualities"
+    },
+    {
+      "id": 99,
+      "term": "Obscure",
+      "definition": "Difficult to understand",
+      "example": "The research paper was bogged down by obscure technical terms.",
+      "category": "Descriptive Adjectives & Qualities"
+    },
+    {
+      "id": 100,
+      "term": "Perfunctory",
+      "definition": "Quickly done without enthusiasm, routine, or deep interest",
+      "example": "He gave the security guard a perfunctory nod as he walked into the lobby.",
+      "category": "Descriptive Adjectives & Qualities"
+    },
+    {
+      "id": 101,
+      "term": "Absurd",
+      "definition": "Unreasonable, ridiculous",
+      "example": "Paying fifty dollars for a single cup of coffee sounds completely absurd.",
+      "category": "Descriptive Adjectives & Qualities"
+    },
+    {
+      "id": 102,
+      "term": "Impartial",
+      "definition": "Treating all sides equally; fair and unbiased",
+      "example": "A judge must remain completely impartial during court proceedings.",
+      "category": "Descriptive Adjectives & Qualities"
+    },
+    {
+      "id": 103,
+      "term": "Offhand",
+      "definition": "Done without preparation, interest, or immediately",
+      "example": "I couldn't give you the exact statistics offhand without checking notes.",
+      "category": "Descriptive Adjectives & Qualities"
+    },
+    {
+      "id": 104,
+      "term": "Unanimity",
+      "definition": "Complete agreement or exact shared opinion among everyone",
+      "example": "The board reached rare unanimity on the new corporate direction.",
+      "category": "Descriptive Adjectives & Qualities"
+    },
+    {
+      "id": 105,
+      "term": "Fugitive",
+      "definition": "Running away from origin or authorities",
+      "example": "The fugitive was captured after hiding out in the mountains for days.",
+      "category": "Descriptive Adjectives & Qualities"
+    },
+    {
+      "id": 106,
+      "term": "Credence",
+      "definition": "Belief in or acceptance of something as true",
+      "example": "Recent data has given extra credence to their original theory.",
+      "category": "Descriptive Adjectives & Qualities"
+    },
+    {
+      "id": 107,
+      "term": "Complementary",
+      "definition": "Completing something else or going well together",
+      "example": "Their different skill sets made them a highly complementary team.",
+      "category": "Descriptive Adjectives & Qualities"
+    },
+    {
+      "id": 108,
+      "term": "Wary",
+      "definition": "Showing caution",
+      "example": "Consumers are naturally wary of unverified online products.",
+      "category": "Descriptive Adjectives & Qualities"
+    },
+    {
+      "id": 109,
+      "term": "Rubble",
+      "definition": "Rough, broken pieces or debris",
+      "example": "Rescue workers searched through the rubble for survivors.",
+      "category": "Descriptive Adjectives & Qualities"
+    },
+    {
+      "id": 110,
+      "term": "Mementos",
+      "definition": "Objects kept as a reminder of a person or event",
+      "example": "She saved old ticket stubs and photos as travel mementos.",
+      "category": "Descriptive Adjectives & Qualities"
+    },
+    {
+      "id": 111,
+      "term": "Lament",
+      "definition": "To express deep grief, sorrow, regret, or critical complaint",
+      "example": "Fans began to lament the cancellation of their favorite television show.",
+      "category": "Descriptive Adjectives & Qualities"
+    },
+    {
+      "id": 112,
+      "term": "Persuasive",
+      "definition": "Capable of convincing",
+      "example": "He delivered a persuasive speech outlining the benefits of recycling.",
+      "category": "Descriptive Adjectives & Qualities"
+    },
+    {
+      "id": 113,
+      "term": "Skeptical",
+      "definition": "Showing a doubt-filled attitude",
+      "example": "Many experts remained skeptical about the bold economic claims.",
+      "category": "Descriptive Adjectives & Qualities"
+    },
+    {
+      "id": 114,
+      "term": "Anachronistic",
+      "definition": "Out of its proper time in history",
+      "example": "A knight wearing modern wristwatches in a medieval movie looks anachronistic.",
+      "category": "Descriptive Adjectives & Qualities"
+    },
+    {
+      "id": 115,
+      "term": "Inextricable",
+      "definition": "Impossible to separate",
+      "example": "Language and culture share an inextricable bond.",
+      "category": "Descriptive Adjectives & Qualities"
+    },
+    {
+      "id": 116,
+      "term": "Disparity",
+      "definition": "A noticeable difference",
+      "example": "There is a growing wealth disparity between urban and rural districts.",
+      "category": "Descriptive Adjectives & Qualities"
+    },
+    {
+      "id": 117,
+      "term": "Serendipity",
+      "definition": "Happening by lucky chance",
+      "example": "Finding my lost keys inside the jacket pocket was pure serendipity.",
+      "category": "Descriptive Adjectives & Qualities"
+    },
+    {
+      "id": 118,
+      "term": "Robust",
+      "definition": "Strong and sturdy",
+      "example": "The application features a robust backend architecture built to handle heavy traffic.",
+      "category": "Descriptive Adjectives & Qualities"
+    },
+    {
+      "id": 119,
+      "term": "Radical",
+      "definition": "Going to the roots; fundamental or revolutionary",
+      "example": "The startup proposed a radical redesign of the traditional user interface.",
+      "category": "Descriptive Adjectives & Qualities"
+    },
+    {
+      "id": 120,
+      "term": "Militant",
+      "definition": "Engaged in active, aggressive, or armed combat",
+      "example": "The militant faction rejected all hopes of a peaceful treaty.",
+      "category": "Descriptive Adjectives & Qualities"
+    },
+    {
+      "id": 121,
+      "term": "Celerity",
+      "definition": "Rapid action or speed",
+      "example": "The emergency response team acted with remarkable celerity.",
+      "category": "Descriptive Adjectives & Qualities"
+    },
+    {
+      "id": 122,
+      "term": "Malevolent",
+      "definition": "Having or showing a desire to cause harm; evil",
+      "example": "The villain in the story harbored malevolent intentions toward the kingdom.",
+      "category": "Descriptive Adjectives & Qualities"
+    }
+  ],
+  "word_progress": [],
+  "quiz_results": []
+}
