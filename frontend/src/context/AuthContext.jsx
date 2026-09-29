@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState } from 'react';
+import { syncGuestProgressToUser } from '../api';
 
 const AuthContext = createContext();
 
@@ -15,10 +16,12 @@ export function AuthProvider({ children }) {
     return null;
   });
 
-  const saveUserSession = (user) => {
+  const saveUserSession = async (user) => {
     setCurrentUser(user);
     if (user) {
       localStorage.setItem('sat_vocab_user', JSON.stringify(user));
+      // Seamlessly transfer any guest practice/mastered words to their database account
+      await syncGuestProgressToUser(user.id);
     } else {
       localStorage.removeItem('sat_vocab_user');
     }

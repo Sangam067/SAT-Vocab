@@ -160,21 +160,6 @@ const db = {
       });
     }
 
-    // Ensure a default guest user exists at id = 1 for unregistered visitors
-    const userOne = (await client.execute({
-      sql: 'SELECT id FROM users WHERE id = 1',
-      args: [],
-    })).rows[0];
-
-    if (!userOne) {
-      try {
-        await client.execute({
-          sql: `INSERT OR IGNORE INTO users (id, username, password_hash, salt, role, daily_goal) VALUES (1, 'guest_student', 'guest_pwd', 'guest_salt', 'student', 5)`,
-          args: [],
-        });
-      } catch (e) {}
-    }
-
     // Seed vocabulary from JSON if empty
     const wordsCountRes = (await client.execute('SELECT COUNT(*) as count FROM words')).rows[0];
     const wordsCount = wordsCountRes ? Number(wordsCountRes.count) : 0;

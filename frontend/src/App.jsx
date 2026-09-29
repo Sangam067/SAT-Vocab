@@ -18,8 +18,8 @@ function AppContent() {
   const [authOpen, setAuthOpen] = useState(false);
   const [submitWordOpen, setSubmitWordOpen] = useState(false);
 
-  // If logged in use their id; otherwise use id 1 for guest preview
-  const effectiveUserId = currentUser ? currentUser.id : 1;
+  // If logged in use their personal user id; otherwise use 'guest' for isolated browser cache
+  const effectiveUserId = currentUser ? currentUser.id : 'guest';
 
   return (
     <div className="app-layout">
