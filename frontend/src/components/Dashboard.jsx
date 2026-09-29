@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { fetchStats, fetchWords } from '../api';
+import ProgressSyncBar from './ProgressSyncBar';
 
-export default function Dashboard({ userId }) {
+export default function Dashboard({ userId, onOpenSubmitWord }) {
   const [stats, setStats] = useState(null);
   const [focusWords, setFocusWords] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
+  const loadDashboardData = () => {
     if (!userId) return;
     Promise.all([fetchStats(userId), fetchWords()])
       .then(([statsData, wordsData]) => {
@@ -16,6 +17,10 @@ export default function Dashboard({ userId }) {
         setLoading(false);
       })
       .catch(() => setLoading(false));
+  };
+
+  useEffect(() => {
+    loadDashboardData();
   }, [userId]);
 
   if (loading) {
@@ -34,6 +39,9 @@ export default function Dashboard({ userId }) {
 
   return (
     <div className="content-container">
+      {/* Save & Upload Progress File Bar */}
+      <ProgressSyncBar userId={userId} onDataUpdated={loadDashboardData} />
+
       {/* 4 Standard Metrics Cards */}
       <div className="kpi-grid">
         <div className="kpi-card">
@@ -87,9 +95,18 @@ export default function Dashboard({ userId }) {
                   High-probability words from recent SAT tests
                 </p>
               </div>
-              <Link to="/browse" style={{ fontSize: '12px', fontWeight: '600', color: 'var(--accent-blue)', textDecoration: 'none' }}>
-                View all words →
-              </Link>
+              <div style={{ display: 'flex', gap: '10px' }}>
+                <button
+                  onClick={onOpenSubmitWord}
+                  className="btn-secondary"
+                  style={{ fontSize: '11px', padding: '4px 10px' }}
+                >
+                  + Add Your Word
+                </button>
+                <Link to="/browse" style={{ fontSize: '12px', fontWeight: '600', color: 'var(--accent-blue)', textDecoration: 'none', display: 'flex', alignItems: 'center' }}>
+                  View all words →
+                </Link>
+              </div>
             </div>
 
             <table className="pro-table">

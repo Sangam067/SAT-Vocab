@@ -1,6 +1,7 @@
 const Database = require('better-sqlite3');
 const path = require('path');
 const fs = require('fs');
+const crypto = require('crypto');
 
 const DB_PATH = path.join(__dirname, 'data', 'sat_vocab.db');
 
@@ -22,6 +23,7 @@ db.exec(`
     username TEXT UNIQUE NOT NULL,
     password_hash TEXT,
     salt TEXT,
+    role TEXT DEFAULT 'student',
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
   );
 
@@ -52,23 +54,55 @@ db.exec(`
     category TEXT NOT NULL,
     UNIQUE(term)
   );
+
+  CREATE TABLE IF NOT EXISTS pending_words (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    term TEXT NOT NULL,
+    definition TEXT NOT NULL,
+    example TEXT NOT NULL,
+    submitted_by TEXT DEFAULT 'student',
+    submitted_at DATETIME DEFAULT CURRENT_TIMESTAMP
+  );
 `);
 
-// Migration safeguard: check if password_hash and salt columns exist in users table
-const tableInfo = db.prepare('PRAGMA table_info(users)').all();
-const hasPasswordHash = tableInfo.some((col) => col.name === 'password_hash');
-if (!hasPasswordHash) {
+// Migration safeguard for users table columns
+const userCols = db.prepare('PRAGMA table_info(users)').all();
+if (!userCols.some((col) => col.name === 'password_hash')) {
   try {
     db.exec(`
       ALTER TABLE users ADD COLUMN password_hash TEXT;
       ALTER TABLE users ADD COLUMN salt TEXT;
     `);
-  } catch (e) {
-    // Ignore if already added
-  }
+  } catch (e) {}
+}
+if (!userCols.some((col) => col.name === 'role')) {
+  try {
+    db.exec(`ALTER TABLE users ADD COLUMN role TEXT DEFAULT 'student'`);
+  } catch (e) {}
 }
 
-// Seed words from JSON
+// Seed admin user: adminsatvocab67 / Sulav@Vocab
+function hashPassword(password, salt) {
+  return crypto.pbkdf2Sync(password, salt, 10000, 64, 'sha512').toString('hex');
+}
+
+const adminUsername = 'adminsatvocab67';
+const adminPlainPassword = 'Sulav@Vocab';
+const existingAdmin = db.prepare('SELECT id FROM users WHERE username = ?').get(adminUsername);
+
+if (!existingAdmin) {
+  const salt = crypto.randomBytes(16).toString('hex');
+  const password_hash = hashPassword(adminPlainPassword, salt);
+  db.prepare(`
+    INSERT INTO users (username, password_hash, salt, role)
+    VALUES (?, ?, ?, 'admin')
+  `).run(adminUsername, password_hash, salt);
+} else {
+  // Ensure role is admin
+  db.prepare(`UPDATE users SET role = 'admin' WHERE username = ?`).run(adminUsername);
+}
+
+// Seed vocabulary from JSON
 const vocabData = JSON.parse(
   fs.readFileSync(path.join(__dirname, 'data', 'vocabulary.json'), 'utf-8')
 );

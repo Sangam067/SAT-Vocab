@@ -3,55 +3,10 @@ import { NavLink } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
 
-const menu = [
-  {
-    path: '/',
-    label: 'Dashboard',
-    icon: (
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="3" y="3" width="7" height="7"></rect>
-        <rect x="14" y="3" width="7" height="7"></rect>
-        <rect x="14" y="14" width="7" height="7"></rect>
-        <rect x="3" y="14" width="7" height="7"></rect>
-      </svg>
-    ),
-  },
-  {
-    path: '/flashcards',
-    label: 'Flashcards',
-    icon: (
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
-        <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
-      </svg>
-    ),
-  },
-  {
-    path: '/quiz',
-    label: 'Quiz Mode',
-    icon: (
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <circle cx="12" cy="12" r="10"></circle>
-        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
-        <line x1="12" y1="17" x2="12.01" y2="17"></line>
-      </svg>
-    ),
-  },
-  {
-    path: '/browse',
-    label: 'Browse & Search',
-    icon: (
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <circle cx="11" cy="11" r="8"></circle>
-        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-      </svg>
-    ),
-  },
-];
-
-export default function Sidebar({ onOpenAuth }) {
+export default function Sidebar({ onOpenAuth, onOpenSubmitWord }) {
   const { theme, toggleTheme } = useTheme();
   const { currentUser, logout } = useAuth();
+  const isAdmin = currentUser && currentUser.role === 'admin';
 
   return (
     <aside className="app-sidebar">
@@ -67,18 +22,85 @@ export default function Sidebar({ onOpenAuth }) {
 
         {/* Nav Links */}
         <nav className="sidebar-nav">
-          {menu.map((item) => (
+          <NavLink
+            to="/"
+            end
+            className={({ isActive }) => `nav-link-item ${isActive ? 'active' : ''}`}
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <rect x="3" y="3" width="7" height="7"></rect>
+              <rect x="14" y="3" width="7" height="7"></rect>
+              <rect x="14" y="14" width="7" height="7"></rect>
+              <rect x="3" y="14" width="7" height="7"></rect>
+            </svg>
+            <span>Dashboard</span>
+          </NavLink>
+
+          <NavLink
+            to="/flashcards"
+            className={({ isActive }) => `nav-link-item ${isActive ? 'active' : ''}`}
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+              <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+            </svg>
+            <span>Flashcards</span>
+          </NavLink>
+
+          <NavLink
+            to="/quiz"
+            className={({ isActive }) => `nav-link-item ${isActive ? 'active' : ''}`}
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+              <line x1="12" y1="17" x2="12.01" y2="17"></line>
+            </svg>
+            <span>Quiz Mode</span>
+          </NavLink>
+
+          <NavLink
+            to="/browse"
+            className={({ isActive }) => `nav-link-item ${isActive ? 'active' : ''}`}
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <span>Browse & Search</span>
+          </NavLink>
+
+          {/* Admin Panel Link (Only visible or prominent for admin) */}
+          {isAdmin && (
             <NavLink
-              key={item.path}
-              to={item.path}
-              end={item.path === '/'}
+              to="/admin"
               className={({ isActive }) => `nav-link-item ${isActive ? 'active' : ''}`}
+              style={{ color: 'var(--color-warning)' }}
             >
-              {item.icon}
-              <span>{item.label}</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+              </svg>
+              <span>Admin Panel</span>
             </NavLink>
-          ))}
+          )}
         </nav>
+
+        {/* Suggest Word CTA */}
+        <div style={{ marginTop: '16px', padding: '0 8px' }}>
+          <button
+            onClick={onOpenSubmitWord}
+            className="btn-secondary"
+            style={{
+              width: '100%',
+              fontSize: '12px',
+              padding: '8px 10px',
+              borderColor: 'var(--accent-blue)',
+              color: 'var(--accent-blue)',
+            }}
+          >
+            + Add Your Word
+          </button>
+        </div>
       </div>
 
       {/* Bottom Profile & Theme Toggle */}
@@ -113,14 +135,21 @@ export default function Sidebar({ onOpenAuth }) {
         {currentUser ? (
           <div className="user-card" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <div className="user-avatar">
+              <div
+                className="user-avatar"
+                style={{
+                  backgroundColor: isAdmin ? 'var(--color-warning)' : 'var(--accent-blue)',
+                }}
+              >
                 {currentUser.username.charAt(0).toUpperCase()}
               </div>
               <div style={{ maxWidth: '100px', overflow: 'hidden' }}>
                 <div className="user-name" style={{ textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                   {currentUser.username}
                 </div>
-                <div className="user-role">Student</div>
+                <div className="user-role" style={{ color: isAdmin ? 'var(--color-warning)' : 'var(--text-muted)' }}>
+                  {isAdmin ? 'Admin' : 'Student'}
+                </div>
               </div>
             </div>
 

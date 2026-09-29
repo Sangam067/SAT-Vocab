@@ -1,6 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 const crypto = require('crypto');
+const path = require('path');
+const fs = require('fs');
 const db = require('./db');
 
 const app = express();
@@ -51,7 +53,6 @@ app.get('/api/auth/captcha', (req, res) => {
   }
 
   const question = `What is ${num1} ${op} ${num2}?`;
-  // Expires in 5 minutes
   captchaStore.set(captchaId, { answer, expiresAt: Date.now() + 5 * 60 * 1000 });
 
   res.json({
@@ -101,10 +102,10 @@ app.post('/api/auth/register', (req, res) => {
   const password_hash = hashPassword(password, salt);
 
   const info = db.prepare(
-    'INSERT INTO users (username, password_hash, salt) VALUES (?, ?, ?)'
-  ).run(username.trim().toLowerCase(), password_hash, salt);
+    'INSERT INTO users (username, password_hash, salt, role) VALUES (?, ?, ?, ?)'
+  ).run(username.trim().toLowerCase(), password_hash, salt, 'student');
 
-  const user = db.prepare('SELECT id, username, created_at FROM users WHERE id = ?').get(info.lastInsertRowid);
+  const user = db.prepare('SELECT id, username, role, created_at FROM users WHERE id = ?').get(info.lastInsertRowid);
   res.status(201).json(user);
 });
 
@@ -142,6 +143,7 @@ app.post('/api/auth/login', (req, res) => {
   res.json({
     id: user.id,
     username: user.username,
+    role: user.role || 'student',
     created_at: user.created_at,
   });
 });
@@ -175,7 +177,73 @@ app.get('/api/words', (req, res) => {
 // GET /api/words/categories — distinct category names
 app.get('/api/words/categories', (req, res) => {
   const categories = db.prepare('SELECT DISTINCT category FROM words ORDER BY category').all();
-  res.json(categories.map(c => c.category));
+  res.json(categories.map((c) => c.category));
+});
+
+// POST /api/words/submit — Student submits a word for admin review
+app.post('/api/words/submit', (req, res) => {
+  const { term, definition, example, submitted_by } = req.body;
+
+  if (!term || !definition || !example) {
+    return res.status(400).json({ error: 'Term, definition, and example sentence are required.' });
+  }
+
+  // Check if word already exists in approved words
+  const existsInApproved = db.prepare('SELECT id FROM words WHERE LOWER(term) = LOWER(?)').get(term.trim());
+  if (existsInApproved) {
+    return res.status(409).json({ error: `The word "${term.trim()}" is already in the vocabulary database.` });
+  }
+
+  // Check if word already submitted in pending
+  const existsInPending = db.prepare('SELECT id FROM pending_words WHERE LOWER(term) = LOWER(?)').get(term.trim());
+  if (existsInPending) {
+    return res.status(409).json({ error: `The word "${term.trim()}" is already waiting for admin approval.` });
+  }
+
+  const info = db.prepare(`
+    INSERT INTO pending_words (term, definition, example, submitted_by)
+    VALUES (?, ?, ?, ?)
+  `).run(term.trim(), definition.trim(), example.trim(), submitted_by || 'Student');
+
+  res.status(201).json({
+    message: 'Word submitted successfully! It will appear across the app once approved by an admin.',
+    id: info.lastInsertRowid,
+  });
+});
+
+// ─── ADMIN WORD MANAGEMENT ────────────────────────────────────────────────────
+
+// GET /api/admin/pending — get all pending submissions (Admin only)
+app.get('/api/admin/pending', (req, res) => {
+  const pending = db.prepare('SELECT * FROM pending_words ORDER BY submitted_at DESC').all();
+  res.json(pending);
+});
+
+// POST /api/admin/approve/:id — approve word and insert into main words table
+app.post('/api/admin/approve/:id', (req, res) => {
+  const pending = db.prepare('SELECT * FROM pending_words WHERE id = ?').get(req.params.id);
+  if (!pending) {
+    return res.status(404).json({ error: 'Pending submission not found' });
+  }
+
+  const category = req.body.category || 'Student Submitted & Community';
+
+  // Insert into words
+  db.prepare(`
+    INSERT OR REPLACE INTO words (term, definition, example, category)
+    VALUES (?, ?, ?, ?)
+  `).run(pending.term, pending.definition, pending.example, category);
+
+  // Remove from pending
+  db.prepare('DELETE FROM pending_words WHERE id = ?').run(req.params.id);
+
+  res.json({ message: `"${pending.term}" approved and added to active vocabulary!` });
+});
+
+// DELETE /api/admin/reject/:id — reject/delete pending submission
+app.delete('/api/admin/reject/:id', (req, res) => {
+  db.prepare('DELETE FROM pending_words WHERE id = ?').run(req.params.id);
+  res.json({ message: 'Submission rejected and removed.' });
 });
 
 // ─── DASHBOARD / STATS ───────────────────────────────────────────────────────
@@ -209,6 +277,90 @@ app.get('/api/stats/:userId', (req, res) => {
     averageScore: avgScore ? Math.round(avgScore * 10) / 10 : 0,
     recentQuizzes,
     reviewedToday,
+  });
+});
+
+// ─── PROGRESS IMPORT & EXPORT (BACKUP / RESTORE) ───────────────────────────────
+
+// GET /api/progress/export/:userId — Export user data as a backup JSON
+app.get('/api/progress/export/:userId', (req, res) => {
+  const userId = req.params.userId;
+  const user = db.prepare('SELECT id, username, created_at FROM users WHERE id = ?').get(userId);
+  const wordProgress = db.prepare('SELECT word_term, is_mastered, last_reviewed_at FROM word_progress WHERE user_id = ?').all(userId);
+  const quizResults = db.prepare('SELECT score, total_questions, completed_at FROM quiz_results WHERE user_id = ? ORDER BY completed_at ASC').all(userId);
+
+  const exportData = {
+    app: 'SAT VocabMaster',
+    version: '1.0',
+    exported_at: new Date().toISOString(),
+    user: user || { id: userId, username: 'guest' },
+    word_progress: wordProgress,
+    quiz_results: quizResults,
+  };
+
+  res.json(exportData);
+});
+
+// POST /api/progress/import/:userId — Restore/merge progress from backup JSON
+app.post('/api/progress/import/:userId', (req, res) => {
+  const userId = req.params.userId;
+  const { word_progress, quiz_results } = req.body;
+
+  if (!Array.isArray(word_progress) && !Array.isArray(quiz_results)) {
+    return res.status(400).json({ error: 'Invalid backup file format.' });
+  }
+
+  const insertProgress = db.prepare(`
+    INSERT INTO word_progress (user_id, word_term, is_mastered, last_reviewed_at)
+    VALUES (?, ?, ?, ?)
+    ON CONFLICT(user_id, word_term) DO UPDATE SET
+      is_mastered = excluded.is_mastered,
+      last_reviewed_at = excluded.last_reviewed_at
+  `);
+
+  const insertQuiz = db.prepare(`
+    INSERT INTO quiz_results (user_id, score, total_questions, completed_at)
+    VALUES (?, ?, ?, ?)
+  `);
+
+  const restoreTransaction = db.transaction(() => {
+    let wordsRestored = 0;
+    let quizzesRestored = 0;
+
+    if (Array.isArray(word_progress)) {
+      for (const item of word_progress) {
+        if (item.word_term) {
+          insertProgress.run(
+            userId,
+            item.word_term,
+            item.is_mastered ? 1 : 0,
+            item.last_reviewed_at || new Date().toISOString()
+          );
+          wordsRestored++;
+        }
+      }
+    }
+
+    if (Array.isArray(quiz_results)) {
+      for (const item of quiz_results) {
+        if (item.total_questions) {
+          insertQuiz.run(
+            userId,
+            item.score,
+            item.total_questions,
+            item.completed_at || new Date().toISOString()
+          );
+          quizzesRestored++;
+        }
+      }
+    }
+
+    return { wordsRestored, quizzesRestored };
+  });
+
+  const result = restoreTransaction();
+  res.json({
+    message: `Progress restored successfully! Merged ${result.wordsRestored} words and ${result.quizzesRestored} quiz entries.`,
   });
 });
 
@@ -267,6 +419,15 @@ app.get('/api/quiz/:userId', (req, res) => {
   ).all(req.params.userId);
   res.json(quizzes);
 });
+
+// ─── SERVE FRONTEND (in production) ──────────────────────────────────────────
+const frontendDist = path.join(__dirname, '..', 'frontend', 'dist');
+if (fs.existsSync(frontendDist)) {
+  app.use(express.static(frontendDist));
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(frontendDist, 'index.html'));
+  });
+}
 
 // ─── START SERVER ─────────────────────────────────────────────────────────────
 

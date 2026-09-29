@@ -44,6 +44,60 @@ export async function fetchCategories() {
   return res.json();
 }
 
+export async function submitWord(term, definition, example, submittedBy) {
+  const res = await fetch(`${API_BASE}/words/submit`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ term, definition, example, submitted_by: submittedBy }),
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || 'Failed to submit word');
+  return data;
+}
+
+export async function fetchPendingWords() {
+  const res = await fetch(`${API_BASE}/admin/pending`);
+  if (!res.ok) throw new Error('Failed to load pending words');
+  return res.json();
+}
+
+export async function approvePendingWord(id, category) {
+  const res = await fetch(`${API_BASE}/admin/approve/${id}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ category }),
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || 'Failed to approve word');
+  return data;
+}
+
+export async function rejectPendingWord(id) {
+  const res = await fetch(`${API_BASE}/admin/reject/${id}`, {
+    method: 'DELETE',
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || 'Failed to reject word');
+  return data;
+}
+
+export async function exportUserProgress(userId) {
+  const res = await fetch(`${API_BASE}/progress/export/${userId}`);
+  if (!res.ok) throw new Error('Failed to export progress');
+  return res.json();
+}
+
+export async function importUserProgress(userId, progressData) {
+  const res = await fetch(`${API_BASE}/progress/import/${userId}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(progressData),
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || 'Failed to import progress');
+  return data;
+}
+
 export async function fetchProgress(userId) {
   const res = await fetch(`${API_BASE}/progress/${userId}`);
   return res.json();

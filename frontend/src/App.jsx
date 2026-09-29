@@ -6,20 +6,27 @@ import Dashboard from './components/Dashboard';
 import Flashcards from './components/Flashcards';
 import Quiz from './components/Quiz';
 import Browse from './components/Browse';
+import AdminPanel from './components/AdminPanel';
 import AuthModal from './components/AuthModal';
+import SubmitWordModal from './components/SubmitWordModal';
 import { ThemeProvider } from './context/ThemeContext';
 import { AuthProvider, useAuth } from './context/AuthContext';
 
 function AppContent() {
   const { currentUser } = useAuth();
   const [authOpen, setAuthOpen] = useState(false);
-  // Default to user id 1 if not logged in so guests can still preview data, but logged in users get their personal ID
+  const [submitWordOpen, setSubmitWordOpen] = useState(false);
+
+  // If logged in use their id; otherwise use id 1 for guest preview
   const effectiveUserId = currentUser ? currentUser.id : 1;
 
   return (
     <div className="app-layout">
       {/* Left Navigation */}
-      <Sidebar onOpenAuth={() => setAuthOpen(true)} />
+      <Sidebar
+        onOpenAuth={() => setAuthOpen(true)}
+        onOpenSubmitWord={() => setSubmitWordOpen(true)}
+      />
 
       {/* Main App */}
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0, height: '100%', overflow: 'hidden' }}>
@@ -27,16 +34,27 @@ function AppContent() {
 
         <main className="app-content">
           <Routes>
-            <Route path="/" element={<Dashboard userId={effectiveUserId} onOpenAuth={() => setAuthOpen(true)} />} />
-            <Route path="/flashcards" element={<Flashcards userId={effectiveUserId} onOpenAuth={() => setAuthOpen(true)} />} />
-            <Route path="/quiz" element={<Quiz userId={effectiveUserId} onOpenAuth={() => setAuthOpen(true)} />} />
-            <Route path="/browse" element={<Browse userId={effectiveUserId} onOpenAuth={() => setAuthOpen(true)} />} />
+            <Route
+              path="/"
+              element={
+                <Dashboard
+                  userId={effectiveUserId}
+                  onOpenSubmitWord={() => setSubmitWordOpen(true)}
+                  onOpenAuth={() => setAuthOpen(true)}
+                />
+              }
+            />
+            <Route path="/flashcards" element={<Flashcards userId={effectiveUserId} />} />
+            <Route path="/quiz" element={<Quiz userId={effectiveUserId} />} />
+            <Route path="/browse" element={<Browse userId={effectiveUserId} />} />
+            <Route path="/admin" element={<AdminPanel onOpenAuth={() => setAuthOpen(true)} />} />
           </Routes>
         </main>
       </div>
 
-      {/* Authentication Modal with Interactive Captcha */}
+      {/* Modals */}
       <AuthModal isOpen={authOpen} onClose={() => setAuthOpen(false)} />
+      <SubmitWordModal isOpen={submitWordOpen} onClose={() => setSubmitWordOpen(false)} />
     </div>
   );
 }
