@@ -20,6 +20,8 @@ db.exec(`
   CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     username TEXT UNIQUE NOT NULL,
+    password_hash TEXT,
+    salt TEXT,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
   );
 
@@ -41,10 +43,7 @@ db.exec(`
     completed_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
   );
-`);
 
-// Seed vocabulary into a read-only reference table
-db.exec(`
   CREATE TABLE IF NOT EXISTS words (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     term TEXT NOT NULL,
@@ -54,6 +53,20 @@ db.exec(`
     UNIQUE(term)
   );
 `);
+
+// Migration safeguard: check if password_hash and salt columns exist in users table
+const tableInfo = db.prepare('PRAGMA table_info(users)').all();
+const hasPasswordHash = tableInfo.some((col) => col.name === 'password_hash');
+if (!hasPasswordHash) {
+  try {
+    db.exec(`
+      ALTER TABLE users ADD COLUMN password_hash TEXT;
+      ALTER TABLE users ADD COLUMN salt TEXT;
+    `);
+  } catch (e) {
+    // Ignore if already added
+  }
+}
 
 // Seed words from JSON
 const vocabData = JSON.parse(
@@ -73,11 +86,5 @@ const seedWords = db.transaction(() => {
 });
 
 seedWords();
-
-// Create a default user if none exists
-const defaultUser = db.prepare('SELECT id FROM users WHERE username = ?').get('default');
-if (!defaultUser) {
-  db.prepare('INSERT INTO users (username) VALUES (?)').run('default');
-}
 
 module.exports = db;

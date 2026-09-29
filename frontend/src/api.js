@@ -1,8 +1,31 @@
 const API_BASE = '/api';
 
-export async function fetchUser(username = 'default') {
-  const res = await fetch(`${API_BASE}/user?username=${username}`);
+export async function fetchCaptcha() {
+  const res = await fetch(`${API_BASE}/auth/captcha`);
+  if (!res.ok) throw new Error('Failed to generate captcha');
   return res.json();
+}
+
+export async function loginUser(username, password, captchaId, captchaAnswer) {
+  const res = await fetch(`${API_BASE}/auth/login`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ username, password, captchaId, captchaAnswer }),
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || 'Failed to login');
+  return data;
+}
+
+export async function registerUser(username, password, captchaId, captchaAnswer) {
+  const res = await fetch(`${API_BASE}/auth/register`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ username, password, captchaId, captchaAnswer }),
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || 'Failed to register');
+  return data;
 }
 
 export async function fetchStats(userId) {

@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
+import { useAuth } from '../context/AuthContext';
 
 const menu = [
   {
@@ -48,8 +49,9 @@ const menu = [
   },
 ];
 
-export default function Sidebar() {
+export default function Sidebar({ onOpenAuth }) {
   const { theme, toggleTheme } = useTheme();
+  const { currentUser, logout } = useAuth();
 
   return (
     <aside className="app-sidebar">
@@ -90,7 +92,7 @@ export default function Sidebar() {
           {theme === 'dark' ? (
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <circle cx="12" cy="12" r="5"></circle>
-              <line x1="12" y1="1" x2="12" y2="3"></line>
+              <line x1="12" y1="12" x2="12" y2="3"></line>
               <line x1="12" y1="21" x2="12" y2="23"></line>
               <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
               <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
@@ -107,14 +109,45 @@ export default function Sidebar() {
           <span style={{ fontSize: '13px' }}>{theme === 'dark' ? 'Light Mode' : 'Dark Mode'}</span>
         </button>
 
-        {/* User Card: explicitly says Student, not Student Alan */}
-        <div className="user-card">
-          <div className="user-avatar">S</div>
-          <div>
-            <div className="user-name">Student</div>
-            <div className="user-role">Target Score: 1550+</div>
+        {/* User Account Section */}
+        {currentUser ? (
+          <div className="user-card" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <div className="user-avatar">
+                {currentUser.username.charAt(0).toUpperCase()}
+              </div>
+              <div style={{ maxWidth: '100px', overflow: 'hidden' }}>
+                <div className="user-name" style={{ textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                  {currentUser.username}
+                </div>
+                <div className="user-role">Student</div>
+              </div>
+            </div>
+
+            <button
+              onClick={logout}
+              title="Log out"
+              style={{
+                background: 'none',
+                border: 'none',
+                color: 'var(--text-muted)',
+                cursor: 'pointer',
+                fontSize: '11px',
+                fontWeight: '600',
+              }}
+            >
+              Sign out
+            </button>
           </div>
-        </div>
+        ) : (
+          <button
+            onClick={onOpenAuth}
+            className="btn-primary"
+            style={{ width: '100%', fontSize: '12px', padding: '8px 12px' }}
+          >
+            Log In / Sign Up
+          </button>
+        )}
       </div>
     </aside>
   );

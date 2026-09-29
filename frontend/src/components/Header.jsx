@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
+import { useAuth } from '../context/AuthContext';
 
-export default function Header() {
+export default function Header({ onOpenAuth }) {
   const [query, setQuery] = useState('');
   const navigate = useNavigate();
   const { theme, toggleTheme } = useTheme();
+  const { currentUser, logout } = useAuth();
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -18,8 +20,14 @@ export default function Header() {
     <header className="app-header">
       {/* Greeting */}
       <div>
-        <h1 className="header-greeting-title">Welcome back, Student</h1>
-        <p className="header-greeting-sub">Track your progress and practice SAT high-yield vocabulary.</p>
+        <h1 className="header-greeting-title">
+          {currentUser ? `Welcome back, ${currentUser.username}` : 'Welcome, Guest Student'}
+        </h1>
+        <p className="header-greeting-sub">
+          {currentUser
+            ? 'Your study progress and test records are persistently synced.'
+            : 'Log in to securely track your personal flashcard & quiz stats.'}
+        </p>
       </div>
 
       {/* Search Input */}
@@ -36,7 +44,7 @@ export default function Header() {
         />
       </form>
 
-      {/* Quick Action & Theme Button */}
+      {/* Right Actions */}
       <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
         <button
           onClick={toggleTheme}
@@ -61,6 +69,16 @@ export default function Header() {
             </svg>
           )}
         </button>
+
+        {!currentUser ? (
+          <button onClick={onOpenAuth} className="btn-secondary" style={{ fontSize: '13px' }}>
+            Log In
+          </button>
+        ) : (
+          <button onClick={logout} className="btn-secondary" style={{ fontSize: '12px' }}>
+            Logout
+          </button>
+        )}
 
         <button onClick={() => navigate('/quiz')} className="btn-primary">
           Quick Quiz
