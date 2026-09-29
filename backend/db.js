@@ -1,150 +1,210 @@
-const Database = require('better-sqlite3');
+require('dotenv').config();
+const { createClient } = require('@libsql/client');
 const path = require('path');
 const fs = require('fs');
 const crypto = require('crypto');
 
-const DB_PATH = path.join(__dirname, 'data', 'sat_vocab.db');
+// Determine database target: Turso Cloud or local SQLite file
+const isTurso = Boolean(process.env.TURSO_DATABASE_URL);
+const localDbPath = path.join(__dirname, 'data', 'sat_vocab.db');
 
-// Ensure data directory exists
-if (!fs.existsSync(path.join(__dirname, 'data'))) {
+if (!isTurso && !fs.existsSync(path.join(__dirname, 'data'))) {
   fs.mkdirSync(path.join(__dirname, 'data'), { recursive: true });
 }
 
-const db = new Database(DB_PATH);
+const client = createClient({
+  url: process.env.TURSO_DATABASE_URL || `file:${localDbPath}`,
+  authToken: process.env.TURSO_AUTH_TOKEN,
+});
 
-// Enable WAL mode for better performance
-db.pragma('journal_mode = WAL');
-db.pragma('foreign_keys = ON');
-
-// Create tables
-db.exec(`
-  CREATE TABLE IF NOT EXISTS users (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    username TEXT UNIQUE NOT NULL,
-    password_hash TEXT,
-    salt TEXT,
-    role TEXT DEFAULT 'student',
-    daily_goal INTEGER DEFAULT 5,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-  );
-
-  CREATE TABLE IF NOT EXISTS word_progress (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    user_id INTEGER NOT NULL,
-    word_term TEXT NOT NULL,
-    is_mastered INTEGER DEFAULT 0,
-    last_reviewed_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
-    UNIQUE(user_id, word_term)
-  );
-
-  CREATE TABLE IF NOT EXISTS quiz_results (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    user_id INTEGER NOT NULL,
-    score INTEGER NOT NULL,
-    total_questions INTEGER NOT NULL,
-    completed_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
-  );
-
-  CREATE TABLE IF NOT EXISTS words (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    term TEXT NOT NULL,
-    definition TEXT NOT NULL,
-    example TEXT NOT NULL,
-    category TEXT NOT NULL,
-    UNIQUE(term)
-  );
-
-  CREATE TABLE IF NOT EXISTS pending_words (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    term TEXT NOT NULL,
-    definition TEXT NOT NULL,
-    example TEXT NOT NULL,
-    submitted_by TEXT DEFAULT 'student',
-    submitted_at DATETIME DEFAULT CURRENT_TIMESTAMP
-  );
-
-  CREATE TABLE IF NOT EXISTS daily_batches (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    user_id INTEGER NOT NULL,
-    date_str TEXT NOT NULL,
-    word_term TEXT NOT NULL,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
-    UNIQUE(user_id, date_str, word_term)
-  );
-`);
-
-// Migration safeguards for users table columns
-const userCols = db.prepare('PRAGMA table_info(users)').all();
-if (!userCols.some((col) => col.name === 'password_hash')) {
-  try {
-    db.exec(`
-      ALTER TABLE users ADD COLUMN password_hash TEXT;
-      ALTER TABLE users ADD COLUMN salt TEXT;
-    `);
-  } catch (e) {}
-}
-if (!userCols.some((col) => col.name === 'role')) {
-  try {
-    db.exec(`ALTER TABLE users ADD COLUMN role TEXT DEFAULT 'student'`);
-  } catch (e) {}
-}
-if (!userCols.some((col) => col.name === 'daily_goal')) {
-  try {
-    db.exec(`ALTER TABLE users ADD COLUMN daily_goal INTEGER DEFAULT 5`);
-  } catch (e) {}
-}
-
-// Seed admin user: adminsatvocab67 / Sulav@Vocab
 function hashPassword(password, salt) {
   return crypto.pbkdf2Sync(password, salt, 10000, 64, 'sha512').toString('hex');
 }
 
-const adminUsername = 'adminsatvocab67';
-const adminPlainPassword = 'Sulav@Vocab';
-const existingAdmin = db.prepare('SELECT id FROM users WHERE username = ?').get(adminUsername);
+const db = {
+  client,
+  isTurso,
+  hashPassword,
 
-if (!existingAdmin) {
-  const salt = crypto.randomBytes(16).toString('hex');
-  const password_hash = hashPassword(adminPlainPassword, salt);
-  db.prepare(`
-    INSERT INTO users (username, password_hash, salt, role, daily_goal)
-    VALUES (?, ?, ?, 'admin', 10)
-  `).run(adminUsername, password_hash, salt);
-} else {
-  db.prepare(`UPDATE users SET role = 'admin' WHERE username = ?`).run(adminUsername);
-}
+  // Get multiple rows
+  async all(sql, params = []) {
+    const res = await client.execute({ sql, args: params });
+    return res.rows;
+  },
 
-// Ensure a default guest user exists at id = 1 for unregistered visitors
-const userOne = db.prepare('SELECT id FROM users WHERE id = 1').get();
-if (!userOne) {
-  try {
-    db.prepare(`
-      INSERT OR IGNORE INTO users (id, username, password_hash, salt, role, daily_goal)
-      VALUES (1, 'guest_student', 'guest_pwd', 'guest_salt', 'student', 5)
-    `).run();
-  } catch (e) {}
-}
+  // Get single row
+  async get(sql, params = []) {
+    const res = await client.execute({ sql, args: params });
+    return res.rows[0] || null;
+  },
 
-// Seed vocabulary from JSON
-const vocabData = JSON.parse(
-  fs.readFileSync(path.join(__dirname, 'data', 'vocabulary.json'), 'utf-8')
-);
+  // Run an INSERT, UPDATE, DELETE
+  async run(sql, params = []) {
+    const res = await client.execute({ sql, args: params });
+    return {
+      lastInsertRowid: res.lastInsertRowid !== undefined ? Number(res.lastInsertRowid) : undefined,
+      changes: res.rowsAffected,
+    };
+  },
 
-const insertWord = db.prepare(`
-  INSERT OR IGNORE INTO words (term, definition, example, category) VALUES (?, ?, ?, ?)
-`);
+  // Execute multiple DDL statements separated by semicolon
+  async exec(sql) {
+    return client.executeMultiple(sql);
+  },
 
-const seedWords = db.transaction(() => {
-  for (const cat of vocabData.vocabulary_categories) {
-    for (const word of cat.words) {
-      insertWord.run(word.term, word.definition, word.example, cat.category_name);
+  // Batch execute statements
+  async batch(statements) {
+    return client.batch(statements);
+  },
+
+  // Initialize schema, migrations, admin user, and seed words
+  async init() {
+    console.log(`Connecting to database (${isTurso ? 'Turso Cloud SQLite' : 'Local SQLite'})...`);
+
+    // Create tables
+    await client.executeMultiple(`
+      CREATE TABLE IF NOT EXISTS users (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        username TEXT UNIQUE NOT NULL,
+        password_hash TEXT,
+        salt TEXT,
+        role TEXT DEFAULT 'student',
+        daily_goal INTEGER DEFAULT 5,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+      );
+
+      CREATE TABLE IF NOT EXISTS word_progress (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        user_id INTEGER NOT NULL,
+        word_term TEXT NOT NULL,
+        is_mastered INTEGER DEFAULT 0,
+        last_reviewed_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+        UNIQUE(user_id, word_term)
+      );
+
+      CREATE TABLE IF NOT EXISTS quiz_results (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        user_id INTEGER NOT NULL,
+        score INTEGER NOT NULL,
+        total_questions INTEGER NOT NULL,
+        completed_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+      );
+
+      CREATE TABLE IF NOT EXISTS words (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        term TEXT NOT NULL UNIQUE,
+        definition TEXT NOT NULL,
+        example TEXT NOT NULL,
+        category TEXT NOT NULL
+      );
+
+      CREATE TABLE IF NOT EXISTS pending_words (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        term TEXT NOT NULL,
+        definition TEXT NOT NULL,
+        example TEXT NOT NULL,
+        submitted_by TEXT DEFAULT 'student',
+        submitted_at DATETIME DEFAULT CURRENT_TIMESTAMP
+      );
+
+      CREATE TABLE IF NOT EXISTS daily_batches (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        user_id INTEGER NOT NULL,
+        date_str TEXT NOT NULL,
+        word_term TEXT NOT NULL,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+        UNIQUE(user_id, date_str, word_term)
+      );
+    `);
+
+    // Migration safeguards for users table columns
+    try {
+      const userCols = (await client.execute('PRAGMA table_info(users)')).rows;
+      if (!userCols.some((col) => col.name === 'password_hash')) {
+        await client.execute('ALTER TABLE users ADD COLUMN password_hash TEXT');
+        await client.execute('ALTER TABLE users ADD COLUMN salt TEXT');
+      }
+      if (!userCols.some((col) => col.name === 'role')) {
+        await client.execute("ALTER TABLE users ADD COLUMN role TEXT DEFAULT 'student'");
+      }
+      if (!userCols.some((col) => col.name === 'daily_goal')) {
+        await client.execute('ALTER TABLE users ADD COLUMN daily_goal INTEGER DEFAULT 5');
+      }
+    } catch (e) {
+      // Ignored if column already exists or table freshly created
     }
-  }
-});
 
-seedWords();
+    // Seed admin user: adminsatvocab67 / Sulav@Vocab
+    const adminUsername = 'adminsatvocab67';
+    const adminPlainPassword = 'Sulav@Vocab';
+    const existingAdmin = (await client.execute({
+      sql: 'SELECT id FROM users WHERE username = ?',
+      args: [adminUsername],
+    })).rows[0];
+
+    if (!existingAdmin) {
+      const salt = crypto.randomBytes(16).toString('hex');
+      const password_hash = hashPassword(adminPlainPassword, salt);
+      await client.execute({
+        sql: `INSERT INTO users (username, password_hash, salt, role, daily_goal) VALUES (?, ?, ?, 'admin', 10)`,
+        args: [adminUsername, password_hash, salt],
+      });
+      console.log('Admin account created: adminsatvocab67');
+    } else {
+      await client.execute({
+        sql: `UPDATE users SET role = 'admin' WHERE username = ?`,
+        args: [adminUsername],
+      });
+    }
+
+    // Ensure a default guest user exists at id = 1 for unregistered visitors
+    const userOne = (await client.execute({
+      sql: 'SELECT id FROM users WHERE id = 1',
+      args: [],
+    })).rows[0];
+
+    if (!userOne) {
+      try {
+        await client.execute({
+          sql: `INSERT OR IGNORE INTO users (id, username, password_hash, salt, role, daily_goal) VALUES (1, 'guest_student', 'guest_pwd', 'guest_salt', 'student', 5)`,
+          args: [],
+        });
+      } catch (e) {}
+    }
+
+    // Seed vocabulary from JSON if empty
+    const wordsCountRes = (await client.execute('SELECT COUNT(*) as count FROM words')).rows[0];
+    const wordsCount = wordsCountRes ? Number(wordsCountRes.count) : 0;
+
+    if (wordsCount === 0) {
+      console.log('Seeding initial SAT vocabulary words from JSON...');
+      const vocabPath = path.join(__dirname, 'data', 'vocabulary.json');
+      if (fs.existsSync(vocabPath)) {
+        const vocabData = JSON.parse(fs.readFileSync(vocabPath, 'utf-8'));
+        const batchStatements = [];
+        for (const cat of vocabData.vocabulary_categories) {
+          for (const word of cat.words) {
+            batchStatements.push({
+              sql: `INSERT OR IGNORE INTO words (term, definition, example, category) VALUES (?, ?, ?, ?)`,
+              args: [word.term, word.definition, word.example, cat.category_name],
+            });
+          }
+        }
+        if (batchStatements.length > 0) {
+          // Batch in chunks of 50 to avoid any limits
+          for (let i = 0; i < batchStatements.length; i += 50) {
+            await client.batch(batchStatements.slice(i, i + 50));
+          }
+          console.log(`Seeded ${batchStatements.length} vocabulary words!`);
+        }
+      }
+    }
+
+    console.log('Database initialized successfully.');
+  },
+};
 
 module.exports = db;

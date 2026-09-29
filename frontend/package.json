@@ -12,7 +12,8 @@
   "dependencies": {
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
-    "react-router-dom": "^6.30.6"
+    "react-router-dom": "^6.30.6",
+    "sat-vocab-monorepo": "file:.."
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.3.3",

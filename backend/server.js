@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const crypto = require('crypto');
@@ -29,6 +30,15 @@ function hashPassword(password, salt) {
   return crypto.pbkdf2Sync(password, salt, 10000, 64, 'sha512').toString('hex');
 }
 
+// ─── HEALTH CHECK ─────────────────────────────────────────────────────────────
+app.get('/api/health', (req, res) => {
+  res.json({
+    status: 'ok',
+    database: db.isTurso ? 'turso_cloud' : 'local_sqlite',
+    timestamp: new Date().toISOString(),
+  });
+});
+
 // ─── CAPTCHA ENDPOINTS ────────────────────────────────────────────────────────
 
 // GET /api/auth/captcha — Generate a new self-contained Captcha puzzle
@@ -58,266 +68,275 @@ app.get('/api/auth/captcha', (req, res) => {
   res.json({
     captchaId,
     question,
+    expiresInSeconds: 300,
   });
 });
 
 // ─── AUTH ENDPOINTS ───────────────────────────────────────────────────────────
 
 // POST /api/auth/register
-app.post('/api/auth/register', (req, res) => {
-  const { username, password, captchaId, captchaAnswer } = req.body;
+app.post('/api/auth/register', async (req, res) => {
+  try {
+    const { username, password, captchaId, captchaAnswer } = req.body;
 
-  if (!username || !password) {
-    return res.status(400).json({ error: 'Username and password are required' });
-  }
+    if (!username || !password) {
+      return res.status(400).json({ error: 'Username and password are required' });
+    }
 
-  if (username.length < 3) {
-    return res.status(400).json({ error: 'Username must be at least 3 characters' });
-  }
+    if (username.trim().length < 3) {
+      return res.status(400).json({ error: 'Username must be at least 3 characters long' });
+    }
 
-  if (password.length < 6) {
-    return res.status(400).json({ error: 'Password must be at least 6 characters' });
-  }
+    if (password.length < 6) {
+      return res.status(400).json({ error: 'Password must be at least 6 characters long' });
+    }
 
-  // Validate Captcha
-  const captcha = captchaStore.get(captchaId);
-  if (!captcha || captcha.expiresAt < Date.now()) {
+    // Validate Captcha
+    const captcha = captchaStore.get(captchaId);
+    if (!captcha || captcha.expiresAt < Date.now()) {
+      captchaStore.delete(captchaId);
+      return res.status(400).json({ error: 'Captcha expired or invalid. Please refresh captcha.' });
+    }
+
+    if (captcha.answer.trim().toLowerCase() !== String(captchaAnswer || '').trim().toLowerCase()) {
+      captchaStore.delete(captchaId);
+      return res.status(400).json({ error: 'Incorrect captcha answer. Please try again.' });
+    }
     captchaStore.delete(captchaId);
-    return res.status(400).json({ error: 'Captcha expired or invalid. Please refresh captcha.' });
+
+    // Check if username exists
+    const existing = await db.get('SELECT id FROM users WHERE username = ?', [username.trim().toLowerCase()]);
+    if (existing) {
+      return res.status(409).json({ error: 'Username is already taken' });
+    }
+
+    const salt = crypto.randomBytes(16).toString('hex');
+    const password_hash = hashPassword(password, salt);
+
+    const info = await db.run(
+      'INSERT INTO users (username, password_hash, salt, role, daily_goal) VALUES (?, ?, ?, ?, ?)',
+      [username.trim().toLowerCase(), password_hash, salt, 'student', 5]
+    );
+
+    const user = await db.get('SELECT id, username, role, daily_goal, created_at FROM users WHERE id = ?', [info.lastInsertRowid]);
+    res.status(201).json(user);
+  } catch (err) {
+    console.error('Register error:', err);
+    res.status(500).json({ error: 'Failed to register user' });
   }
-
-  if (captcha.answer.trim().toLowerCase() !== String(captchaAnswer || '').trim().toLowerCase()) {
-    captchaStore.delete(captchaId);
-    return res.status(400).json({ error: 'Incorrect captcha answer. Please try again.' });
-  }
-  captchaStore.delete(captchaId);
-
-  // Check if username exists
-  const existing = db.prepare('SELECT id FROM users WHERE username = ?').get(username.trim().toLowerCase());
-  if (existing) {
-    return res.status(409).json({ error: 'Username is already taken' });
-  }
-
-  const salt = crypto.randomBytes(16).toString('hex');
-  const password_hash = hashPassword(password, salt);
-
-  const info = db.prepare(
-    'INSERT INTO users (username, password_hash, salt, role, daily_goal) VALUES (?, ?, ?, ?, ?)'
-  ).run(username.trim().toLowerCase(), password_hash, salt, 'student', 5);
-
-  const user = db.prepare('SELECT id, username, role, daily_goal, created_at FROM users WHERE id = ?').get(info.lastInsertRowid);
-  res.status(201).json(user);
 });
 
 // POST /api/auth/login
-app.post('/api/auth/login', (req, res) => {
-  const { username, password, captchaId, captchaAnswer } = req.body;
+app.post('/api/auth/login', async (req, res) => {
+  try {
+    const { username, password, captchaId, captchaAnswer } = req.body;
 
-  if (!username || !password) {
-    return res.status(400).json({ error: 'Username and password are required' });
-  }
+    if (!username || !password) {
+      return res.status(400).json({ error: 'Username and password are required' });
+    }
 
-  // Validate Captcha
-  const captcha = captchaStore.get(captchaId);
-  if (!captcha || captcha.expiresAt < Date.now()) {
+    // Validate Captcha
+    const captcha = captchaStore.get(captchaId);
+    if (!captcha || captcha.expiresAt < Date.now()) {
+      captchaStore.delete(captchaId);
+      return res.status(400).json({ error: 'Captcha expired or invalid. Please refresh captcha.' });
+    }
+
+    if (captcha.answer.trim().toLowerCase() !== String(captchaAnswer || '').trim().toLowerCase()) {
+      captchaStore.delete(captchaId);
+      return res.status(400).json({ error: 'Incorrect captcha answer. Please try again.' });
+    }
     captchaStore.delete(captchaId);
-    return res.status(400).json({ error: 'Captcha expired or invalid. Please refresh captcha.' });
-  }
 
-  if (captcha.answer.trim().toLowerCase() !== String(captchaAnswer || '').trim().toLowerCase()) {
-    captchaStore.delete(captchaId);
-    return res.status(400).json({ error: 'Incorrect captcha answer. Please try again.' });
-  }
-  captchaStore.delete(captchaId);
+    const user = await db.get('SELECT * FROM users WHERE username = ?', [username.trim().toLowerCase()]);
+    if (!user || !user.password_hash) {
+      return res.status(401).json({ error: 'Invalid username or password' });
+    }
 
-  const user = db.prepare('SELECT * FROM users WHERE username = ?').get(username.trim().toLowerCase());
-  if (!user || !user.password_hash) {
-    return res.status(401).json({ error: 'Invalid username or password' });
-  }
+    const computedHash = hashPassword(password, user.salt);
+    if (computedHash !== user.password_hash) {
+      return res.status(401).json({ error: 'Invalid username or password' });
+    }
 
-  const computedHash = hashPassword(password, user.salt);
-  if (computedHash !== user.password_hash) {
-    return res.status(401).json({ error: 'Invalid username or password' });
+    res.json({
+      id: user.id,
+      username: user.username,
+      role: user.role || 'student',
+      daily_goal: user.daily_goal || 5,
+      created_at: user.created_at,
+    });
+  } catch (err) {
+    console.error('Login error:', err);
+    res.status(500).json({ error: 'Failed to log in' });
   }
-
-  res.json({
-    id: user.id,
-    username: user.username,
-    role: user.role || 'student',
-    daily_goal: user.daily_goal || 5,
-    created_at: user.created_at,
-  });
 });
 
 // ─── DAILY GOAL & DAILY FLASHCARDS ENDPOINTS ──────────────────────────────────
 
-// GET /api/goal/:userId — get current daily goal and today's dedicated random batch (min 5, unmastered, no duplicates)
-app.get('/api/goal/:userId', (req, res) => {
-  const userId = req.params.userId;
-  const user = db.prepare('SELECT id, username, daily_goal FROM users WHERE id = ?').get(userId);
-  // Enforce minimum 5 words daily goal
-  const goal = Math.max(5, user?.daily_goal || 5);
+// GET /api/goal/:userId — get current daily goal and today's dedicated random batch
+app.get('/api/goal/:userId', async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const user = await db.get('SELECT id, username, daily_goal FROM users WHERE id = ?', [userId]);
+    // Enforce minimum 5 words daily goal
+    const goal = Math.max(5, user?.daily_goal || 5);
 
-  const todayDate = new Date().toISOString().split('T')[0];
+    const todayDate = new Date().toISOString().split('T')[0];
 
-  // Words already mastered by this user (is_mastered = 1)
-  const masteredRows = db.prepare(
-    'SELECT word_term FROM word_progress WHERE user_id = ? AND is_mastered = 1'
-  ).all(userId);
-  const masteredSet = new Set(masteredRows.map((r) => r.word_term.toLowerCase()));
+    // Words already mastered by this user (is_mastered = 1)
+    const masteredRows = await db.all(
+      'SELECT word_term FROM word_progress WHERE user_id = ? AND is_mastered = 1',
+      [userId]
+    );
+    const masteredSet = new Set(masteredRows.map((r) => r.word_term.toLowerCase()));
 
-  // Check existing daily batch for today
-  let batchRows = db.prepare(`
-    SELECT b.id as batch_id, w.id, w.term, w.definition, w.example, w.category
-    FROM daily_batches b
-    JOIN words w ON LOWER(b.word_term) = LOWER(w.term)
-    WHERE b.user_id = ? AND b.date_str = ?
-    ORDER BY b.id ASC
-  `).all(userId, todayDate);
-
-  // If today's batch is less than current target goal, select random unmastered words without duplicates
-  if (batchRows.length < goal) {
-    const needed = goal - batchRows.length;
-    const existingTermsInBatch = new Set(batchRows.map((b) => b.term.toLowerCase()));
-
-    // Get candidate words that are:
-    // 1. NOT mastered by this user
-    // 2. NOT already in today's batch
-    const candidateQuery = `
-      SELECT * FROM words 
-      WHERE LOWER(term) NOT IN (
-        SELECT LOWER(word_term) FROM word_progress WHERE user_id = ? AND is_mastered = 1
-      )
-      AND LOWER(term) NOT IN (
-        SELECT LOWER(word_term) FROM daily_batches WHERE user_id = ? AND date_str = ?
-      )
-      ORDER BY RANDOM()
-      LIMIT ?
-    `;
-    let candidateWords = db.prepare(candidateQuery).all(userId, userId, todayDate, needed);
-
-    // If candidate unmastered words are exhausted, backfill from remaining words not in today's batch
-    if (candidateWords.length < needed) {
-      const stillNeeded = needed - candidateWords.length;
-      const allExisting = new Set([
-        ...Array.from(existingTermsInBatch),
-        ...candidateWords.map((c) => c.term.toLowerCase()),
-      ]);
-
-      const backfillQuery = `
-        SELECT * FROM words
-        WHERE LOWER(term) NOT IN (
-          SELECT LOWER(word_term) FROM daily_batches WHERE user_id = ? AND date_str = ?
-        )
-        ORDER BY RANDOM()
-        LIMIT ?
-      `;
-      const backfillWords = db.prepare(backfillQuery).all(userId, todayDate, stillNeeded);
-      for (const bw of backfillWords) {
-        if (!allExisting.has(bw.term.toLowerCase())) {
-          candidateWords.push(bw);
-          allExisting.add(bw.term.toLowerCase());
-        }
-      }
-    }
-
-    // Insert selected words into daily_batches
-    const insertBatchStmt = db.prepare(`
-      INSERT OR IGNORE INTO daily_batches (user_id, date_str, word_term)
-      VALUES (?, ?, ?)
-    `);
-
-    const insertMany = db.transaction((wordsToInsert) => {
-      for (const w of wordsToInsert) {
-        insertBatchStmt.run(userId, todayDate, w.term);
-      }
-    });
-    insertMany(candidateWords);
-
-    // Re-fetch full batch for today
-    batchRows = db.prepare(`
+    // Check existing daily batch for today
+    let batchRows = await db.all(`
       SELECT b.id as batch_id, w.id, w.term, w.definition, w.example, w.category
       FROM daily_batches b
       JOIN words w ON LOWER(b.word_term) = LOWER(w.term)
       WHERE b.user_id = ? AND b.date_str = ?
       ORDER BY b.id ASC
-    `).all(userId, todayDate);
+    `, [userId, todayDate]);
+
+    // If today's batch is less than current target goal, select random unmastered words without duplicates
+    if (batchRows.length < goal) {
+      const needed = goal - batchRows.length;
+      const existingTermsInBatch = new Set(batchRows.map((b) => b.term.toLowerCase()));
+
+      const candidateQuery = `
+        SELECT * FROM words 
+        WHERE LOWER(term) NOT IN (
+          SELECT LOWER(word_term) FROM word_progress WHERE user_id = ? AND is_mastered = 1
+        )
+        AND LOWER(term) NOT IN (
+          SELECT LOWER(word_term) FROM daily_batches WHERE user_id = ? AND date_str = ?
+        )
+        ORDER BY RANDOM()
+        LIMIT ?
+      `;
+      let candidateWords = await db.all(candidateQuery, [userId, userId, todayDate, needed]);
+
+      // If candidate unmastered words are exhausted, backfill from remaining words not in today's batch
+      if (candidateWords.length < needed) {
+        const stillNeeded = needed - candidateWords.length;
+        const allExisting = new Set([
+          ...Array.from(existingTermsInBatch),
+          ...candidateWords.map((c) => c.term.toLowerCase()),
+        ]);
+
+        const backfillQuery = `
+          SELECT * FROM words
+          WHERE LOWER(term) NOT IN (
+            SELECT LOWER(word_term) FROM daily_batches WHERE user_id = ? AND date_str = ?
+          )
+          ORDER BY RANDOM()
+          LIMIT ?
+        `;
+        const backfillWords = await db.all(backfillQuery, [userId, todayDate, stillNeeded]);
+        for (const bw of backfillWords) {
+          if (!allExisting.has(bw.term.toLowerCase())) {
+            candidateWords.push(bw);
+            allExisting.add(bw.term.toLowerCase());
+          }
+        }
+      }
+
+      // Insert selected words into daily_batches
+      const insertStmts = candidateWords.map((w) => ({
+        sql: `INSERT OR IGNORE INTO daily_batches (user_id, date_str, word_term) VALUES (?, ?, ?)`,
+        args: [userId, todayDate, w.term],
+      }));
+      if (insertStmts.length > 0) {
+        await db.batch(insertStmts);
+      }
+
+      // Re-fetch full batch for today
+      batchRows = await db.all(`
+        SELECT b.id as batch_id, w.id, w.term, w.definition, w.example, w.category
+        FROM daily_batches b
+        JOIN words w ON LOWER(b.word_term) = LOWER(w.term)
+        WHERE b.user_id = ? AND b.date_str = ?
+        ORDER BY b.id ASC
+      `, [userId, todayDate]);
+    }
+
+    // Slice to current goal if batch had more from previous setting
+    const activeBatch = batchRows.slice(0, goal).map((word) => ({
+      ...word,
+      is_mastered: masteredSet.has(word.term.toLowerCase()),
+    }));
+
+    // Words reviewed today
+    const reviewedTodayRows = await db.all(`
+      SELECT word_term FROM word_progress 
+      WHERE user_id = ? AND date(last_reviewed_at) = date('now')
+    `, [userId]);
+    const reviewedTodayCount = reviewedTodayRows.length;
+
+    // Quizzes completed today
+    const quizzesTodayRes = await db.get(`
+      SELECT COUNT(*) as count FROM quiz_results 
+      WHERE user_id = ? AND date(completed_at) = date('now')
+    `, [userId]);
+    const quizzesToday = quizzesTodayRes ? Number(quizzesTodayRes.count) : 0;
+
+    // Count how many of today's batch are already mastered
+    const batchMasteredCount = activeBatch.filter((w) => w.is_mastered).length;
+
+    // Total words in syllabus vs total mastered
+    const totalWordsRes = await db.get('SELECT COUNT(*) as count FROM words');
+    const totalWords = totalWordsRes ? Number(totalWordsRes.count) : 0;
+    const totalMastered = masteredSet.size;
+
+    res.json({
+      daily_goal: goal,
+      today_date: todayDate,
+      daily_batch: activeBatch,
+      reviewed_today: reviewedTodayCount,
+      quizzes_today: quizzesToday,
+      batch_mastered: batchMasteredCount,
+      total_words: totalWords,
+      total_mastered: totalMastered,
+      is_goal_met: batchMasteredCount >= goal || (reviewedTodayCount >= goal && quizzesToday >= 1),
+    });
+  } catch (err) {
+    console.error('GET /api/goal error:', err);
+    res.status(500).json({ error: 'Failed to fetch daily goal' });
   }
-
-  // Slice to current goal if batch had more from previous setting
-  const activeBatch = batchRows.slice(0, goal).map((word) => ({
-    ...word,
-    is_mastered: masteredSet.has(word.term.toLowerCase()),
-  }));
-
-  // Words reviewed today
-  const reviewedTodayRows = db.prepare(`
-    SELECT word_term FROM word_progress 
-    WHERE user_id = ? AND date(last_reviewed_at) = date('now')
-  `).all(userId);
-  const reviewedTodayCount = reviewedTodayRows.length;
-
-  // Quizzes completed today
-  const quizzesToday = db.prepare(`
-    SELECT COUNT(*) as count FROM quiz_results 
-    WHERE user_id = ? AND date(completed_at) = date('now')
-  `).get(userId).count;
-
-  // Count how many of today's batch are already mastered
-  const batchMasteredCount = activeBatch.filter((w) => w.is_mastered).length;
-
-  // Total words in syllabus vs total mastered
-  const totalWords = db.prepare('SELECT COUNT(*) as count FROM words').get().count;
-  const totalMastered = masteredSet.size;
-
-  res.json({
-    daily_goal: goal,
-    today_date: todayDate,
-    daily_batch: activeBatch,
-    reviewed_today: reviewedTodayCount,
-    quizzes_today: quizzesToday,
-    batch_mastered: batchMasteredCount,
-    total_words: totalWords,
-    total_mastered: totalMastered,
-    is_goal_met: batchMasteredCount >= goal || (reviewedTodayCount >= goal && quizzesToday >= 1),
-  });
 });
 
 // PUT /api/goal/:userId — set a new daily target goal (minimum 5)
-app.put('/api/goal/:userId', (req, res) => {
-  const userId = req.params.userId;
-  const { daily_goal } = req.body;
+app.put('/api/goal/:userId', async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const { daily_goal } = req.body;
 
-  // Strictly enforce minimum 5 words daily goal
-  const validGoal = Math.max(5, Math.min(50, parseInt(daily_goal, 10) || 5));
-  db.prepare('UPDATE users SET daily_goal = ? WHERE id = ?').run(validGoal, userId);
+    // Strictly enforce minimum 5 words daily goal
+    const validGoal = Math.max(5, Math.min(50, parseInt(daily_goal, 10) || 5));
+    await db.run('UPDATE users SET daily_goal = ? WHERE id = ?', [validGoal, userId]);
 
-  res.json({
-    message: `Daily goal set to ${validGoal} words/day (minimum 5 words enforced).`,
-    daily_goal: validGoal,
-  });
+    res.json({
+      message: `Daily goal set to ${validGoal} words/day (minimum 5 words enforced).`,
+      daily_goal: validGoal,
+    });
+  } catch (err) {
+    console.error('PUT /api/goal error:', err);
+    res.status(500).json({ error: 'Failed to update daily goal' });
+  }
 });
 
 // POST /api/goal/submit-quiz/:userId — Submit daily quiz results for today's words
-// Correct answers become MASTERED (is_mastered = 1) and will not come on another day.
-// Wrong answers remain UNMASTERED (is_mastered = 0) and can appear on subsequent days.
-app.post('/api/goal/submit-quiz/:userId', (req, res) => {
-  const userId = req.params.userId;
-  const { results } = req.body; // Array of { term: string, is_correct: boolean }
+app.post('/api/goal/submit-quiz/:userId', async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const { results } = req.body; // Array of { term: string, is_correct: boolean }
 
-  if (!Array.isArray(results) || results.length === 0) {
-    return res.status(400).json({ error: 'Quiz results array is required.' });
-  }
+    if (!Array.isArray(results) || results.length === 0) {
+      return res.status(400).json({ error: 'Quiz results array is required.' });
+    }
 
-  const updateProgressStmt = db.prepare(`
-    INSERT INTO word_progress (user_id, word_term, is_mastered, last_reviewed_at)
-    VALUES (?, ?, ?, CURRENT_TIMESTAMP)
-    ON CONFLICT(user_id, word_term) DO UPDATE SET
-      is_mastered = excluded.is_mastered,
-      last_reviewed_at = CURRENT_TIMESTAMP
-  `);
-
-  const saveResultsTx = db.transaction(() => {
+    const batchStatements = [];
     let correctCount = 0;
     const masteredTerms = [];
     const reviewTerms = [];
@@ -329,254 +348,327 @@ app.post('/api/goal/submit-quiz/:userId', (req, res) => {
       if (isCorrect) {
         correctCount++;
         masteredTerms.push(item.term);
-        // Correct answer: mark mastered (1) -> will NOT come another day
-        updateProgressStmt.run(userId, item.term, 1);
+        batchStatements.push({
+          sql: `
+            INSERT INTO word_progress (user_id, word_term, is_mastered, last_reviewed_at)
+            VALUES (?, ?, 1, CURRENT_TIMESTAMP)
+            ON CONFLICT(user_id, word_term) DO UPDATE SET
+              is_mastered = 1,
+              last_reviewed_at = CURRENT_TIMESTAMP
+          `,
+          args: [userId, item.term],
+        });
       } else {
         reviewTerms.push(item.term);
-        // Incorrect answer: mark unmastered (0) -> will be eligible to come next day
-        updateProgressStmt.run(userId, item.term, 0);
+        batchStatements.push({
+          sql: `
+            INSERT INTO word_progress (user_id, word_term, is_mastered, last_reviewed_at)
+            VALUES (?, ?, 0, CURRENT_TIMESTAMP)
+            ON CONFLICT(user_id, word_term) DO UPDATE SET
+              is_mastered = 0,
+              last_reviewed_at = CURRENT_TIMESTAMP
+          `,
+          args: [userId, item.term],
+        });
       }
     }
 
     // Record quiz attempt
-    db.prepare(`
-      INSERT INTO quiz_results (user_id, score, total_questions)
-      VALUES (?, ?, ?)
-    `).run(userId, correctCount, results.length);
+    batchStatements.push({
+      sql: `
+        INSERT INTO quiz_results (user_id, score, total_questions)
+        VALUES (?, ?, ?)
+      `,
+      args: [userId, correctCount, results.length],
+    });
 
-    return { correctCount, masteredTerms, reviewTerms };
-  });
+    await db.batch(batchStatements);
 
-  const { correctCount, masteredTerms, reviewTerms } = saveResultsTx();
-
-  res.json({
-    message: 'Daily quiz completed!',
-    score: correctCount,
-    total_questions: results.length,
-    mastered_terms: masteredTerms,
-    review_terms: reviewTerms,
-  });
+    res.json({
+      message: 'Daily quiz completed!',
+      score: correctCount,
+      total_questions: results.length,
+      mastered_terms: masteredTerms,
+      review_terms: reviewTerms,
+    });
+  } catch (err) {
+    console.error('Submit quiz error:', err);
+    res.status(500).json({ error: 'Failed to submit quiz results' });
+  }
 });
 
 // POST /api/goal/record-review/:userId — record that student reviewed cards
-app.post('/api/goal/record-review/:userId', (req, res) => {
-  const userId = req.params.userId;
-  const { terms } = req.body;
+app.post('/api/goal/record-review/:userId', async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const { terms } = req.body;
 
-  if (Array.isArray(terms)) {
-    const touchStmt = db.prepare(`
-      INSERT INTO word_progress (user_id, word_term, is_mastered, last_reviewed_at)
-      VALUES (?, ?, 0, CURRENT_TIMESTAMP)
-      ON CONFLICT(user_id, word_term) DO UPDATE SET
-        last_reviewed_at = CURRENT_TIMESTAMP
-    `);
-    const tx = db.transaction(() => {
-      for (const t of terms) {
-        touchStmt.run(userId, t);
-      }
-    });
-    tx();
+    if (Array.isArray(terms) && terms.length > 0) {
+      const statements = terms.map((t) => ({
+        sql: `
+          INSERT INTO word_progress (user_id, word_term, is_mastered, last_reviewed_at)
+          VALUES (?, ?, 0, CURRENT_TIMESTAMP)
+          ON CONFLICT(user_id, word_term) DO UPDATE SET
+            last_reviewed_at = CURRENT_TIMESTAMP
+        `,
+        args: [userId, t],
+      }));
+      await db.batch(statements);
+    }
+
+    res.json({ success: true });
+  } catch (err) {
+    console.error('Record review error:', err);
+    res.status(500).json({ error: 'Failed to record card review' });
   }
-
-  res.json({ success: true });
 });
 
 // ─── WORDS ────────────────────────────────────────────────────────────────────
 
 // GET /api/words — all words with optional category and search filters
-app.get('/api/words', (req, res) => {
-  const { category, search } = req.query;
-  let query = 'SELECT * FROM words';
-  const params = [];
-  const conditions = [];
+app.get('/api/words', async (req, res) => {
+  try {
+    const { category, search } = req.query;
+    let query = 'SELECT * FROM words';
+    const params = [];
+    const conditions = [];
 
-  if (category) {
-    conditions.push('category = ?');
-    params.push(category);
-  }
-  if (search) {
-    conditions.push('(term LIKE ? OR definition LIKE ?)');
-    params.push(`%${search}%`, `%${search}%`);
-  }
-  if (conditions.length > 0) {
-    query += ' WHERE ' + conditions.join(' AND ');
-  }
-  query += ' ORDER BY term ASC';
+    if (category) {
+      conditions.push('category = ?');
+      params.push(category);
+    }
+    if (search) {
+      conditions.push('(term LIKE ? OR definition LIKE ?)');
+      params.push(`%${search}%`, `%${search}%`);
+    }
 
-  const words = db.prepare(query).all(...params);
-  res.json(words);
+    if (conditions.length > 0) {
+      query += ' WHERE ' + conditions.join(' AND ');
+    }
+    query += ' ORDER BY term ASC';
+
+    const words = await db.all(query, params);
+    res.json(words);
+  } catch (err) {
+    console.error('GET /api/words error:', err);
+    res.status(500).json({ error: 'Failed to fetch words' });
+  }
 });
 
 // GET /api/words/categories — distinct category names
-app.get('/api/words/categories', (req, res) => {
-  const categories = db.prepare('SELECT DISTINCT category FROM words ORDER BY category').all();
-  res.json(categories.map((c) => c.category));
+app.get('/api/words/categories', async (req, res) => {
+  try {
+    const categories = await db.all('SELECT DISTINCT category FROM words ORDER BY category');
+    res.json(categories.map((c) => c.category));
+  } catch (err) {
+    console.error('GET /api/words/categories error:', err);
+    res.status(500).json({ error: 'Failed to fetch categories' });
+  }
 });
 
 // POST /api/words/submit — Registered students only submit words for admin review
-app.post('/api/words/submit', (req, res) => {
-  const { term, definition, example, user_id } = req.body;
+app.post('/api/words/submit', async (req, res) => {
+  try {
+    const { term, definition, example, user_id } = req.body;
 
-  // REQUIRE LOGGED IN USER
-  if (!user_id) {
-    return res.status(401).json({ error: 'Authentication required. Please log in to suggest new words.' });
+    // REQUIRE LOGGED IN USER
+    if (!user_id) {
+      return res.status(401).json({ error: 'Authentication required. Please log in to suggest new words.' });
+    }
+
+    const user = await db.get('SELECT id, username FROM users WHERE id = ?', [user_id]);
+    if (!user) {
+      return res.status(401).json({ error: 'User account not found. Please log in.' });
+    }
+
+    if (!term || !definition || !example) {
+      return res.status(400).json({ error: 'Term, definition, and example sentence are required.' });
+    }
+
+    // Check if word already exists in approved words
+    const existsInApproved = await db.get('SELECT id, term FROM words WHERE LOWER(term) = LOWER(?)', [term.trim()]);
+    if (existsInApproved) {
+      return res.status(409).json({ error: `Duplicate word: "${existsInApproved.term}" is already in the vocabulary database!` });
+    }
+
+    // Check if word already submitted in pending
+    const existsInPending = await db.get('SELECT id, term FROM pending_words WHERE LOWER(term) = LOWER(?)', [term.trim()]);
+    if (existsInPending) {
+      return res.status(409).json({ error: `Duplicate submission: "${existsInPending.term}" is already submitted and awaiting admin approval.` });
+    }
+
+    const info = await db.run(`
+      INSERT INTO pending_words (term, definition, example, submitted_by)
+      VALUES (?, ?, ?, ?)
+    `, [term.trim(), definition.trim(), example.trim(), user.username]);
+
+    res.status(201).json({
+      message: 'Word submitted successfully! It will appear across the app once approved by an admin.',
+      id: info.lastInsertRowid,
+    });
+  } catch (err) {
+    console.error('POST /api/words/submit error:', err);
+    res.status(500).json({ error: 'Failed to submit word' });
   }
-
-  const user = db.prepare('SELECT id, username FROM users WHERE id = ?').get(user_id);
-  if (!user) {
-    return res.status(401).json({ error: 'User account not found. Please log in.' });
-  }
-
-  if (!term || !definition || !example) {
-    return res.status(400).json({ error: 'Term, definition, and example sentence are required.' });
-  }
-
-  // Check if word already exists in approved words
-  const existsInApproved = db.prepare('SELECT id, term FROM words WHERE LOWER(term) = LOWER(?)').get(term.trim());
-  if (existsInApproved) {
-    return res.status(409).json({ error: `Duplicate word: "${existsInApproved.term}" is already in the vocabulary database!` });
-  }
-
-  // Check if word already submitted in pending
-  const existsInPending = db.prepare('SELECT id, term FROM pending_words WHERE LOWER(term) = LOWER(?)').get(term.trim());
-  if (existsInPending) {
-    return res.status(409).json({ error: `Duplicate submission: "${existsInPending.term}" is already submitted and awaiting admin approval.` });
-  }
-
-  const info = db.prepare(`
-    INSERT INTO pending_words (term, definition, example, submitted_by)
-    VALUES (?, ?, ?, ?)
-  `).run(term.trim(), definition.trim(), example.trim(), user.username);
-
-  res.status(201).json({
-    message: 'Word submitted successfully! It will appear across the app once approved by an admin.',
-    id: info.lastInsertRowid,
-  });
 });
 
 // ─── ADMIN WORD MANAGEMENT ────────────────────────────────────────────────────
 
 // GET /api/admin/pending — get all pending submissions (Admin only)
-app.get('/api/admin/pending', (req, res) => {
-  const pending = db.prepare('SELECT * FROM pending_words ORDER BY submitted_at DESC').all();
-  res.json(pending);
+app.get('/api/admin/pending', async (req, res) => {
+  try {
+    const pending = await db.all('SELECT * FROM pending_words ORDER BY submitted_at DESC');
+    res.json(pending);
+  } catch (err) {
+    console.error('GET /api/admin/pending error:', err);
+    res.status(500).json({ error: 'Failed to fetch pending submissions' });
+  }
 });
 
 // POST /api/admin/approve/:id — approve word and insert into main words table
-app.post('/api/admin/approve/:id', (req, res) => {
-  const pending = db.prepare('SELECT * FROM pending_words WHERE id = ?').get(req.params.id);
-  if (!pending) {
-    return res.status(404).json({ error: 'Pending submission not found' });
+app.post('/api/admin/approve/:id', async (req, res) => {
+  try {
+    const pending = await db.get('SELECT * FROM pending_words WHERE id = ?', [req.params.id]);
+    if (!pending) {
+      return res.status(404).json({ error: 'Pending submission not found' });
+    }
+
+    const category = req.body.category || 'Student Submitted & Community';
+
+    await db.batch([
+      {
+        sql: `INSERT OR REPLACE INTO words (term, definition, example, category) VALUES (?, ?, ?, ?)`,
+        args: [pending.term, pending.definition, pending.example, category],
+      },
+      {
+        sql: 'DELETE FROM pending_words WHERE id = ?',
+        args: [req.params.id],
+      },
+    ]);
+
+    res.json({ message: `"${pending.term}" approved and added to active vocabulary!` });
+  } catch (err) {
+    console.error('Approve word error:', err);
+    res.status(500).json({ error: 'Failed to approve word' });
   }
-
-  const category = req.body.category || 'Student Submitted & Community';
-
-  db.prepare(`
-    INSERT OR REPLACE INTO words (term, definition, example, category)
-    VALUES (?, ?, ?, ?)
-  `).run(pending.term, pending.definition, pending.example, category);
-
-  db.prepare('DELETE FROM pending_words WHERE id = ?').run(req.params.id);
-
-  res.json({ message: `"${pending.term}" approved and added to active vocabulary!` });
 });
 
 // DELETE /api/admin/reject/:id — reject/delete pending submission
-app.delete('/api/admin/reject/:id', (req, res) => {
-  db.prepare('DELETE FROM pending_words WHERE id = ?').run(req.params.id);
-  res.json({ message: 'Submission rejected and removed.' });
+app.delete('/api/admin/reject/:id', async (req, res) => {
+  try {
+    await db.run('DELETE FROM pending_words WHERE id = ?', [req.params.id]);
+    res.json({ message: 'Submission rejected and removed.' });
+  } catch (err) {
+    console.error('Reject word error:', err);
+    res.status(500).json({ error: 'Failed to reject word' });
+  }
 });
 
 // ─── DASHBOARD / STATS ───────────────────────────────────────────────────────
 
 // GET /api/stats/:userId
-app.get('/api/stats/:userId', (req, res) => {
-  const userId = req.params.userId;
+app.get('/api/stats/:userId', async (req, res) => {
+  try {
+    const userId = req.params.userId;
 
-  const totalWords = db.prepare('SELECT COUNT(*) as count FROM words').get().count;
+    const totalWordsRes = await db.get('SELECT COUNT(*) as count FROM words');
+    const totalWords = totalWordsRes ? Number(totalWordsRes.count) : 0;
 
-  const masteredCount = db.prepare(
-    'SELECT COUNT(*) as count FROM word_progress WHERE user_id = ? AND is_mastered = 1'
-  ).get(userId).count;
+    const masteredRes = await db.get(
+      'SELECT COUNT(*) as count FROM word_progress WHERE user_id = ? AND is_mastered = 1',
+      [userId]
+    );
+    const masteredCount = masteredRes ? Number(masteredRes.count) : 0;
 
-  const avgScore = db.prepare(
-    'SELECT AVG(CAST(score AS FLOAT) / total_questions * 100) as avg FROM quiz_results WHERE user_id = ?'
-  ).get(userId).avg;
+    const avgScoreRes = await db.get(
+      'SELECT AVG(CAST(score AS FLOAT) / total_questions * 100) as avg FROM quiz_results WHERE user_id = ?',
+      [userId]
+    );
+    const avgScore = avgScoreRes?.avg;
 
-  const recentQuizzes = db.prepare(
-    'SELECT * FROM quiz_results WHERE user_id = ? ORDER BY completed_at DESC LIMIT 10'
-  ).all(userId);
+    const recentQuizzes = await db.all(
+      'SELECT * FROM quiz_results WHERE user_id = ? ORDER BY completed_at DESC LIMIT 10',
+      [userId]
+    );
 
-  const reviewedToday = db.prepare(
-    `SELECT COUNT(*) as count FROM word_progress 
-     WHERE user_id = ? AND date(last_reviewed_at) = date('now')`
-  ).get(userId).count;
+    const reviewedTodayRes = await db.get(
+      `SELECT COUNT(*) as count FROM word_progress 
+       WHERE user_id = ? AND date(last_reviewed_at) = date('now')`,
+      [userId]
+    );
+    const reviewedToday = reviewedTodayRes ? Number(reviewedTodayRes.count) : 0;
 
-  res.json({
-    totalWords,
-    masteredCount,
-    averageScore: avgScore ? Math.round(avgScore * 10) / 10 : 0,
-    recentQuizzes,
-    reviewedToday,
-  });
+    res.json({
+      totalWords,
+      masteredCount,
+      averageScore: avgScore ? Math.round(Number(avgScore) * 10) / 10 : 0,
+      recentQuizzes,
+      reviewedToday,
+    });
+  } catch (err) {
+    console.error('GET /api/stats error:', err);
+    res.status(500).json({ error: 'Failed to fetch user stats' });
+  }
 });
 
 // ─── PROGRESS IMPORT & EXPORT (BACKUP / RESTORE) ───────────────────────────────
 
 // GET /api/progress/export/:userId — Export user data as a backup JSON
-app.get('/api/progress/export/:userId', (req, res) => {
-  const userId = req.params.userId;
-  const user = db.prepare('SELECT id, username, created_at FROM users WHERE id = ?').get(userId);
-  const wordProgress = db.prepare('SELECT word_term, is_mastered, last_reviewed_at FROM word_progress WHERE user_id = ?').all(userId);
-  const quizResults = db.prepare('SELECT score, total_questions, completed_at FROM quiz_results WHERE user_id = ? ORDER BY completed_at ASC').all(userId);
+app.get('/api/progress/export/:userId', async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const user = await db.get('SELECT id, username, created_at FROM users WHERE id = ?', [userId]);
+    const wordProgress = await db.all('SELECT word_term, is_mastered, last_reviewed_at FROM word_progress WHERE user_id = ?', [userId]);
+    const quizResults = await db.all('SELECT score, total_questions, completed_at FROM quiz_results WHERE user_id = ? ORDER BY completed_at ASC', [userId]);
 
-  const exportData = {
-    app: 'SAT VocabMaster',
-    version: '1.0',
-    exported_at: new Date().toISOString(),
-    user: user || { id: userId, username: 'guest' },
-    word_progress: wordProgress,
-    quiz_results: quizResults,
-  };
+    const exportData = {
+      app: 'SAT VocabMaster',
+      version: '1.0',
+      exported_at: new Date().toISOString(),
+      user: user || { id: userId, username: 'guest' },
+      word_progress: wordProgress,
+      quiz_results: quizResults,
+    };
 
-  res.json(exportData);
+    res.json(exportData);
+  } catch (err) {
+    console.error('Export error:', err);
+    res.status(500).json({ error: 'Failed to export progress data' });
+  }
 });
 
 // POST /api/progress/import/:userId — Restore/merge progress from backup JSON
-app.post('/api/progress/import/:userId', (req, res) => {
-  const userId = req.params.userId;
-  const { word_progress, quiz_results } = req.body;
+app.post('/api/progress/import/:userId', async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const { word_progress, quiz_results } = req.body;
 
-  if (!Array.isArray(word_progress) && !Array.isArray(quiz_results)) {
-    return res.status(400).json({ error: 'Invalid backup file format.' });
-  }
+    if (!Array.isArray(word_progress) && !Array.isArray(quiz_results)) {
+      return res.status(400).json({ error: 'Invalid backup file format.' });
+    }
 
-  const insertProgress = db.prepare(`
-    INSERT INTO word_progress (user_id, word_term, is_mastered, last_reviewed_at)
-    VALUES (?, ?, ?, ?)
-    ON CONFLICT(user_id, word_term) DO UPDATE SET
-      is_mastered = excluded.is_mastered,
-      last_reviewed_at = excluded.last_reviewed_at
-  `);
-
-  const insertQuiz = db.prepare(`
-    INSERT INTO quiz_results (user_id, score, total_questions, completed_at)
-    VALUES (?, ?, ?, ?)
-  `);
-
-  const restoreTransaction = db.transaction(() => {
+    const statements = [];
     let wordsRestored = 0;
     let quizzesRestored = 0;
 
     if (Array.isArray(word_progress)) {
       for (const item of word_progress) {
         if (item.word_term) {
-          insertProgress.run(
-            userId,
-            item.word_term,
-            item.is_mastered ? 1 : 0,
-            item.last_reviewed_at || new Date().toISOString()
-          );
+          statements.push({
+            sql: `
+              INSERT INTO word_progress (user_id, word_term, is_mastered, last_reviewed_at)
+              VALUES (?, ?, ?, ?)
+              ON CONFLICT(user_id, word_term) DO UPDATE SET
+                is_mastered = excluded.is_mastered,
+                last_reviewed_at = excluded.last_reviewed_at
+            `,
+            args: [
+              userId,
+              item.word_term,
+              item.is_mastered ? 1 : 0,
+              item.last_reviewed_at || new Date().toISOString(),
+            ],
+          });
           wordsRestored++;
         }
       }
@@ -585,80 +677,104 @@ app.post('/api/progress/import/:userId', (req, res) => {
     if (Array.isArray(quiz_results)) {
       for (const item of quiz_results) {
         if (item.total_questions) {
-          insertQuiz.run(
-            userId,
-            item.score,
-            item.total_questions,
-            item.completed_at || new Date().toISOString()
-          );
+          statements.push({
+            sql: `
+              INSERT INTO quiz_results (user_id, score, total_questions, completed_at)
+              VALUES (?, ?, ?, ?)
+            `,
+            args: [
+              userId,
+              item.score,
+              item.total_questions,
+              item.completed_at || new Date().toISOString(),
+            ],
+          });
           quizzesRestored++;
         }
       }
     }
 
-    return { wordsRestored, quizzesRestored };
-  });
+    if (statements.length > 0) {
+      for (let i = 0; i < statements.length; i += 50) {
+        await db.batch(statements.slice(i, i + 50));
+      }
+    }
 
-  const result = restoreTransaction();
-  res.json({
-    message: `Progress restored successfully! Merged ${result.wordsRestored} words and ${result.quizzesRestored} quiz entries.`,
-  });
+    res.json({
+      message: `Progress restored successfully! Merged ${wordsRestored} words and ${quizzesRestored} quiz entries.`,
+    });
+  } catch (err) {
+    console.error('Import error:', err);
+    res.status(500).json({ error: 'Failed to import progress data' });
+  }
 });
 
 // ─── WORD PROGRESS ────────────────────────────────────────────────────────────
 
 // GET /api/progress/:userId — all progress for a specific user
-app.get('/api/progress/:userId', (req, res) => {
-  const progress = db.prepare(
-    'SELECT * FROM word_progress WHERE user_id = ?'
-  ).all(req.params.userId);
-  res.json(progress);
+app.get('/api/progress/:userId', async (req, res) => {
+  try {
+    const progress = await db.all('SELECT * FROM word_progress WHERE user_id = ?', [req.params.userId]);
+    res.json(progress);
+  } catch (err) {
+    console.error('GET /api/progress error:', err);
+    res.status(500).json({ error: 'Failed to fetch user progress' });
+  }
 });
 
 // PUT /api/progress/:userId/:wordTerm — toggle or set mastered state for user
-app.put('/api/progress/:userId/:wordTerm', (req, res) => {
-  const { userId, wordTerm } = req.params;
-  const { is_mastered } = req.body;
+app.put('/api/progress/:userId/:wordTerm', async (req, res) => {
+  try {
+    const { userId, wordTerm } = req.params;
+    const { is_mastered } = req.body;
 
-  const existing = db.prepare(
-    'SELECT * FROM word_progress WHERE user_id = ? AND word_term = ?'
-  ).get(userId, wordTerm);
+    await db.run(`
+      INSERT INTO word_progress (user_id, word_term, is_mastered, last_reviewed_at)
+      VALUES (?, ?, ?, CURRENT_TIMESTAMP)
+      ON CONFLICT(user_id, word_term) DO UPDATE SET
+        is_mastered = excluded.is_mastered,
+        last_reviewed_at = CURRENT_TIMESTAMP
+    `, [userId, wordTerm, is_mastered ? 1 : 0]);
 
-  if (existing) {
-    db.prepare(
-      'UPDATE word_progress SET is_mastered = ?, last_reviewed_at = CURRENT_TIMESTAMP WHERE user_id = ? AND word_term = ?'
-    ).run(is_mastered ? 1 : 0, userId, wordTerm);
-  } else {
-    db.prepare(
-      'INSERT INTO word_progress (user_id, word_term, is_mastered) VALUES (?, ?, ?)'
-    ).run(userId, wordTerm, is_mastered ? 1 : 0);
+    const updated = await db.get('SELECT * FROM word_progress WHERE user_id = ? AND word_term = ?', [userId, wordTerm]);
+    res.json(updated);
+  } catch (err) {
+    console.error('PUT /api/progress error:', err);
+    res.status(500).json({ error: 'Failed to update word progress' });
   }
-
-  const updated = db.prepare(
-    'SELECT * FROM word_progress WHERE user_id = ? AND word_term = ?'
-  ).get(userId, wordTerm);
-  res.json(updated);
 });
 
 // ─── QUIZ RESULTS ─────────────────────────────────────────────────────────────
 
 // POST /api/quiz/:userId — save quiz result for specific user
-app.post('/api/quiz/:userId', (req, res) => {
-  const { score, total_questions } = req.body;
-  const info = db.prepare(
-    'INSERT INTO quiz_results (user_id, score, total_questions) VALUES (?, ?, ?)'
-  ).run(req.params.userId, score, total_questions);
+app.post('/api/quiz/:userId', async (req, res) => {
+  try {
+    const { score, total_questions } = req.body;
+    const info = await db.run(
+      'INSERT INTO quiz_results (user_id, score, total_questions) VALUES (?, ?, ?)',
+      [req.params.userId, score, total_questions]
+    );
 
-  const result = db.prepare('SELECT * FROM quiz_results WHERE id = ?').get(info.lastInsertRowid);
-  res.json(result);
+    const result = await db.get('SELECT * FROM quiz_results WHERE id = ?', [info.lastInsertRowid]);
+    res.json(result);
+  } catch (err) {
+    console.error('POST /api/quiz error:', err);
+    res.status(500).json({ error: 'Failed to save quiz result' });
+  }
 });
 
 // GET /api/quiz/:userId — get quiz history for user
-app.get('/api/quiz/:userId', (req, res) => {
-  const quizzes = db.prepare(
-    'SELECT * FROM quiz_results WHERE user_id = ? ORDER BY completed_at DESC'
-  ).all(req.params.userId);
-  res.json(quizzes);
+app.get('/api/quiz/:userId', async (req, res) => {
+  try {
+    const quizzes = await db.all(
+      'SELECT * FROM quiz_results WHERE user_id = ? ORDER BY completed_at DESC',
+      [req.params.userId]
+    );
+    res.json(quizzes);
+  } catch (err) {
+    console.error('GET /api/quiz error:', err);
+    res.status(500).json({ error: 'Failed to fetch quiz history' });
+  }
 });
 
 // ─── SERVE FRONTEND (in production) ──────────────────────────────────────────
@@ -672,6 +788,16 @@ if (fs.existsSync(frontendDist)) {
 
 // ─── START SERVER ─────────────────────────────────────────────────────────────
 
-app.listen(PORT, () => {
-  console.log(`✨ SAT Vocab API running on http://localhost:${PORT}`);
-});
+async function startServer() {
+  try {
+    await db.init();
+    app.listen(PORT, () => {
+      console.log(`✨ SAT Vocab API running on http://localhost:${PORT}`);
+    });
+  } catch (err) {
+    console.error('Failed to start server:', err);
+    process.exit(1);
+  }
+}
+
+startServer();
