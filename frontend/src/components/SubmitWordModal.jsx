@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { submitWord } from '../api';
+import React, { useState, useEffect } from 'react';
+import { submitWord, fetchCaptcha } from '../api';
 import { useAuth } from '../context/AuthContext';
 
 export default function SubmitWordModal({ isOpen, onClose, onOpenAuth }) {
@@ -9,6 +9,25 @@ export default function SubmitWordModal({ isOpen, onClose, onOpenAuth }) {
   const [example, setExample] = useState('');
   const [status, setStatus] = useState(null); // { type: 'success' | 'error', message: string }
   const [loading, setLoading] = useState(false);
+  const [captchaData, setCaptchaData] = useState(null);
+  const [captchaAnswer, setCaptchaAnswer] = useState('');
+
+  const loadNewCaptcha = async () => {
+    try {
+      setCaptchaAnswer('');
+      const data = await fetchCaptcha();
+      setCaptchaData(data);
+    } catch (err) {
+      console.error('Failed to load captcha:', err);
+    }
+  };
+
+  useEffect(() => {
+    if (isOpen && currentUser) {
+      setStatus(null);
+      loadNewCaptcha();
+    }
+  }, [isOpen, currentUser]);
 
   if (!isOpen) return null;
 
@@ -77,20 +96,30 @@ export default function SubmitWordModal({ isOpen, onClose, onOpenAuth }) {
       return;
     }
 
+    if (!captchaAnswer.trim()) {
+      setStatus({ type: 'error', message: 'Please solve the captcha puzzle to submit.' });
+      return;
+    }
+
     setLoading(true);
     try {
       const res = await submitWord(
         term.trim(),
         definition.trim(),
         example.trim(),
-        currentUser.id
+        currentUser.id,
+        captchaData?.captchaId,
+        captchaAnswer.trim()
       );
       setStatus({ type: 'success', message: res.message });
       setTerm('');
       setDefinition('');
       setExample('');
+      setCaptchaAnswer('');
+      loadNewCaptcha();
     } catch (err) {
       setStatus({ type: 'error', message: err.message || 'Duplicate or invalid submission.' });
+      loadNewCaptcha();
     } finally {
       setLoading(false);
     }
@@ -254,6 +283,76 @@ export default function SubmitWordModal({ isOpen, onClose, onOpenAuth }) {
                 resize: 'none',
               }}
             />
+          </div>
+
+          {/* Interactive CAPTCHA Section */}
+          <div
+            style={{
+              padding: '12px',
+              borderRadius: '8px',
+              backgroundColor: 'var(--bg-muted)',
+              border: '1px solid var(--border-card)',
+            }}
+          >
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+              <span style={{ fontSize: '11px', fontWeight: '700', textTransform: 'uppercase', color: 'var(--text-muted)' }}>
+                Security Captcha
+              </span>
+              <button
+                type="button"
+                onClick={loadNewCaptcha}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  color: 'var(--accent-blue)',
+                  fontSize: '11px',
+                  fontWeight: '600',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '4px',
+                }}
+              >
+                ↻ Refresh Captcha
+              </button>
+            </div>
+
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <div
+                style={{
+                  padding: '8px 14px',
+                  borderRadius: '6px',
+                  backgroundColor: 'var(--bg-surface)',
+                  border: '1px dashed var(--border-card)',
+                  fontFamily: 'monospace',
+                  fontSize: '14px',
+                  fontWeight: '800',
+                  color: 'var(--accent-blue)',
+                  letterSpacing: '0.05em',
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                {captchaData ? captchaData.question : 'Loading captcha...'}
+              </div>
+
+              <input
+                type="text"
+                value={captchaAnswer}
+                onChange={(e) => setCaptchaAnswer(e.target.value)}
+                placeholder="Enter answer"
+                required
+                style={{
+                  flex: 1,
+                  padding: '8px 12px',
+                  borderRadius: '6px',
+                  border: '1px solid var(--border-card)',
+                  backgroundColor: 'var(--bg-surface)',
+                  color: 'var(--text-main)',
+                  fontSize: '13px',
+                  outline: 'none',
+                }}
+              />
+            </div>
           </div>
 
           <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px', marginTop: '6px' }}>

@@ -121,11 +121,11 @@ export async function fetchCategories() {
   return res.json();
 }
 
-export async function submitWord(term, definition, example, userId) {
+export async function submitWord(term, definition, example, userId, captchaId, captchaAnswer) {
   const res = await fetch(`${API_BASE}/words/submit`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ term, definition, example, user_id: userId }),
+    body: JSON.stringify({ term, definition, example, user_id: userId, captchaId, captchaAnswer }),
   });
   const data = await res.json();
   if (!res.ok) throw new Error(data.error || 'Failed to submit word');

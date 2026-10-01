@@ -469,7 +469,7 @@ app.get('/api/words/categories', async (req, res) => {
 // POST /api/words/submit — Registered students only submit words for admin review
 app.post('/api/words/submit', async (req, res) => {
   try {
-    const { term, definition, example, user_id } = req.body;
+    const { term, definition, example, user_id, captchaId, captchaAnswer } = req.body;
 
     // REQUIRE LOGGED IN USER
     if (!user_id) {
@@ -484,6 +484,19 @@ app.post('/api/words/submit', async (req, res) => {
     if (!term || !definition || !example) {
       return res.status(400).json({ error: 'Term, definition, and example sentence are required.' });
     }
+
+    // Validate Captcha
+    const captcha = captchaStore.get(captchaId);
+    if (!captcha || captcha.expiresAt < Date.now()) {
+      captchaStore.delete(captchaId);
+      return res.status(400).json({ error: 'Captcha expired or invalid. Please refresh captcha.' });
+    }
+
+    if (captcha.answer.trim().toLowerCase() !== String(captchaAnswer || '').trim().toLowerCase()) {
+      captchaStore.delete(captchaId);
+      return res.status(400).json({ error: 'Incorrect captcha answer. Please try again.' });
+    }
+    captchaStore.delete(captchaId);
 
     // Check if word already exists in approved words
     const existsInApproved = await db.get('SELECT id, term FROM words WHERE LOWER(term) = LOWER(?)', [term.trim()]);
