@@ -325,6 +325,35 @@ export async function rejectPendingWord(id) {
   return data;
 }
 
+export async function updatePendingWord(id, { term, definition, example }) {
+  const res = await fetch(`${API_BASE}/admin/pending/${id}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ term, definition, example }),
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || 'Failed to update pending word');
+  return data;
+}
+
+export async function fetchAdminWords(search = '') {
+  const query = search ? `?search=${encodeURIComponent(search)}` : '';
+  const res = await fetch(`${API_BASE}/admin/words${query}`);
+  if (!res.ok) throw new Error('Failed to fetch words');
+  return res.json();
+}
+
+export async function updateApprovedWord(id, { term, definition, example, category }) {
+  const res = await fetch(`${API_BASE}/admin/words/${id}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ term, definition, example, category }),
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || 'Failed to update word');
+  return data;
+}
+
 // ─── PROGRESS IMPORT & EXPORT ─────────────────────────────────────────────────
 
 export async function exportUserProgress(userId) {

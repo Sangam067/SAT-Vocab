@@ -564,6 +564,71 @@ app.delete('/api/admin/reject/:id', async (req, res) => {
   }
 });
 
+// PUT /api/admin/pending/:id — edit a pending word's fields before approval
+app.put('/api/admin/pending/:id', async (req, res) => {
+  try {
+    const { term, definition, example } = req.body;
+    if (!term || !definition || !example) {
+      return res.status(400).json({ error: 'Term, definition, and example are required.' });
+    }
+    const existing = await db.get('SELECT id FROM pending_words WHERE id = ?', [req.params.id]);
+    if (!existing) {
+      return res.status(404).json({ error: 'Pending submission not found.' });
+    }
+    await db.run(
+      'UPDATE pending_words SET term = ?, definition = ?, example = ? WHERE id = ?',
+      [term.trim(), definition.trim(), example.trim(), req.params.id]
+    );
+    const updated = await db.get('SELECT * FROM pending_words WHERE id = ?', [req.params.id]);
+    res.json({ message: 'Pending word updated successfully.', word: updated });
+  } catch (err) {
+    console.error('PUT /api/admin/pending/:id error:', err);
+    res.status(500).json({ error: 'Failed to update pending word' });
+  }
+});
+
+// GET /api/admin/words — get all published words (Admin only)
+app.get('/api/admin/words', async (req, res) => {
+  try {
+    const { search } = req.query;
+    let query = 'SELECT * FROM words';
+    const params = [];
+    if (search) {
+      query += ' WHERE (term LIKE ? OR definition LIKE ?)';
+      params.push(`%${search}%`, `%${search}%`);
+    }
+    query += ' ORDER BY term ASC';
+    const words = await db.all(query, params);
+    res.json(words);
+  } catch (err) {
+    console.error('GET /api/admin/words error:', err);
+    res.status(500).json({ error: 'Failed to fetch words' });
+  }
+});
+
+// PUT /api/admin/words/:id — edit a published word's definition/example/category
+app.put('/api/admin/words/:id', async (req, res) => {
+  try {
+    const { term, definition, example, category } = req.body;
+    if (!term || !definition || !example) {
+      return res.status(400).json({ error: 'Term, definition, and example are required.' });
+    }
+    const existing = await db.get('SELECT id FROM words WHERE id = ?', [req.params.id]);
+    if (!existing) {
+      return res.status(404).json({ error: 'Word not found.' });
+    }
+    await db.run(
+      'UPDATE words SET term = ?, definition = ?, example = ?, category = ? WHERE id = ?',
+      [term.trim(), definition.trim(), example.trim(), (category || '').trim(), req.params.id]
+    );
+    const updated = await db.get('SELECT * FROM words WHERE id = ?', [req.params.id]);
+    res.json({ message: `"${updated.term}" updated successfully.`, word: updated });
+  } catch (err) {
+    console.error('PUT /api/admin/words/:id error:', err);
+    res.status(500).json({ error: 'Failed to update word' });
+  }
+});
+
 // ─── DASHBOARD / STATS ───────────────────────────────────────────────────────
 
 // GET /api/stats/:userId
