@@ -17,21 +17,33 @@ function AppContent() {
   const { currentUser } = useAuth();
   const [authOpen, setAuthOpen] = useState(false);
   const [submitWordOpen, setSubmitWordOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   // If logged in use their personal user id; otherwise use 'guest' for isolated browser cache
   const effectiveUserId = currentUser ? currentUser.id : 'guest';
 
   return (
     <div className="app-layout">
+      {/* Mobile sidebar overlay */}
+      <div
+        className={`sidebar-overlay ${sidebarOpen ? 'active' : ''}`}
+        onClick={() => setSidebarOpen(false)}
+      />
+
       {/* Left Navigation */}
       <Sidebar
+        isOpen={sidebarOpen}
+        onClose={() => setSidebarOpen(false)}
         onOpenAuth={() => setAuthOpen(true)}
         onOpenSubmitWord={() => setSubmitWordOpen(true)}
       />
 
       {/* Main App */}
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0, height: '100%', overflow: 'hidden' }}>
-        <Header onOpenAuth={() => setAuthOpen(true)} />
+        <Header
+          onOpenAuth={() => setAuthOpen(true)}
+          onToggleSidebar={() => setSidebarOpen((v) => !v)}
+        />
 
         <main className="app-content">
           <Routes>

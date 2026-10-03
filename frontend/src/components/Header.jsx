@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
 
-export default function Header({ onOpenAuth }) {
+export default function Header({ onOpenAuth, onToggleSidebar }) {
   const [query, setQuery] = useState('');
   const navigate = useNavigate();
   const { theme, toggleTheme } = useTheme();
@@ -18,16 +18,25 @@ export default function Header({ onOpenAuth }) {
 
   return (
     <header className="app-header">
-      {/* Greeting */}
-      <div>
-        <h1 className="header-greeting-title">
-          {currentUser ? `Welcome back, ${currentUser.username}` : 'Welcome, Guest Student'}
-        </h1>
-        <p className="header-greeting-sub">
-          {currentUser
-            ? 'Your study progress and test records are persistently synced.'
-            : 'Log in to securely track your personal flashcard & quiz stats.'}
-        </p>
+      {/* Left: Mobile menu toggle + Greeting */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: '12px', minWidth: 0 }}>
+        <button className="mobile-menu-btn" onClick={onToggleSidebar} aria-label="Open menu">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+        <div style={{ minWidth: 0 }}>
+          <h1 className="header-greeting-title" style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+            {currentUser ? `Welcome back, ${currentUser.username}` : 'Welcome, Guest Student'}
+          </h1>
+          <p className="header-greeting-sub">
+            {currentUser
+              ? 'Your study progress and test records are persistently synced.'
+              : 'Log in to securely track your personal flashcard & quiz stats.'}
+          </p>
+        </div>
       </div>
 
       {/* Search Input */}
@@ -45,10 +54,10 @@ export default function Header({ onOpenAuth }) {
       </form>
 
       {/* Right Actions */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexShrink: 0 }}>
         <button
           onClick={toggleTheme}
-          className="btn-icon"
+          className="btn-icon header-hide-mobile"
           title={`Switch to ${theme === 'dark' ? 'Light' : 'Dark'} mode`}
         >
           {theme === 'dark' ? (
@@ -71,11 +80,11 @@ export default function Header({ onOpenAuth }) {
         </button>
 
         {!currentUser ? (
-          <button onClick={onOpenAuth} className="btn-secondary" style={{ fontSize: '13px' }}>
+          <button onClick={onOpenAuth} className="btn-secondary header-hide-mobile" style={{ fontSize: '13px' }}>
             Log In
           </button>
         ) : (
-          <button onClick={logout} className="btn-secondary" style={{ fontSize: '12px' }}>
+          <button onClick={logout} className="btn-secondary header-hide-mobile" style={{ fontSize: '12px' }}>
             Logout
           </button>
         )}

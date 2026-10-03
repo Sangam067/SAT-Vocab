@@ -3,16 +3,21 @@ import { NavLink } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
 
-export default function Sidebar({ onOpenAuth, onOpenSubmitWord }) {
+export default function Sidebar({ isOpen, onClose, onOpenAuth, onOpenSubmitWord }) {
   const { theme, toggleTheme } = useTheme();
   const { currentUser, logout } = useAuth();
   const isAdmin = currentUser && currentUser.role === 'admin';
 
   return (
-    <aside className="app-sidebar">
+    <aside className={`app-sidebar ${isOpen ? 'open' : ''}`}>
+      {/* Close button (mobile/tablet) */}
+      <button className="sidebar-close-btn" onClick={onClose} aria-label="Close menu">
+        ✕
+      </button>
+
       {/* Brand Top */}
       <div>
-        <NavLink to="/" className="app-brand">
+        <NavLink to="/" className="app-brand" onClick={onClose}>
           <div className="brand-badge">S</div>
           <div>
             <div className="brand-title">VocabMaster</div>
@@ -21,7 +26,7 @@ export default function Sidebar({ onOpenAuth, onOpenSubmitWord }) {
         </NavLink>
 
         {/* Nav Links */}
-        <nav className="sidebar-nav">
+        <nav className="sidebar-nav" onClick={onClose}>
           <NavLink
             to="/"
             end
@@ -100,7 +105,7 @@ export default function Sidebar({ onOpenAuth, onOpenSubmitWord }) {
         {/* Suggest Word CTA */}
         <div style={{ marginTop: '16px', padding: '0 8px' }}>
           <button
-            onClick={onOpenSubmitWord}
+            onClick={() => { onClose(); onOpenSubmitWord(); }}
             className="btn-secondary"
             style={{
               width: '100%',
@@ -182,7 +187,7 @@ export default function Sidebar({ onOpenAuth, onOpenSubmitWord }) {
           </div>
         ) : (
           <button
-            onClick={onOpenAuth}
+            onClick={() => { onClose(); onOpenAuth(); }}
             className="btn-primary"
             style={{ width: '100%', fontSize: '12px', padding: '8px 12px' }}
           >

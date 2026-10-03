@@ -109,7 +109,8 @@ export default function Dashboard({ userId, onOpenSubmitWord }) {
               </div>
             </div>
 
-            <table className="pro-table">
+            <div className="table-responsive">
+              <table className="pro-table">
               <thead>
                 <tr>
                   <th>Word</th>
@@ -136,7 +137,8 @@ export default function Dashboard({ userId, onOpenSubmitWord }) {
                   </tr>
                 ))}
               </tbody>
-            </table>
+              </table>
+            </div>
           </div>
 
           <div style={{ borderTop: '1px solid var(--border-subtle)', paddingTop: '14px', marginTop: '16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '12px' }}>
@@ -230,7 +232,7 @@ export default function Dashboard({ userId, onOpenSubmitWord }) {
             <span style={{ fontSize: '12px', color: 'var(--text-muted)' }}>Interactive tools</span>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '14px' }}>
+          <div className="learning-modes-grid">
             <Link
               to="/flashcards"
               className="pro-card"
