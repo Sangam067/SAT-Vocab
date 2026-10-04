@@ -47,12 +47,12 @@ export default function Flashcards({ userId }) {
     }, 120);
   }, [words.length]);
 
-  const toggleMastered = async () => {
+  const toggleMastered = useCallback(async () => {
     if (!currentWord || !userId) return;
     const newState = !isMastered;
     setProgress((prev) => ({ ...prev, [currentWord.term]: newState }));
     await updateProgress(userId, currentWord.term, newState);
-  };
+  }, [currentWord, userId, isMastered]);
 
   useEffect(() => {
     const handleKey = (e) => {
@@ -68,7 +68,7 @@ export default function Flashcards({ userId }) {
     };
     window.addEventListener('keydown', handleKey);
     return () => window.removeEventListener('keydown', handleKey);
-  }, [goNext, goPrev, currentWord, isMastered]);
+  }, [goNext, goPrev, toggleMastered]);
 
   if (loading) {
     return (

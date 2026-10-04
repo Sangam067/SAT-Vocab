@@ -15,7 +15,7 @@ function loadSession(userId) {
     const s = JSON.parse(raw);
     if (Array.isArray(s.reviewedSet)) s.reviewedSet = new Set(s.reviewedSet);
     return s;
-  } catch (e) { return null; }
+  } catch (_e) { return null; }
 }
 function saveSession(userId, state) {
   try {
@@ -23,10 +23,10 @@ function saveSession(userId, state) {
       ...state,
       reviewedSet: Array.from(state.reviewedSet || []),
     }));
-  } catch (e) {}
+  } catch (_e) {}
 }
 function clearSession(userId) {
-  try { sessionStorage.removeItem(getSessionKey(userId)); } catch (e) {}
+  try { sessionStorage.removeItem(getSessionKey(userId)); } catch (_e) {}
 }
 
 function shuffle(array) {
@@ -304,6 +304,37 @@ export default function DailyGoalSection({ userId, onOpenAuth }) {
               <div style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: '600' }}>Total Words</div>
             </div>
           </div>
+
+          {/* Guest notice */}
+          {!currentUser && (
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                flexWrap: 'wrap',
+                gap: '10px',
+                padding: '10px 14px',
+                backgroundColor: 'var(--bg-muted)',
+                borderRadius: '8px',
+                border: '1px solid var(--border-subtle)',
+                fontSize: '12px',
+                color: 'var(--text-muted)',
+              }}
+            >
+              <span>💡 <strong>Guest Mode:</strong> Create a free account or log in to sync streaks and test history.</span>
+              {onOpenAuth && (
+                <button
+                  type="button"
+                  onClick={onOpenAuth}
+                  className="btn-secondary"
+                  style={{ fontSize: '12px', padding: '4px 12px' }}
+                >
+                  Log In / Sign Up
+                </button>
+              )}
+            </div>
+          )}
 
           {/* Input field */}
           <div>

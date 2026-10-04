@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { useSearchParams, Link } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { fetchWords, fetchCategories, fetchProgress, updateProgress } from '../api';
 
 export default function Browse({ userId }) {
