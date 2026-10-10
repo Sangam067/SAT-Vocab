@@ -160,31 +160,25 @@ const db = {
       });
     }
 
-    // Seed vocabulary from JSON if empty
-    const wordsCountRes = (await client.execute('SELECT COUNT(*) as count FROM words')).rows[0];
-    const wordsCount = wordsCountRes ? Number(wordsCountRes.count) : 0;
-
-    if (wordsCount === 0) {
-      console.log('Seeding initial SAT vocabulary words from JSON...');
-      const vocabPath = path.join(__dirname, 'data', 'vocabulary.json');
-      if (fs.existsSync(vocabPath)) {
-        const vocabData = JSON.parse(fs.readFileSync(vocabPath, 'utf-8'));
-        const batchStatements = [];
-        for (const cat of vocabData.vocabulary_categories) {
-          for (const word of cat.words) {
-            batchStatements.push({
-              sql: `INSERT OR IGNORE INTO words (term, definition, example, category) VALUES (?, ?, ?, ?)`,
-              args: [word.term, word.definition, word.example, cat.category_name],
-            });
-          }
+    // Synchronize all vocabulary words from JSON into database (using INSERT OR IGNORE)
+    const vocabPath = path.join(__dirname, 'data', 'vocabulary.json');
+    if (fs.existsSync(vocabPath)) {
+      const vocabData = JSON.parse(fs.readFileSync(vocabPath, 'utf-8'));
+      const batchStatements = [];
+      for (const cat of vocabData.vocabulary_categories) {
+        for (const word of cat.words) {
+          batchStatements.push({
+            sql: `INSERT OR IGNORE INTO words (term, definition, example, category) VALUES (?, ?, ?, ?)`,
+            args: [word.term, word.definition, word.example, cat.category_name],
+          });
         }
-        if (batchStatements.length > 0) {
-          // Batch in chunks of 50 to avoid any limits
-          for (let i = 0; i < batchStatements.length; i += 50) {
-            await client.batch(batchStatements.slice(i, i + 50));
-          }
-          console.log(`Seeded ${batchStatements.length} vocabulary words!`);
+      }
+      if (batchStatements.length > 0) {
+        // Batch in chunks of 50 to avoid statement limits
+        for (let i = 0; i < batchStatements.length; i += 50) {
+          await client.batch(batchStatements.slice(i, i + 50));
         }
+        console.log(`Synchronized ${batchStatements.length} vocabulary words from JSON.`);
       }
     }
 

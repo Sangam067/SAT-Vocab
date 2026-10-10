@@ -3,148 +3,2601 @@
     {
       "category_name": "Scientific & Research Words (Data & Theories)",
       "words": [
-        { "term": "Empirical", "definition": "Based on direct observation or experiment rather than theory", "example": "The scientist gathered empirical data to support her climate hypothesis." },
-        { "term": "Anomaly", "definition": "Something that deviates from what is standard, normal, or expected; an outlier", "example": "The sudden drop in temperature was an anomaly that baffled meteorologists." },
-        { "term": "Plausible", "definition": "Seemingly reasonable or probable; believable", "example": "His explanation for being late sounded plausible enough to be true." },
-        { "term": "Tenuous", "definition": "Very weak, slight, or unsubstantiated (often used to describe a bad hypothesis)", "example": "The detective realized their connection to the crime scene was extremely tenuous." },
-        { "term": "Spurious", "definition": "False, fake, or invalid", "example": "The study relied on spurious correlations that fell apart under strict peer review." },
-        { "term": "Corroborate", "definition": "To confirm, support, or provide supporting evidence for a statement or finding", "example": "Three independent witnesses came forward to corroborate his alibi." },
-        { "term": "Precursor", "definition": "An event or thing that comes before another and leads up to it", "example": "Mild headaches can sometimes be a precursor to a severe migraine." },
-        { "term": "Efficacy", "definition": "The ability to produce a desired or intended result; effectiveness", "example": "Clinical trials proved the high efficacy of the new vaccine." },
-        { "term": "Latent", "definition": "Existing but not yet developed, manifest, or hidden", "example": "She discovered a latent talent for painting during her recovery." },
-        { "term": "Mutable", "definition": "Liable to change; fickle or adaptable", "example": "Language is a mutable system that evolves constantly over generations." },
-        { "term": "Invariable", "definition": "Never changing; remaining constant in all circumstances", "example": "Gravity remains an invariable law of physics." },
-        { "term": "Contingent", "definition": "Depending on something else to happen; not certain", "example": "Our weekend camping trip is contingent upon good weather." }
+        {
+          "term": "Empirical",
+          "definition": "Based on direct observation or experiment rather than theory",
+          "example": "The scientist gathered empirical data to support her climate hypothesis."
+        },
+        {
+          "term": "Anomaly",
+          "definition": "Something that deviates from what is standard, normal, or expected; an outlier",
+          "example": "The sudden drop in temperature was an anomaly that baffled meteorologists."
+        },
+        {
+          "term": "Plausible",
+          "definition": "Seemingly reasonable or probable; believable",
+          "example": "His explanation for being late sounded plausible enough to be true."
+        },
+        {
+          "term": "Tenuous",
+          "definition": "Very weak, slight, or unsubstantiated (often used to describe a bad hypothesis)",
+          "example": "The detective realized their connection to the crime scene was extremely tenuous."
+        },
+        {
+          "term": "Spurious",
+          "definition": "False, fake, or invalid",
+          "example": "The study relied on spurious correlations that fell apart under strict peer review."
+        },
+        {
+          "term": "Corroborate",
+          "definition": "To confirm, support, or provide supporting evidence for a statement or finding",
+          "example": "Three independent witnesses came forward to corroborate his alibi."
+        },
+        {
+          "term": "Precursor",
+          "definition": "An event or thing that comes before another and leads up to it",
+          "example": "Mild headaches can sometimes be a precursor to a severe migraine."
+        },
+        {
+          "term": "Efficacy",
+          "definition": "The ability to produce a desired or intended result; effectiveness",
+          "example": "Clinical trials proved the high efficacy of the new vaccine."
+        },
+        {
+          "term": "Latent",
+          "definition": "Existing but not yet developed, manifest, or hidden",
+          "example": "She discovered a latent talent for painting during her recovery."
+        },
+        {
+          "term": "Mutable",
+          "definition": "Liable to change; fickle or adaptable",
+          "example": "Language is a mutable system that evolves constantly over generations."
+        },
+        {
+          "term": "Invariable",
+          "definition": "Never changing; remaining constant in all circumstances",
+          "example": "Gravity remains an invariable law of physics."
+        },
+        {
+          "term": "Contingent",
+          "definition": "Depending on something else to happen; not certain",
+          "example": "Our weekend camping trip is contingent upon good weather."
+        }
       ]
     },
     {
       "category_name": "Argumentation & Debate Words (Author's Intent)",
       "words": [
-        { "term": "Substantiate", "definition": "To provide evidence to support or prove the truth of something", "example": "Without financial records, he could not substantiate his claims of innocence." },
-        { "term": "Belie", "definition": "To contradict, misrepresent, or give a false impression of something", "example": "Her calm exterior belied the intense anxiety she felt inside." },
-        { "term": "Qualify", "definition": "To add limitations, conditions, or restrictions to a claim", "example": "The professor felt compelled to qualify his sweeping statement with a few exceptions." },
-        { "term": "Concede", "definition": "To admit that something is true or valid after first denying or resisting it", "example": "After seeing the final poll numbers, the candidate had to concede the election." },
-        { "term": "Refute / Rebut", "definition": "To prove a statement or theory to be wrong or false; to argue against a statement", "example": "The defense attorney used hard evidence to refute the prosecution's claim." },
-        { "term": "Promulgate", "definition": "To promote or make an idea widely known; broadcast", "example": "The organization works to promulgate awareness about digital privacy." },
-        { "term": "Vindicate", "definition": "To clear someone of blame or to prove a disputed theory is completely correct", "example": "The new DNA evidence served to completely vindicate the wrongfully accused man." },
-        { "term": "Undermine", "definition": "To weaken or sabotage an argument or a study's foundation", "example": "Constant criticism can seriously undermine a student's confidence." },
-        { "term": "Bolster", "definition": "To support, strengthen, or prop up an argument", "example": "The speaker used historical facts to bolster her argument." },
-        { "term": "Antithetical", "definition": "Directly opposed or contrary to something", "example": "Cruelty to animals is antithetical to everything our shelter stands for." },
-        { "term": "Misconstrue", "definition": "To interpret something wrongly or misunderstand the meaning", "example": "It is easy to misconstrue tone of voice when reading a text message." },
-        { "term": "Repudiate", "definition": "To reject or refuse to accept", "example": "The leader was forced to publicly repudiate the extremist group's statements." }
+        {
+          "term": "Substantiate",
+          "definition": "To provide evidence to support or prove the truth of something",
+          "example": "Without financial records, he could not substantiate his claims of innocence."
+        },
+        {
+          "term": "Belie",
+          "definition": "To contradict, misrepresent, or give a false impression of something",
+          "example": "Her calm exterior belied the intense anxiety she felt inside."
+        },
+        {
+          "term": "Qualify",
+          "definition": "To add limitations, conditions, or restrictions to a claim",
+          "example": "The professor felt compelled to qualify his sweeping statement with a few exceptions."
+        },
+        {
+          "term": "Concede",
+          "definition": "To admit that something is true or valid after first denying or resisting it",
+          "example": "After seeing the final poll numbers, the candidate had to concede the election."
+        },
+        {
+          "term": "Refute / Rebut",
+          "definition": "To prove a statement or theory to be wrong or false; to argue against a statement",
+          "example": "The defense attorney used hard evidence to refute the prosecution's claim."
+        },
+        {
+          "term": "Promulgate",
+          "definition": "To promote or make an idea widely known; broadcast",
+          "example": "The organization works to promulgate awareness about digital privacy."
+        },
+        {
+          "term": "Vindicate",
+          "definition": "To clear someone of blame or to prove a disputed theory is completely correct",
+          "example": "The new DNA evidence served to completely vindicate the wrongfully accused man."
+        },
+        {
+          "term": "Undermine",
+          "definition": "To weaken or sabotage an argument or a study's foundation",
+          "example": "Constant criticism can seriously undermine a student's confidence."
+        },
+        {
+          "term": "Bolster",
+          "definition": "To support, strengthen, or prop up an argument",
+          "example": "The speaker used historical facts to bolster her argument."
+        },
+        {
+          "term": "Antithetical",
+          "definition": "Directly opposed or contrary to something",
+          "example": "Cruelty to animals is antithetical to everything our shelter stands for."
+        },
+        {
+          "term": "Misconstrue",
+          "definition": "To interpret something wrongly or misunderstand the meaning",
+          "example": "It is easy to misconstrue tone of voice when reading a text message."
+        },
+        {
+          "term": "Repudiate",
+          "definition": "To reject or refuse to accept",
+          "example": "The leader was forced to publicly repudiate the extremist group's statements."
+        }
       ]
     },
     {
       "category_name": "Human Behavior, Mind & Society",
       "words": [
-        { "term": "Pragmatic", "definition": "Dealing with situations practically and realistically rather than theoretically", "example": "Instead of dreaming big, she took a pragmatic approach to budgeting her startup." },
-        { "term": "Scrutinize / Scrutiny", "definition": "To examine, inspect, or watch very closely and carefully", "example": "Auditors will scrutinize every single transaction for discrepancies." },
-        { "term": "Reticent", "definition": "Not revealing one's thoughts or feelings readily; reserved or silent", "example": "He was notoriously reticent when asked about his personal life." },
-        { "term": "Deference", "definition": "Humble submission and respect toward someone else's authority or opinion", "example": "She spoke to the village elders with deep deference." },
-        { "term": "Candor", "definition": "The quality of being open, honest, and straightforward in expression", "example": "I appreciated the CEO's refreshing candor during the corporate crisis." },
-        { "term": "Partisan", "definition": "Strongly supporting one specific political party, cause, or faction", "example": "The bill stalled in Congress due to bitter partisan arguments." },
-        { "term": "Altruistic", "definition": "Showing a disinterested and selfless concern for the well-being of others", "example": "Her altruistic donation funded the entire community hospital wing." },
-        { "term": "Capricious", "definition": "Given to sudden and unaccountable changes of mood or behavior; unpredictable", "example": "The capricious weather ruined our plans for an outdoor picnic." },
-        { "term": "Ambivalent", "definition": "Having mixed feelings or conflicting ideas about something", "example": "She felt ambivalent about accepting the promotion because of the long commute." },
-        { "term": "Avarice", "definition": "Extreme greed for wealth or material gain", "example": "Driven by pure avarice, the merchant cheated his customers out of their savings." },
-        { "term": "Indignant", "definition": "Feeling or showing anger at what is perceived as unfair treatment", "example": "The consumer was indignant when told refunds were not permitted." },
-        { "term": "Reverent", "definition": "Feeling or showing deep and solemn respect", "example": "The crowd maintained a reverent silence inside the memorial hall." },
-        { "term": "Loath", "definition": "Unwilling or reluctant", "example": "He was loath to admit that he had made a mistake." },
-        { "term": "Haughty", "definition": "Unfriendly, proud, and arrogant", "example": "Her haughty attitude alienated her colleagues from wanting to work with her." },
-        { "term": "Inept / Ineptitude", "definition": "Unskilled, lacking ability or proficiency", "example": "His sheer ineptitude at fixing computers caused more damage than good." },
-        { "term": "Voracity", "definition": "Having a huge appetite or excessive eagerness", "example": "His voracity for historical non-fiction meant he read three books a week." },
-        { "term": "Idiosyncrasy", "definition": "A unique habit or peculiar behavior belonging to only one person", "example": "One of his charming idiosyncrasies was collecting vintage ticket stubs." },
-        { "term": "Conceit", "definition": "Excessive pride, or an extended artistic metaphor/idea", "example": "The poem relies on the conceit of comparing human life to changing seasons." }
+        {
+          "term": "Pragmatic",
+          "definition": "Dealing with situations practically and realistically rather than theoretically",
+          "example": "Instead of dreaming big, she took a pragmatic approach to budgeting her startup."
+        },
+        {
+          "term": "Scrutinize / Scrutiny",
+          "definition": "To examine, inspect, or watch very closely and carefully",
+          "example": "Auditors will scrutinize every single transaction for discrepancies."
+        },
+        {
+          "term": "Reticent",
+          "definition": "Not revealing one's thoughts or feelings readily; reserved or silent",
+          "example": "He was notoriously reticent when asked about his personal life."
+        },
+        {
+          "term": "Deference",
+          "definition": "Humble submission and respect toward someone else's authority or opinion",
+          "example": "She spoke to the village elders with deep deference."
+        },
+        {
+          "term": "Candor",
+          "definition": "The quality of being open, honest, and straightforward in expression",
+          "example": "I appreciated the CEO's refreshing candor during the corporate crisis."
+        },
+        {
+          "term": "Partisan",
+          "definition": "Strongly supporting one specific political party, cause, or faction",
+          "example": "The bill stalled in Congress due to bitter partisan arguments."
+        },
+        {
+          "term": "Altruistic",
+          "definition": "Showing a disinterested and selfless concern for the well-being of others",
+          "example": "Her altruistic donation funded the entire community hospital wing."
+        },
+        {
+          "term": "Capricious",
+          "definition": "Given to sudden and unaccountable changes of mood or behavior; unpredictable",
+          "example": "The capricious weather ruined our plans for an outdoor picnic."
+        },
+        {
+          "term": "Ambivalent",
+          "definition": "Having mixed feelings or conflicting ideas about something",
+          "example": "She felt ambivalent about accepting the promotion because of the long commute."
+        },
+        {
+          "term": "Avarice",
+          "definition": "Extreme greed for wealth or material gain",
+          "example": "Driven by pure avarice, the merchant cheated his customers out of their savings."
+        },
+        {
+          "term": "Indignant",
+          "definition": "Feeling or showing anger at what is perceived as unfair treatment",
+          "example": "The consumer was indignant when told refunds were not permitted."
+        },
+        {
+          "term": "Reverent",
+          "definition": "Feeling or showing deep and solemn respect",
+          "example": "The crowd maintained a reverent silence inside the memorial hall."
+        },
+        {
+          "term": "Loath",
+          "definition": "Unwilling or reluctant",
+          "example": "He was loath to admit that he had made a mistake."
+        },
+        {
+          "term": "Haughty",
+          "definition": "Unfriendly, proud, and arrogant",
+          "example": "Her haughty attitude alienated her colleagues from wanting to work with her."
+        },
+        {
+          "term": "Inept / Ineptitude",
+          "definition": "Unskilled, lacking ability or proficiency",
+          "example": "His sheer ineptitude at fixing computers caused more damage than good."
+        },
+        {
+          "term": "Voracity",
+          "definition": "Having a huge appetite or excessive eagerness",
+          "example": "His voracity for historical non-fiction meant he read three books a week."
+        },
+        {
+          "term": "Idiosyncrasy",
+          "definition": "A unique habit or peculiar behavior belonging to only one person",
+          "example": "One of his charming idiosyncrasies was collecting vintage ticket stubs."
+        },
+        {
+          "term": "Conceit",
+          "definition": "Excessive pride, or an extended artistic metaphor/idea",
+          "example": "The poem relies on the conceit of comparing human life to changing seasons."
+        }
       ]
     },
     {
       "category_name": "High-Probability Verbs & Actions",
       "words": [
-        { "term": "Preclude", "definition": "To prevent from happening; make impossible", "example": "A prior commitment will preclude me from attending the meeting." },
-        { "term": "Engender", "definition": "To cause, give rise to, or bring about a feeling or situation", "example": "The new policies hope to engender a culture of transparency." },
-        { "term": "Mitigate / Alleviate / Assuage / Mollify", "definition": "To soothe, relieve, make less severe, or make less angry", "example": "Taking painkillers helped mitigate the throbbing headache." },
-        { "term": "Obviate", "definition": "To remove a need or difficulty; avoid or prevent by taking proactive steps", "example": "Using online banking can obviate the need to visit physical branches." },
-        { "term": "Exacerbate", "definition": "To make a problem or negative feeling worse", "example": "Scratching the bug bite will only exacerbate the itching." },
-        { "term": "Supersede", "definition": "To take the place of something; to substitute or replace", "example": "The new software update will supersede the old version completely." },
-        { "term": "Augment", "definition": "To make something greater by adding to it; increase", "example": "He took on a part-time job to augment his monthly income." },
-        { "term": "Curtail", "definition": "To reduce in extent or quantity; impose a restriction on", "example": "Budget cuts forced the library to curtail its operating hours." },
-        { "term": "Dispel", "definition": "To make a doubt, feeling, or belief disappear or vanish", "example": "The teacher stepped forward to dispel rumors about the upcoming exam." },
-        { "term": "Eschew", "definition": "To deliberately avoid or abstain from", "example": "As a strict minimalist, she chose to eschew luxury goods." },
-        { "term": "Impede", "definition": "To slow down, block, or hinder progress", "example": "Heavy snowfall began to impede traffic on the highway." },
-        { "term": "Thwart", "definition": "To stop or prevent someone from accomplishing something", "example": "Quick-thinking guards managed to thwart the robbery attempt." },
-        { "term": "Accommodate", "definition": "To fulfill a need or request; to plan ahead or make room for something", "example": "The hotel can easily accommodate large tour groups." },
-        { "term": "Reconcile", "definition": "To bring two things or opposing sides into agreement", "example": "They managed to reconcile their differences after a long heart-to-heart." },
-        { "term": "Flout", "definition": "To openly disregard a rule, law, or convention", "example": "Motorists who flout speed limits risk heavy fines." },
-        { "term": "Coalesce", "definition": "To come together to form one mass or a single whole entity", "example": "Eventually, the separate community groups began to coalesce into a powerful coalition." },
-        { "term": "Surmount", "definition": "To overcome a difficulty or obstacle", "example": "With hard work, she managed to surmount all language barriers." },
-        { "term": "Upended", "definition": "Turned upside down", "example": "The sudden news completely upended their travel plans." },
-        { "term": "Encompasses", "definition": "To include different items in a group", "example": "The school's curriculum encompasses both arts and sciences." },
-        { "term": "Foregrounded", "definition": "To put something in a primary or prominent position", "example": "The documentary foregrounded the struggles of local farmers." },
-        { "term": "Contrived", "definition": "Forced, artificial, or unnatural", "example": "The movie's happy ending felt totally contrived and unbelievable." },
-        { "term": "Accentuate", "definition": "To make something more noticeable", "example": "Wearing dark eyeliner can accentuate your eyes." },
-        { "term": "Efface", "definition": "To erase or wipe out", "example": "Time will eventually efface the carvings on the ancient stone." },
-        { "term": "Preempt", "definition": "To act first to stop something before it happens", "example": "The network had to preempt regular programming for breaking news." },
-        { "term": "Espouse", "definition": "To support or adopt a cause/belief", "example": "The politician proudly chose to espouse environmental reform." },
-        { "term": "Offset", "definition": "To counterbalance or make up for something", "example": "Extra earnings from freelancing helped offset the high cost of rent." },
-        { "term": "Excoriate", "definition": "To criticize someone or something harshly", "example": "Movie critics rushed to excoriate the director's disastrous sequel." },
-        { "term": "Subvert", "definition": "To undermine or weaken power, authority, an idea, or a belief", "example": "The novel tells a story of rebels trying to subvert an oppressive regime." },
-        { "term": "Rescind", "definition": "To cancel an official order, agreement, or application", "example": "The university threatened to rescind his admission offer if grades dropped." }
+        {
+          "term": "Preclude",
+          "definition": "To prevent from happening; make impossible",
+          "example": "A prior commitment will preclude me from attending the meeting."
+        },
+        {
+          "term": "Engender",
+          "definition": "To cause, give rise to, or bring about a feeling or situation",
+          "example": "The new policies hope to engender a culture of transparency."
+        },
+        {
+          "term": "Mitigate / Alleviate / Assuage / Mollify",
+          "definition": "To soothe, relieve, make less severe, or make less angry",
+          "example": "Taking painkillers helped mitigate the throbbing headache."
+        },
+        {
+          "term": "Obviate",
+          "definition": "To remove a need or difficulty; avoid or prevent by taking proactive steps",
+          "example": "Using online banking can obviate the need to visit physical branches."
+        },
+        {
+          "term": "Exacerbate",
+          "definition": "To make a problem or negative feeling worse",
+          "example": "Scratching the bug bite will only exacerbate the itching."
+        },
+        {
+          "term": "Supersede",
+          "definition": "To take the place of something; to substitute or replace",
+          "example": "The new software update will supersede the old version completely."
+        },
+        {
+          "term": "Augment",
+          "definition": "To make something greater by adding to it; increase",
+          "example": "He took on a part-time job to augment his monthly income."
+        },
+        {
+          "term": "Curtail",
+          "definition": "To reduce in extent or quantity; impose a restriction on",
+          "example": "Budget cuts forced the library to curtail its operating hours."
+        },
+        {
+          "term": "Dispel",
+          "definition": "To make a doubt, feeling, or belief disappear or vanish",
+          "example": "The teacher stepped forward to dispel rumors about the upcoming exam."
+        },
+        {
+          "term": "Eschew",
+          "definition": "To deliberately avoid or abstain from",
+          "example": "As a strict minimalist, she chose to eschew luxury goods."
+        },
+        {
+          "term": "Impede",
+          "definition": "To slow down, block, or hinder progress",
+          "example": "Heavy snowfall began to impede traffic on the highway."
+        },
+        {
+          "term": "Thwart",
+          "definition": "To stop or prevent someone from accomplishing something",
+          "example": "Quick-thinking guards managed to thwart the robbery attempt."
+        },
+        {
+          "term": "Accommodate",
+          "definition": "To fulfill a need or request; to plan ahead or make room for something",
+          "example": "The hotel can easily accommodate large tour groups."
+        },
+        {
+          "term": "Reconcile",
+          "definition": "To bring two things or opposing sides into agreement",
+          "example": "They managed to reconcile their differences after a long heart-to-heart."
+        },
+        {
+          "term": "Flout",
+          "definition": "To openly disregard a rule, law, or convention",
+          "example": "Motorists who flout speed limits risk heavy fines."
+        },
+        {
+          "term": "Coalesce",
+          "definition": "To come together to form one mass or a single whole entity",
+          "example": "Eventually, the separate community groups began to coalesce into a powerful coalition."
+        },
+        {
+          "term": "Surmount",
+          "definition": "To overcome a difficulty or obstacle",
+          "example": "With hard work, she managed to surmount all language barriers."
+        },
+        {
+          "term": "Upended",
+          "definition": "Turned upside down",
+          "example": "The sudden news completely upended their travel plans."
+        },
+        {
+          "term": "Encompasses",
+          "definition": "To include different items in a group",
+          "example": "The school's curriculum encompasses both arts and sciences."
+        },
+        {
+          "term": "Foregrounded",
+          "definition": "To put something in a primary or prominent position",
+          "example": "The documentary foregrounded the struggles of local farmers."
+        },
+        {
+          "term": "Contrived",
+          "definition": "Forced, artificial, or unnatural",
+          "example": "The movie's happy ending felt totally contrived and unbelievable."
+        },
+        {
+          "term": "Accentuate",
+          "definition": "To make something more noticeable",
+          "example": "Wearing dark eyeliner can accentuate your eyes."
+        },
+        {
+          "term": "Efface",
+          "definition": "To erase or wipe out",
+          "example": "Time will eventually efface the carvings on the ancient stone."
+        },
+        {
+          "term": "Preempt",
+          "definition": "To act first to stop something before it happens",
+          "example": "The network had to preempt regular programming for breaking news."
+        },
+        {
+          "term": "Espouse",
+          "definition": "To support or adopt a cause/belief",
+          "example": "The politician proudly chose to espouse environmental reform."
+        },
+        {
+          "term": "Offset",
+          "definition": "To counterbalance or make up for something",
+          "example": "Extra earnings from freelancing helped offset the high cost of rent."
+        },
+        {
+          "term": "Excoriate",
+          "definition": "To criticize someone or something harshly",
+          "example": "Movie critics rushed to excoriate the director's disastrous sequel."
+        },
+        {
+          "term": "Subvert",
+          "definition": "To undermine or weaken power, authority, an idea, or a belief",
+          "example": "The novel tells a story of rebels trying to subvert an oppressive regime."
+        },
+        {
+          "term": "Rescind",
+          "definition": "To cancel an official order, agreement, or application",
+          "example": "The university threatened to rescind his admission offer if grades dropped."
+        }
       ]
     },
     {
       "category_name": "Descriptive Adjectives & Qualities",
       "words": [
-        { "term": "Mundane", "definition": "Lacking interest or excitement; dull, ordinary, and everyday", "example": "She sought to escape the mundane routine of office life by traveling." },
-        { "term": "Ephemeral", "definition": "Lasting for a very short time; transient", "example": "Internet fame can be quite ephemeral, fading away almost as quickly as it starts." },
-        { "term": "Rudimentary / Inchoate", "definition": "In an early stage; basic, simple, or not yet fully formed", "example": "He only possessed a rudimentary understanding of computer coding." },
-        { "term": "Apocryphal", "definition": "Widely circulated yet doubtful or unverified (often referring to a false story or myth)", "example": "That famous story about George Washington and the cherry tree is entirely apocryphal." },
-        { "term": "Amenable", "definition": "Open, willing to agree, or cooperative", "example": "Fortunately, my supervisor was amenable to changing our shift schedules." },
-        { "term": "Untenable", "definition": "Defenseless; impossible to maintain or defend against criticism", "example": "Due to mounting financial losses, their business model became completely untenable." },
-        { "term": "Canonical", "definition": "Accepted, authorized, or standard within a field", "example": "Shakespeare's plays remain a canonical part of English literature courses." },
-        { "term": "Inscrutable", "definition": "Impossible to understand or interpret", "example": "The poker player kept an inscrutable expression on his face the entire match." },
-        { "term": "Intractable", "definition": "Hard to control or deal with; stubborn", "example": "Poverty and corruption are complex, intractable problems for lawmakers." },
-        { "term": "Haphazard", "definition": "Lacking any clear order, plan, or organization", "example": "His haphazard note-taking made studying for finals twice as difficult." },
-        { "term": "Detrimental", "definition": "Causing high harm, damage, or negative effects", "example": "Smoking has proven detrimental effects on long-term respiratory health." },
-        { "term": "Pervasive", "definition": "Spreading widely throughout an area or group; common and widespread everywhere", "example": "There is a pervasive sense of optimism across the tech startup scene." },
-        { "term": "Imminent", "definition": "Very likely to happen very soon", "example": "Dark clouds on the horizon suggested that a thunderstorm was imminent." },
-        { "term": "Arcane", "definition": "Mysterious, secret, or understood by few", "example": "He spent hours deciphering the arcane legal jargon in the contract." },
-        { "term": "Extraneous", "definition": "Irrelevant or extra; not belonging to the matter at hand", "example": "Please remove any extraneous details from your essay draft." },
-        { "term": "Ubiquitous", "definition": "Appearing everywhere at the same time", "example": "Smartphones have become ubiquitous in modern daily life." },
-        { "term": "Prudent", "definition": "Acting with or showing careful judgment and caution", "example": "It is always prudent to save a portion of your monthly income." },
-        { "term": "Specious", "definition": "Superficial, plausible on the surface, but actually wrong or misleading", "example": "The advertisement made specious claims about rapid weight loss." },
-        { "term": "Strictures", "definition": "Restrictions or limitations", "example": "The strictures of the budget forced them to cut creative programs." },
-        { "term": "Insolvency", "definition": "Being unable to pay debts", "example": "Poor cash flow pushed the retail company straight into insolvency." },
-        { "term": "Startling", "definition": "Extremely surprising or new", "example": "The report revealed startling statistics regarding clean water shortages." },
-        { "term": "Meticulous", "definition": "Extremely careful, doing things with very thin/fine detail", "example": "She was meticulous when organizing her code repository." },
-        { "term": "Indifferent", "definition": "Showing a lack of care or interest", "example": "He remained completely indifferent to whether we won or lost the game." },
-        { "term": "Archetype", "definition": "An original model or thing from which others are formed", "example": "Sherlock Holmes is the literary archetype of the brilliant detective." },
-        { "term": "Obsolete", "definition": "No longer in use", "example": "Floppy disks have become completely obsolete in modern computing." },
-        { "term": "Abiding", "definition": "Lasting a long time; continuing without change", "example": "She holds an abiding passion for astronomy and stargazing." },
-        { "term": "Proprietary", "definition": "Private or exclusively owned", "example": "The company protects its proprietary software algorithms under strict patents." },
-        { "term": "Obscure", "definition": "Difficult to understand", "example": "The research paper was bogged down by obscure technical terms." },
-        { "term": "Perfunctory", "definition": "Quickly done without enthusiasm, routine, or deep interest", "example": "He gave the security guard a perfunctory nod as he walked into the lobby." },
-        { "term": "Absurd", "definition": "Unreasonable, ridiculous", "example": "Paying fifty dollars for a single cup of coffee sounds completely absurd." },
-        { "term": "Impartial", "definition": "Treating all sides equally; fair and unbiased", "example": "A judge must remain completely impartial during court proceedings." },
-        { "term": "Offhand", "definition": "Done without preparation, interest, or immediately", "example": "I couldn't give you the exact statistics offhand without checking notes." },
-        { "term": "Unanimity", "definition": "Complete agreement or exact shared opinion among everyone", "example": "The board reached rare unanimity on the new corporate direction." },
-        { "term": "Fugitive", "definition": "Running away from origin or authorities", "example": "The fugitive was captured after hiding out in the mountains for days." },
-        { "term": "Credence", "definition": "Belief in or acceptance of something as true", "example": "Recent data has given extra credence to their original theory." },
-        { "term": "Complementary", "definition": "Completing something else or going well together", "example": "Their different skill sets made them a highly complementary team." },
-        { "term": "Wary", "definition": "Showing caution", "example": "Consumers are naturally wary of unverified online products." },
-        { "term": "Rubble", "definition": "Rough, broken pieces or debris", "example": "Rescue workers searched through the rubble for survivors." },
-        { "term": "Mementos", "definition": "Objects kept as a reminder of a person or event", "example": "She saved old ticket stubs and photos as travel mementos." },
-        { "term": "Lament", "definition": "To express deep grief, sorrow, regret, or critical complaint", "example": "Fans began to lament the cancellation of their favorite television show." },
-        { "term": "Persuasive", "definition": "Capable of convincing", "example": "He delivered a persuasive speech outlining the benefits of recycling." },
-        { "term": "Skeptical", "definition": "Showing a doubt-filled attitude", "example": "Many experts remained skeptical about the bold economic claims." },
-        { "term": "Anachronistic", "definition": "Out of its proper time in history", "example": "A knight wearing modern wristwatches in a medieval movie looks anachronistic." },
-        { "term": "Inextricable", "definition": "Impossible to separate", "example": "Language and culture share an inextricable bond." },
-        { "term": "Disparity", "definition": "A noticeable difference", "example": "There is a growing wealth disparity between urban and rural districts." },
-        { "term": "Serendipity", "definition": "Happening by lucky chance", "example": "Finding my lost keys inside the jacket pocket was pure serendipity." },
-        { "term": "Robust", "definition": "Strong and sturdy", "example": "The application features a robust backend architecture built to handle heavy traffic." },
-        { "term": "Radical", "definition": "Going to the roots; fundamental or revolutionary", "example": "The startup proposed a radical redesign of the traditional user interface." },
-        { "term": "Militant", "definition": "Engaged in active, aggressive, or armed combat", "example": "The militant faction rejected all hopes of a peaceful treaty." },
-        { "term": "Celerity", "definition": "Rapid action or speed", "example": "The emergency response team acted with remarkable celerity." },
-        { "term": "Malevolent", "definition": "Having or showing a desire to cause harm; evil", "example": "The villain in the story harbored malevolent intentions toward the kingdom." }
+        {
+          "term": "Mundane",
+          "definition": "Lacking interest or excitement; dull, ordinary, and everyday",
+          "example": "She sought to escape the mundane routine of office life by traveling."
+        },
+        {
+          "term": "Ephemeral",
+          "definition": "Lasting for a very short time; transient",
+          "example": "Internet fame can be quite ephemeral, fading away almost as quickly as it starts."
+        },
+        {
+          "term": "Rudimentary / Inchoate",
+          "definition": "In an early stage; basic, simple, or not yet fully formed",
+          "example": "He only possessed a rudimentary understanding of computer coding."
+        },
+        {
+          "term": "Apocryphal",
+          "definition": "Widely circulated yet doubtful or unverified (often referring to a false story or myth)",
+          "example": "That famous story about George Washington and the cherry tree is entirely apocryphal."
+        },
+        {
+          "term": "Amenable",
+          "definition": "Open, willing to agree, or cooperative",
+          "example": "Fortunately, my supervisor was amenable to changing our shift schedules."
+        },
+        {
+          "term": "Untenable",
+          "definition": "Defenseless; impossible to maintain or defend against criticism",
+          "example": "Due to mounting financial losses, their business model became completely untenable."
+        },
+        {
+          "term": "Canonical",
+          "definition": "Accepted, authorized, or standard within a field",
+          "example": "Shakespeare's plays remain a canonical part of English literature courses."
+        },
+        {
+          "term": "Inscrutable",
+          "definition": "Impossible to understand or interpret",
+          "example": "The poker player kept an inscrutable expression on his face the entire match."
+        },
+        {
+          "term": "Intractable",
+          "definition": "Hard to control or deal with; stubborn",
+          "example": "Poverty and corruption are complex, intractable problems for lawmakers."
+        },
+        {
+          "term": "Haphazard",
+          "definition": "Lacking any clear order, plan, or organization",
+          "example": "His haphazard note-taking made studying for finals twice as difficult."
+        },
+        {
+          "term": "Detrimental",
+          "definition": "Causing high harm, damage, or negative effects",
+          "example": "Smoking has proven detrimental effects on long-term respiratory health."
+        },
+        {
+          "term": "Pervasive",
+          "definition": "Spreading widely throughout an area or group; common and widespread everywhere",
+          "example": "There is a pervasive sense of optimism across the tech startup scene."
+        },
+        {
+          "term": "Imminent",
+          "definition": "Very likely to happen very soon",
+          "example": "Dark clouds on the horizon suggested that a thunderstorm was imminent."
+        },
+        {
+          "term": "Arcane",
+          "definition": "Mysterious, secret, or understood by few",
+          "example": "He spent hours deciphering the arcane legal jargon in the contract."
+        },
+        {
+          "term": "Extraneous",
+          "definition": "Irrelevant or extra; not belonging to the matter at hand",
+          "example": "Please remove any extraneous details from your essay draft."
+        },
+        {
+          "term": "Ubiquitous",
+          "definition": "Appearing everywhere at the same time",
+          "example": "Smartphones have become ubiquitous in modern daily life."
+        },
+        {
+          "term": "Prudent",
+          "definition": "Acting with or showing careful judgment and caution",
+          "example": "It is always prudent to save a portion of your monthly income."
+        },
+        {
+          "term": "Specious",
+          "definition": "Superficial, plausible on the surface, but actually wrong or misleading",
+          "example": "The advertisement made specious claims about rapid weight loss."
+        },
+        {
+          "term": "Strictures",
+          "definition": "Restrictions or limitations",
+          "example": "The strictures of the budget forced them to cut creative programs."
+        },
+        {
+          "term": "Insolvency",
+          "definition": "Being unable to pay debts",
+          "example": "Poor cash flow pushed the retail company straight into insolvency."
+        },
+        {
+          "term": "Startling",
+          "definition": "Extremely surprising or new",
+          "example": "The report revealed startling statistics regarding clean water shortages."
+        },
+        {
+          "term": "Meticulous",
+          "definition": "Extremely careful, doing things with very thin/fine detail",
+          "example": "She was meticulous when organizing her code repository."
+        },
+        {
+          "term": "Indifferent",
+          "definition": "Showing a lack of care or interest",
+          "example": "He remained completely indifferent to whether we won or lost the game."
+        },
+        {
+          "term": "Archetype",
+          "definition": "An original model or thing from which others are formed",
+          "example": "Sherlock Holmes is the literary archetype of the brilliant detective."
+        },
+        {
+          "term": "Obsolete",
+          "definition": "No longer in use",
+          "example": "Floppy disks have become completely obsolete in modern computing."
+        },
+        {
+          "term": "Abiding",
+          "definition": "Lasting a long time; continuing without change",
+          "example": "She holds an abiding passion for astronomy and stargazing."
+        },
+        {
+          "term": "Proprietary",
+          "definition": "Private or exclusively owned",
+          "example": "The company protects its proprietary software algorithms under strict patents."
+        },
+        {
+          "term": "Obscure",
+          "definition": "Difficult to understand",
+          "example": "The research paper was bogged down by obscure technical terms."
+        },
+        {
+          "term": "Perfunctory",
+          "definition": "Quickly done without enthusiasm, routine, or deep interest",
+          "example": "He gave the security guard a perfunctory nod as he walked into the lobby."
+        },
+        {
+          "term": "Absurd",
+          "definition": "Unreasonable, ridiculous",
+          "example": "Paying fifty dollars for a single cup of coffee sounds completely absurd."
+        },
+        {
+          "term": "Impartial",
+          "definition": "Treating all sides equally; fair and unbiased",
+          "example": "A judge must remain completely impartial during court proceedings."
+        },
+        {
+          "term": "Offhand",
+          "definition": "Done without preparation, interest, or immediately",
+          "example": "I couldn't give you the exact statistics offhand without checking notes."
+        },
+        {
+          "term": "Unanimity",
+          "definition": "Complete agreement or exact shared opinion among everyone",
+          "example": "The board reached rare unanimity on the new corporate direction."
+        },
+        {
+          "term": "Fugitive",
+          "definition": "Running away from origin or authorities",
+          "example": "The fugitive was captured after hiding out in the mountains for days."
+        },
+        {
+          "term": "Credence",
+          "definition": "Belief in or acceptance of something as true",
+          "example": "Recent data has given extra credence to their original theory."
+        },
+        {
+          "term": "Complementary",
+          "definition": "Completing something else or going well together",
+          "example": "Their different skill sets made them a highly complementary team."
+        },
+        {
+          "term": "Wary",
+          "definition": "Showing caution",
+          "example": "Consumers are naturally wary of unverified online products."
+        },
+        {
+          "term": "Rubble",
+          "definition": "Rough, broken pieces or debris",
+          "example": "Rescue workers searched through the rubble for survivors."
+        },
+        {
+          "term": "Mementos",
+          "definition": "Objects kept as a reminder of a person or event",
+          "example": "She saved old ticket stubs and photos as travel mementos."
+        },
+        {
+          "term": "Lament",
+          "definition": "To express deep grief, sorrow, regret, or critical complaint",
+          "example": "Fans began to lament the cancellation of their favorite television show."
+        },
+        {
+          "term": "Persuasive",
+          "definition": "Capable of convincing",
+          "example": "He delivered a persuasive speech outlining the benefits of recycling."
+        },
+        {
+          "term": "Skeptical",
+          "definition": "Showing a doubt-filled attitude",
+          "example": "Many experts remained skeptical about the bold economic claims."
+        },
+        {
+          "term": "Anachronistic",
+          "definition": "Out of its proper time in history",
+          "example": "A knight wearing modern wristwatches in a medieval movie looks anachronistic."
+        },
+        {
+          "term": "Inextricable",
+          "definition": "Impossible to separate",
+          "example": "Language and culture share an inextricable bond."
+        },
+        {
+          "term": "Disparity",
+          "definition": "A noticeable difference",
+          "example": "There is a growing wealth disparity between urban and rural districts."
+        },
+        {
+          "term": "Serendipity",
+          "definition": "Happening by lucky chance",
+          "example": "Finding my lost keys inside the jacket pocket was pure serendipity."
+        },
+        {
+          "term": "Robust",
+          "definition": "Strong and sturdy",
+          "example": "The application features a robust backend architecture built to handle heavy traffic."
+        },
+        {
+          "term": "Radical",
+          "definition": "Going to the roots; fundamental or revolutionary",
+          "example": "The startup proposed a radical redesign of the traditional user interface."
+        },
+        {
+          "term": "Militant",
+          "definition": "Engaged in active, aggressive, or armed combat",
+          "example": "The militant faction rejected all hopes of a peaceful treaty."
+        },
+        {
+          "term": "Celerity",
+          "definition": "Rapid action or speed",
+          "example": "The emergency response team acted with remarkable celerity."
+        },
+        {
+          "term": "Malevolent",
+          "definition": "Having or showing a desire to cause harm; evil",
+          "example": "The villain in the story harbored malevolent intentions toward the kingdom."
+        }
+      ]
+    },
+    {
+      "category_name": "PrepPros SAT - Level 1 (Medium)",
+      "words": [
+        {
+          "term": "Abundant",
+          "definition": "Existing or available in large quantities; plentiful",
+          "example": "The fertile river valley provided an abundant harvest that supported the entire ancient civilization."
+        },
+        {
+          "term": "Adhere",
+          "definition": "To believe in and follow the practices of",
+          "example": "Researchers must strictly adhere to established ethical protocols during clinical trials."
+        },
+        {
+          "term": "Advocate",
+          "definition": "To publicly support or recommend",
+          "example": "Environmental scientists continue to advocate for international treaties limiting carbon emissions."
+        },
+        {
+          "term": "Prohibitive",
+          "definition": "Forbidding or restricting something; excessively high or difficult to pay",
+          "example": "The prohibitive cost of advanced telescope equipment initially delayed the astronomy expedition."
+        },
+        {
+          "term": "Allude",
+          "definition": "To suggest or call attention to indirectly",
+          "example": "In her essay, the critic chose to allude to historical revolutions rather than discuss them openly."
+        },
+        {
+          "term": "Analogous",
+          "definition": "Comparable in certain respects, typically a way which makes clearer the nature of the things compared",
+          "example": "The flow of electric current through a wire is analogous to water moving through a pipe."
+        },
+        {
+          "term": "Tranquil",
+          "definition": "Free from disturbance; calm",
+          "example": "The tranquil atmosphere of the mountain sanctuary allowed the poet to write without distraction."
+        },
+        {
+          "term": "Anecdote",
+          "definition": "A short amusing or interesting story about a real incident or person",
+          "example": "The keynote speaker opened his lecture with a humorous personal anecdote about his early laboratory mishaps."
+        },
+        {
+          "term": "Relevant",
+          "definition": "Closely connected or appropriate to what is being done or considered",
+          "example": "The judge reminded the jury to consider only evidence directly relevant to the specific charges."
+        },
+        {
+          "term": "Outsized",
+          "definition": "Larger, greater, or more significant than what is considered typical",
+          "example": "The modest startup company had an outsized impact on the international software market."
+        },
+        {
+          "term": "Apprehensive",
+          "definition": "Anxious or fearful that something bad or unpleasant will happen",
+          "example": "Astronomers were apprehensive that dense cloud cover would obstruct their view of the solar eclipse."
+        },
+        {
+          "term": "Unattainable",
+          "definition": "Not able to be reached or achieved",
+          "example": "Without international funding, the proposed conservation project remained an unattainable goal."
+        },
+        {
+          "term": "Arbitrary",
+          "definition": "Based on random choice or personal whim, rather than any reason or system",
+          "example": "The teacher avoided making arbitrary rules, ensuring every classroom policy served an educational purpose."
+        },
+        {
+          "term": "Lineage",
+          "definition": "Of descent from an ancestor",
+          "example": "Genetic analysis revealed that the rare bird shared an evolutionary lineage with ancient raptors."
+        },
+        {
+          "term": "Assert",
+          "definition": "To state a fact or belief confidently or forcefully",
+          "example": "The historian continued to assert that trade routes were the primary catalyst for cultural exchange."
+        },
+        {
+          "term": "Bias",
+          "definition": "Prejudice in favor of or against one thing, group, or person compared with another",
+          "example": "To minimize experimental bias, the researchers conducted a double-blind psychological study."
+        },
+        {
+          "term": "Coarseness",
+          "definition": "The quality of being rough or harsh",
+          "example": "The geologist noted the coarseness of the sandstone sediment along the ancient riverbed."
+        },
+        {
+          "term": "Validate",
+          "definition": "To check or prove the accuracy or validity of something",
+          "example": "Subsequent peer-reviewed experiments helped validate the controversial findings of the physics team."
+        },
+        {
+          "term": "Underscore",
+          "definition": "To emphasize or draw attention to",
+          "example": "The recent drought served to underscore the urgent necessity of water conservation infrastructure."
+        },
+        {
+          "term": "Consensus",
+          "definition": "A general agreement",
+          "example": "The scientific consensus affirmed that human industrial activity is driving global warming."
+        },
+        {
+          "term": "Decisive",
+          "definition": "Settling an issue; producing a definite result",
+          "example": "The naval battle proved to be the decisive turning point of the multi-year conflict."
+        },
+        {
+          "term": "Eloquent",
+          "definition": "Fluent or persuasive in speaking or writing",
+          "example": "Frederick Douglass delivered an eloquent speech passionately demanding the abolition of slavery."
+        },
+        {
+          "term": "Exert",
+          "definition": "To make a physical or mental effort",
+          "example": "The athlete had to exert tremendous concentration to maintain proper form during the final sprint."
+        },
+        {
+          "term": "Dispute",
+          "definition": "A disagreement, argument, or debate",
+          "example": "The territorial dispute between the two bordering nations was resolved through diplomatic mediation."
+        },
+        {
+          "term": "Denounce",
+          "definition": "To publicly declare to be wrong or evil",
+          "example": "Civil rights leaders gathered to denounce discriminatory housing policies throughout the municipality."
+        },
+        {
+          "term": "Provoke",
+          "definition": "To stimulate or give rise to a reaction or emotion, typically a strong or unwelcome one in someone",
+          "example": "The editorial was intentionally provocative to provoke debate regarding municipal tax allocations."
+        },
+        {
+          "term": "Overlook",
+          "definition": "To miss or fail to notice something",
+          "example": "When editing a complex manuscript, authors must take care not to overlook subtle grammatical errors."
+        },
+        {
+          "term": "Repression",
+          "definition": "The restraint, prevention, or inhibition of a feeling or quality",
+          "example": "The political regime maintained stability through systematic repression of independent journalism."
+        },
+        {
+          "term": "Speculate",
+          "definition": "To form a theory or conjecture about a subject without firm evidence",
+          "example": "Without recovered black box data, flight safety investigators could only speculate about the engine failure."
+        },
+        {
+          "term": "Subtle",
+          "definition": "So delicate or precise as to be difficult to analyze or describe",
+          "example": "The painter used subtle gradations of shadow to impart depth and warmth to the portrait."
+        },
+        {
+          "term": "Retain",
+          "definition": "To continue to have; keep possession of",
+          "example": "Despite adopting modern electronic processes, the firm managed to retain its traditional craftsmanship."
+        },
+        {
+          "term": "Degrade",
+          "definition": "To treat or regard someone with contempt or disrespect",
+          "example": "Pollution and industrial runoff rapidly degrade delicate freshwater ecosystems."
+        },
+        {
+          "term": "Divergent",
+          "definition": "Tending to be different or develop in different directions",
+          "example": "The two evolutionary biologists reached divergent conclusions despite analyzing the same fossil specimen."
+        },
+        {
+          "term": "Explicit",
+          "definition": "Stated clearly and in detail, leaving no room for confusion or doubt",
+          "example": "The lab manual gave explicit instructions regarding the safe handling of caustic chemical reagents."
+        },
+        {
+          "term": "Counteract",
+          "definition": "To oppose or neutralize the effects of something by taking contrary or opposing actions; to offset or balance out",
+          "example": "Regular aerobic exercise helps counteract the detrimental physical effects of sedentary desk work."
+        },
+        {
+          "term": "Prominent",
+          "definition": "Important; famous",
+          "example": "Several prominent economists were invited to testify before the parliamentary budget committee."
+        },
+        {
+          "term": "Reciprocate",
+          "definition": "To respond to a gesture or action by making a corresponding one",
+          "example": "The ambassador expressed hope that neighboring countries would reciprocate their peaceful overtures."
+        },
+        {
+          "term": "Refute",
+          "definition": "To prove a statement or theory to be wrong or false",
+          "example": "Rigorous quantitative experimentation enabled the chemist to refute the outdated caloric theory."
+        },
+        {
+          "term": "Prevalent",
+          "definition": "Common",
+          "example": "Vitamin D deficiency is especially prevalent among populations living in high-latitude regions."
+        },
+        {
+          "term": "Oppressive",
+          "definition": "Unjustly inflicting hardship and constraint",
+          "example": "The workers united to strike against oppressive working hours and hazardous factory conditions."
+        },
+        {
+          "term": "Novel",
+          "definition": "New or unusual in an interesting way",
+          "example": "The engineer patented a novel filtration mechanism that drastically cut industrial water waste."
+        },
+        {
+          "term": "Inevitable",
+          "definition": "Certain to happen; unavoidable",
+          "example": "Given the accelerating rate of inflation, economic analysts deemed a rise in interest rates inevitable."
+        },
+        {
+          "term": "Conventional",
+          "definition": "Ordinary or commonplace",
+          "example": "Rather than following conventional architectural patterns, the designer used sustainable bamboo."
+        },
+        {
+          "term": "Detractor",
+          "definition": "A person who tries to take away from the quality, value or reputation of something or someone",
+          "example": "Despite the harsh critique of every persistent detractor, the young artist continued to innovate."
+        },
+        {
+          "term": "Dispersed",
+          "definition": "Spread widely",
+          "example": "Seeds of the dandelion plant are dispersed across vast distances by gusty autumn breezes."
+        },
+        {
+          "term": "Elicit",
+          "definition": "Evoke or draw out a response, answer, or fact from someone in reaction to one's own actions or questions",
+          "example": "The investigative reporter asked incisive questions designed to elicit honest remarks from the CEO."
+        },
+        {
+          "term": "Catalyze",
+          "definition": "To bring about a chemical reaction; to bring about or inspire",
+          "example": "The publication of the activist's investigative book helped catalyze nationwide environmental reforms."
+        },
+        {
+          "term": "Evade",
+          "definition": "To escape or slip away",
+          "example": "The nimble arctic hare used its camouflage to evade predatory snowy owls on the tundra."
+        },
+        {
+          "term": "Exploit",
+          "definition": "To make full use of and derive benefit from; to treat someone unfairly in order to make money or gain an advantage",
+          "example": "Colonial powers frequently sought to exploit the rich mineral reserves of conquered territories."
+        },
+        {
+          "term": "Sporadic",
+          "definition": "Occurring at irregular intervals or only in a few places",
+          "example": "The meteor shower produced sporadic bursts of light across the otherwise dark midnight sky."
+        },
+        {
+          "term": "Momentous",
+          "definition": "Of great importance or significance, especially in having a bearing on future events",
+          "example": "The signing of the peace accord was a momentous milestone that ended decades of civil unrest."
+        },
+        {
+          "term": "Pristine",
+          "definition": "Clean and fresh as if new; spotless",
+          "example": "The remote alpine lake remained in pristine condition due to strict environmental protections."
+        },
+        {
+          "term": "Constrict",
+          "definition": "To make narrower or tighten",
+          "example": "Cold atmospheric temperatures cause superficial blood vessels to constrict to preserve bodily heat."
+        },
+        {
+          "term": "Ecology",
+          "definition": "Study of the natural world and interactions among organisms",
+          "example": "Her graduate thesis in ecology examined how apex predator reintroduction revitalized riparian forests."
+        },
+        {
+          "term": "Entomology",
+          "definition": "Study of insects",
+          "example": "Specializing in entomology, the researcher discovered three previously unclassified species of beetles."
+        },
+        {
+          "term": "Genetics",
+          "definition": "Study of genes and hereditary traits",
+          "example": "Modern advancements in genetics enable botanists to breed crops resistant to severe drought."
+        },
+        {
+          "term": "Ornithology",
+          "definition": "Study of birds",
+          "example": "His lifelong passion for ornithology led him to track the migratory corridors of arctic terns."
+        },
+        {
+          "term": "Paleontology",
+          "definition": "Study of fossils and prehistoric life",
+          "example": "Excavations directed by the department of paleontology unearthed an intact velociraptor skeleton."
+        },
+        {
+          "term": "Zoology",
+          "definition": "Study of animals and animal behavior",
+          "example": "Courses in comparative zoology explore anatomical adaptations across diverse terrestrial vertebrates."
+        },
+        {
+          "term": "Astronomy",
+          "definition": "Study of stars, planets, and celestial phenomena",
+          "example": "Infrared space telescopes revolutionized observational astronomy by peering through cosmic dust clouds."
+        },
+        {
+          "term": "Botany",
+          "definition": "Study of plants",
+          "example": "Early pioneers in botany classified hundreds of medicinal flora across the rainforest canopy."
+        },
+        {
+          "term": "Neuroscience",
+          "definition": "Science of the brain and nervous system",
+          "example": "Cutting-edge tools in neuroscience allow cognitive scientists to map active neural pathways during sleep."
+        },
+        {
+          "term": "Geology",
+          "definition": "Study of rocks and Earth's physical structure",
+          "example": "Fieldwork in volcanic geology revealed stratigraphic layers left by cataclysmic prehistoric eruptions."
+        },
+        {
+          "term": "Anthropology",
+          "definition": "Study of human behavior, society, and social organization",
+          "example": "Cultural anthropology investigates kinship structures and oral traditions across remote societies."
+        },
+        {
+          "term": "Archaeology",
+          "definition": "Study of historical human activity through the excavation of physical objects",
+          "example": "Marine archaeology yielded pottery relics preserved inside a sunken Mediterranean cargo vessel."
+        },
+        {
+          "term": "Economics",
+          "definition": "Study of monetary systems, production, and resource distribution",
+          "example": "The principles of microeconomic theory explain how consumer demand shifts in response to price changes."
+        },
+        {
+          "term": "Ethnography",
+          "definition": "Study of individual cultures through direct immersion",
+          "example": "The sociologist published an intimate ethnography depicting life among nomadic pastoralist herders."
+        },
+        {
+          "term": "Folklore",
+          "definition": "Study of traditional stories, customs, and myths",
+          "example": "Appalachian folklore preserves ancient storytelling motifs that crossed the Atlantic centuries ago."
+        },
+        {
+          "term": "Sociology",
+          "definition": "Study of everyday human social behaviors and interactions",
+          "example": "Scholars of urban sociology analyze how transit access affects social mobility in metropolitan hubs."
+        },
+        {
+          "term": "Hierarchy",
+          "definition": "System of rank or organization where elements are graded above one another",
+          "example": "Wolf packs establish a clear social hierarchy to maintain pack order and facilitate cooperative hunting."
+        },
+        {
+          "term": "Indigenous",
+          "definition": "Native to a particular region or environment",
+          "example": "Conservationists worked alongside indigenous communities to protect old-growth temperate rainforests."
+        },
+        {
+          "term": "Inhibit",
+          "definition": "Prevent, hinder, or impede an action or process",
+          "example": "Extreme cold temperatures can inhibit enzymatic reactions necessary for cellular respiration."
+        },
+        {
+          "term": "Pigment",
+          "definition": "Natural coloring matter in animals, plants, or minerals",
+          "example": "Chlorophyll is the predominant green pigment enabling photosynthetic plants to absorb solar light."
+        },
+        {
+          "term": "Predisposed",
+          "definition": "Having a tendency or susceptibility toward something beforehand",
+          "example": "Due to inherited genetic markers, some individuals are predisposed to elevated blood pressure."
+        },
+        {
+          "term": "Equitable",
+          "definition": "Fair and just; treating everyone equally",
+          "example": "The council sought an equitable distribution of public education funds across all municipal districts."
+        },
+        {
+          "term": "Regenerate",
+          "definition": "Regrow or renew lost tissue, energy, or vitality",
+          "example": "Certain salamander species retain the astonishing biological ability to regenerate amputated limbs."
+        },
+        {
+          "term": "Stimulus",
+          "definition": "Something that provokes a specific functional response or reaction",
+          "example": "The sudden flash of intense light acted as a sensory stimulus triggering an involuntary eye blink."
+        },
+        {
+          "term": "Indulgent",
+          "definition": "Having or indicating a tendency to be overly generous or lenient",
+          "example": "The indulgent grandparents allowed the children to stay up well past their customary bedtime."
+        },
+        {
+          "term": "Feasible",
+          "definition": "Possible to do easily or conveniently; viable",
+          "example": "The civil engineer presented a feasible proposal to expand light rail transit without exceeding budget."
+        },
+        {
+          "term": "Oblivious",
+          "definition": "Unaware or unmindful of what is happening around oneself",
+          "example": "Absorbed in her novel, the student was completely oblivious to the bustling commuters on the train."
+        },
+        {
+          "term": "Absolve",
+          "definition": "To clear of wrongdoing; pardon or grant forgiveness",
+          "example": "Newly uncovered security footage served to absolve the wrongly accused suspect of all robbery charges."
+        },
+        {
+          "term": "Behold",
+          "definition": "To see or observe something, often with a sense of wonder",
+          "example": "Standing upon the rim of the canyon, travelers paused to behold the majestic sunrise over the peaks."
+        },
+        {
+          "term": "Acclaim",
+          "definition": "To praise openly and enthusiastically",
+          "example": "The debut symphony won international acclaim from both seasoned critics and classical audiences."
+        },
+        {
+          "term": "Rectify",
+          "definition": "To correct or make right",
+          "example": "The administration took immediate measures to rectify the accounting discrepancies in the financial report."
+        },
+        {
+          "term": "Chastise",
+          "definition": "To criticize severely or reprimand sharply",
+          "example": "The conductor stopped the rehearsal to chastise musicians who had failed to practice the score."
+        },
+        {
+          "term": "Satiate",
+          "definition": "To satisfy a desire or appetite fully or to excess",
+          "example": "A hearty warm meal of vegetable stew helped satiate the weary hikers after their twenty-mile trek."
+        },
+        {
+          "term": "Adversary",
+          "definition": "An opponent or enemy in a contest, conflict, or dispute",
+          "example": "The grandmaster analyzed every move made by his adversary with deep tactical concentration."
+        },
+        {
+          "term": "Align",
+          "definition": "To support or adopt the position; place in a straight line",
+          "example": "The independent senator chose to align her vote with the environmental committee's legislation."
+        },
+        {
+          "term": "Comprehensive",
+          "definition": "Complete; including or dealing with all or nearly all elements",
+          "example": "The medical encyclopedia provides a comprehensive overview of human infectious diseases."
+        },
+        {
+          "term": "Strenuous",
+          "definition": "Requiring great effort, energy, or exertion",
+          "example": "Ascending the steep rocky summit proved to be a strenuous physical challenge for the climbers."
+        },
+        {
+          "term": "Rudimentary",
+          "definition": "Very basic; relating to an immature or undeveloped form",
+          "example": "Early hominids fashioned rudimentary flint knives to scrape hides and butcher game."
+        },
+        {
+          "term": "Badger",
+          "definition": "To pester, harass, or annoy persistently",
+          "example": "Reporters continued to badger the governor with questions until he abruptly adjourned the briefing."
+        },
+        {
+          "term": "Imposing",
+          "definition": "Having a striking appearance or commanding pressure; grand",
+          "example": "The neoclassical cathedral featured an imposing marble facade that dominated the city square."
+        },
+        {
+          "term": "Deplete",
+          "definition": "To decrease or exhaust the supply of",
+          "example": "Decades of unregulated commercial overfishing threaten to deplete offshore cod populations."
+        },
+        {
+          "term": "Adverse",
+          "definition": "Unfavorable, unlucky, harmful, or preventing success",
+          "example": "The maritime voyage encountered adverse weather conditions that forced the vessel back to port."
+        },
+        {
+          "term": "Ominous",
+          "definition": "Menacing, threatening, or giving the impression that something bad will happen",
+          "example": "The ominous rumble of distant thunder signaled that torrential rain would arrive shortly."
+        },
+        {
+          "term": "Perpetuate",
+          "definition": "To continue; to keep something from dying out or being forgotten",
+          "example": "Relying on outdated textbooks can perpetuate historical misconceptions in the classroom."
+        },
+        {
+          "term": "Erratic",
+          "definition": "Unpredictable, irregular, or uneven in pattern or movement",
+          "example": "Erratic wind fluctuations made it exceedingly difficult for pilots to land the aircraft safely."
+        },
+        {
+          "term": "Manifestations",
+          "definition": "Visible or evident signs or expressions of something; to make something clear or apparent",
+          "example": "Tremors and seismic rumbles were early geological manifestations of the volcano's impending eruption."
+        },
+        {
+          "term": "Depict",
+          "definition": "To draw or portray in words or artistic form",
+          "example": "The ancient cave paintings depict herds of bison traversing grassy glacial valleys."
+        },
+        {
+          "term": "Expedite",
+          "definition": "To speed up the progress of an action or process",
+          "example": "The passport agency offered an express service to expedite international travel documents."
+        },
+        {
+          "term": "Monetize",
+          "definition": "To make money from something or convert into currency",
+          "example": "The digital creator sought sustainable strategies to monetize educational video content."
+        },
+        {
+          "term": "Foreboding",
+          "definition": "An ominous foretelling; a feeling that something bad will happen",
+          "example": "A dark sense of foreboding settled over the crew as the ship entered uncharted, stormy waters."
+        },
+        {
+          "term": "Aversion",
+          "definition": "Intense dislike; revulsion or strong disinclination",
+          "example": "Having suffered food poisoning, the traveler developed a lifelong aversion to shellfish."
+        },
+        {
+          "term": "Sedentary",
+          "definition": "Passive or inactive; tending to spend much time seated",
+          "example": "Health professionals caution that maintaining a sedentary lifestyle increases cardiovascular risk."
+        },
+        {
+          "term": "Occupy",
+          "definition": "Take possession of a place or thing; reside in",
+          "example": "Allied forces prepared to occupy the strategic harbor town to protect supply shipping."
+        },
+        {
+          "term": "Palatable",
+          "definition": "Acceptable to the mind or senses; pleasant to taste",
+          "example": "The diplomat proposed a compromise palatable to both corporate leaders and labor unions."
+        },
+        {
+          "term": "Credible",
+          "definition": "Believable and convincing",
+          "example": "Historians require credible primary documentation before certifying an oral legend as fact."
+        },
+        {
+          "term": "Inconsequential",
+          "definition": "Lacking importance or significance, trivial, unimportant",
+          "example": "Minor typographical quirks in the first draft were deemed inconsequential to the plot."
+        },
+        {
+          "term": "Convene",
+          "definition": "To come together for a meeting or assembly",
+          "example": "World leaders agreed to convene in Geneva to renegotiate international maritime boundaries."
+        },
+        {
+          "term": "Opulent",
+          "definition": "Extremely wealthy; extravagant and luxurious",
+          "example": "The opulent ballroom was adorned with crystal chandeliers and gilded rococo mirrors."
+        },
+        {
+          "term": "Livid",
+          "definition": "Extremely angry; furious",
+          "example": "The customer was livid when the airline repeatedly canceled flights without offering lodging."
+        },
+        {
+          "term": "Yield",
+          "definition": "To produce or provide; to surrender under pressure",
+          "example": "Careful crop rotation allowed the farmland to yield record quantities of winter wheat."
+        },
+        {
+          "term": "Callous",
+          "definition": "Insensitive; showing a cruel disregard for others",
+          "example": "Critics condemned the landlord's callous refusal to repair heating systems during subzero weather."
+        },
+        {
+          "term": "Scrutiny",
+          "definition": "Critical observation or examination",
+          "example": "The proposed constitutional amendment faced intense scrutiny from legal scholars nationwide."
+        },
+        {
+          "term": "Inherent",
+          "definition": "Inborn or naturally occurring in something; intrinsic",
+          "example": "Mountaineering carries inherent risks that cannot be entirely eliminated through technology."
+        },
+        {
+          "term": "Marginal",
+          "definition": "Unimportant, minor, or situated at the outer edge",
+          "example": "The minor tweak to engine aerodynamics produced only a marginal gain in overall fuel efficiency."
+        },
+        {
+          "term": "Debilitate",
+          "definition": "To make weak or feeble; drain strength from",
+          "example": "Chronic respiratory illnesses can severely debilitate patients if left unmanaged."
+        },
+        {
+          "term": "Debase",
+          "definition": "To lower in value, quality, or character",
+          "example": "Adding base metals to gold coinage was an ancient practice used to debase the imperial currency."
+        },
+        {
+          "term": "Defunct",
+          "definition": "No longer in existence or use; extinct",
+          "example": "The railway line became defunct after interstate highways superseded freight train travel."
+        },
+        {
+          "term": "Articulate",
+          "definition": "Well spoken; expressing thoughts fluently and clearly",
+          "example": "The debater gave an articulate defense of democratic institutions during the town hall forum."
+        },
+        {
+          "term": "Alleviate",
+          "definition": "To relieve or make more bearable",
+          "example": "Public transit expansions helped alleviate daily traffic gridlock on the city's main suspension bridge."
+        },
+        {
+          "term": "Unyielding",
+          "definition": "Not giving in; stubborn or firm under pressure",
+          "example": "The labor union remained unyielding in its insistence on safer industrial working conditions."
+        },
+        {
+          "term": "Diligent",
+          "definition": "Characterized by steady, earnest, and energetic application",
+          "example": "Through diligent research in the National Archives, the genealogist traced six generations of ancestors."
+        },
+        {
+          "term": "Pedestrian",
+          "definition": "Dull, ordinary; lacking inspiration",
+          "example": "Reviewers described the novel's plot as pedestrian, noting it relied on overused crime fiction tropes."
+        },
+        {
+          "term": "Malignant",
+          "definition": "Causing harm; malevolent or cancerous",
+          "example": "The oncologist confirmed that the biopsy showed no sign of malignant cell growth."
+        },
+        {
+          "term": "Flaunt",
+          "definition": "To display or show off ostentatiously",
+          "example": "Rather than flaunt his vast personal fortune, the philanthropist lived in an unpretentious home."
+        },
+        {
+          "term": "Desolate",
+          "definition": "Depressed; bleak; lifeless and deserted",
+          "example": "Winds swept across the desolate tundra, where few plants could survive the harsh polar winter."
+        },
+        {
+          "term": "Convey",
+          "definition": "To communicate or express something",
+          "example": "The author used poignant dialogue to convey the characters' deep sense of longing and sorrow."
+        },
+        {
+          "term": "Debunk",
+          "definition": "To prove false; expose the falseness of a myth or idea",
+          "example": "Investigative journalists worked tirelessly to debunk popular internet conspiracy theories."
+        },
+        {
+          "term": "Ideology",
+          "definition": "A systematic body of concepts or belief system",
+          "example": "The political party's economic ideology centered on free markets and minimal regulatory oversight."
+        },
+        {
+          "term": "Contemporary",
+          "definition": "Current; belonging to the present era",
+          "example": "The gallery showcases contemporary sculptures crafted by living African artists."
+        },
+        {
+          "term": "Displace",
+          "definition": "To force someone or something from its home or habitat",
+          "example": "Rising sea levels threaten to displace vulnerable island communities across the Pacific."
+        },
+        {
+          "term": "Prestige",
+          "definition": "The reputation or influence arising from success or rank",
+          "example": "Winning the prestigious research prize elevated the university's international academic standing."
+        },
+        {
+          "term": "Disposition",
+          "definition": "A person's inherent qualities of mind and character; personality",
+          "example": "Known for her cheerful disposition, the physician put nervous young patients immediately at ease."
+        },
+        {
+          "term": "Peripheral",
+          "definition": "At the edge of, not central; of minor relevance",
+          "example": "The committee focused on core budgetary deficits and ignored peripheral ideological arguments."
+        },
+        {
+          "term": "Accolade",
+          "definition": "Praise; distinction or award granted in honor",
+          "example": "The lifetime achievement accolade celebrated her half-century of contributions to biochemisty."
+        },
+        {
+          "term": "Reluctant",
+          "definition": "Unwilling or hesitant",
+          "example": "The witness was initially reluctant to speak out until prosecutors promised protective security."
+        },
+        {
+          "term": "Obliterate",
+          "definition": "To completely destroy; wipe out leaving no trace",
+          "example": "The heavy coastal hurricane threatened to obliterate wooden boardwalks along the waterfront."
+        }
+      ]
+    },
+    {
+      "category_name": "PrepPros SAT - Level 2 (Difficult)",
+      "words": [
+        {
+          "term": "Buttress",
+          "definition": "To increase the strength of or justification for; to reinforce",
+          "example": "The defense attorney presented newly unearthed financial records to buttress her client's testimony."
+        },
+        {
+          "term": "Abate",
+          "definition": "To decrease, recede, or lessen in intensity",
+          "example": "After three days of gale-force winds, the blizzard finally began to abate over the valley."
+        },
+        {
+          "term": "Unobtrusive",
+          "definition": "Not conspicuous or attracting attention; discreet",
+          "example": "The museum installed unobtrusive security sensors that did not distract from the Renaissance paintings."
+        },
+        {
+          "term": "Evoke",
+          "definition": "To bring or recall to the conscious mind",
+          "example": "The haunting melody of the cello was able to evoke memories of the author's childhood in rural Ireland."
+        },
+        {
+          "term": "Conjecture",
+          "definition": "The formation or expression of an opinion or theory without sufficient evidence for proof",
+          "example": "Without tangible planetary samples, astronomers acknowledged their hypothesis was based on conjecture."
+        },
+        {
+          "term": "Mitigate",
+          "definition": "To make something less severe, serious, or painful",
+          "example": "Planting mangrove barriers along coastal estuaries helps mitigate storm surge damage during hurricanes."
+        },
+        {
+          "term": "Contempt",
+          "definition": "The feeling that a person or thing is beneath consideration, worthless, or deserving scorn",
+          "example": "The corrupt oligarch treated the reformist regulations with open contempt."
+        },
+        {
+          "term": "Hinder",
+          "definition": "Create difficulties for someone or something, resulting in delay or obstruction",
+          "example": "Budgetary cutbacks and administrative red tape continued to hinder construction on the new hospital."
+        },
+        {
+          "term": "Implicit",
+          "definition": "Implied but not plainly expressed",
+          "example": "Although no formal contract was drafted, there was an implicit agreement that both parties would share costs."
+        },
+        {
+          "term": "Invoke",
+          "definition": "To cite or appeal to someone or something as an authority for an action or in support of an argument",
+          "example": "The constitutional scholar invoked landmark civil liberties precedents during oral arguments."
+        },
+        {
+          "term": "Dormant",
+          "definition": "Having normal physical functions suspended or slowed down for a period of time; in or as if in a deep sleep",
+          "example": "The volcanic crater had remained dormant for over two centuries before suddenly spewing plumes of ash."
+        },
+        {
+          "term": "Copious",
+          "definition": "Plentiful in number; abundant in quantity",
+          "example": "The biologist took copious notes during six months of field observation in the Amazon basin."
+        },
+        {
+          "term": "Disseminate",
+          "definition": "To scatter or spread widely",
+          "example": "Public health agencies utilized social networks to disseminate preventative advice during the flu season."
+        },
+        {
+          "term": "Eclipse",
+          "definition": "To make less outstanding or important by comparison; obscure",
+          "example": "The composer's later symphonic masterpieces tended to eclipse the brilliant chamber music of his youth."
+        },
+        {
+          "term": "Uncanny",
+          "definition": "Strange or mysterious, especially in an unsettling way",
+          "example": "The portrait bore an uncanny resemblance to the historical founder who had passed away two centuries prior."
+        },
+        {
+          "term": "Supplant",
+          "definition": "To supersede and replace; to take the place of",
+          "example": "Digital streaming services rapidly rose to supplant optical disc rentals in household entertainment."
+        },
+        {
+          "term": "Placate",
+          "definition": "To make someone less angry or hostile",
+          "example": "The corporation offered generous severance packages to placate striking factory workers."
+        },
+        {
+          "term": "Pretentious",
+          "definition": "Attempting to impress by showing greater importance, talent, culture, etc. than is possessed",
+          "example": "Critics mocked the film's pretentious dialogue, arguing it was confusing rather than profound."
+        },
+        {
+          "term": "Palpable",
+          "definition": "Capable of being touched or felt; easily perceived",
+          "example": "The tension inside the courtroom was palpable as the foreman rose to deliver the jury's verdict."
+        },
+        {
+          "term": "Omit",
+          "definition": "To leave out or exclude something or someone",
+          "example": "The editor advised the author to omit repetitive adjectives to tighten the novel's pacing."
+        },
+        {
+          "term": "Transpose",
+          "definition": "Cause two or more things to exchange places",
+          "example": "The pianist had to transpose the difficult musical arrangement into a lower key to suit the vocalist."
+        },
+        {
+          "term": "Entail",
+          "definition": "Involve something as necessary or inevitable part or consequence",
+          "example": "Embarking upon an expedition to the Antarctic will entail months of grueling physical preparation."
+        },
+        {
+          "term": "Insidious",
+          "definition": "Treacherous, spreading harm stealthily and gradually",
+          "example": "High blood pressure is often called an insidious condition because it damages arteries without early symptoms."
+        },
+        {
+          "term": "Calamitous",
+          "definition": "Disastrous; causing great damage or distress",
+          "example": "The prolonged drought brought calamitous consequences to regional agricultural yields and rural economies."
+        },
+        {
+          "term": "Adept",
+          "definition": "Very skilled, expert, or proficient",
+          "example": "The diplomatic negotiator was adept at easing hostilities between rival faction leaders."
+        },
+        {
+          "term": "Fickle",
+          "definition": "Erratic; changing frequently, especially regarding loyalties or interests",
+          "example": "Fashion trends are notoriously fickle, shifting dramatically with each successive season."
+        },
+        {
+          "term": "Aesthetic",
+          "definition": "Pertaining to the appreciation of beauty or good taste",
+          "example": "The architect balanced aesthetic appeal with structural efficiency when designing the glass pavilion."
+        },
+        {
+          "term": "Corollary",
+          "definition": "A statement or condition that logically results from a proven argument",
+          "example": "Economic prosperity, as a corollary of open trade, fostered cultural renaissance throughout the region."
+        },
+        {
+          "term": "Prevail",
+          "definition": "To win, triumph, or prove more powerful",
+          "example": "Despite facing insurmountable odds, the courageous resistance managed to prevail against the invaders."
+        },
+        {
+          "term": "Prevailing",
+          "definition": "Widespread; generally accepted or current",
+          "example": "The prevailing consensus among seismologists is that fault line monitoring must be modernized."
+        },
+        {
+          "term": "Antithesis",
+          "definition": "The direct opposite; a person or thing that is the direct contrary of someone or something else",
+          "example": "Selfish corruption in public office is the complete antithesis of dedicated civil service."
+        },
+        {
+          "term": "Autonomous",
+          "definition": "Acting independently or having the freedom to govern itself",
+          "example": "The remote indigenous tribe retained autonomous governance over its traditional ancestral lands."
+        },
+        {
+          "term": "Decry",
+          "definition": "To publicly denounce; discredit or express strong disapproval of",
+          "example": "Educators united to decry proposed funding reductions for public school library and music programs."
+        },
+        {
+          "term": "Defame",
+          "definition": "To libel or slander; to ruin the good name of someone",
+          "example": "The celebrity filed a defamation lawsuit against the tabloid for printing falsehoods to defame her reputation."
+        },
+        {
+          "term": "Feign",
+          "definition": "To represent falsely; to fake or pretend",
+          "example": "The actor had to feign utter surprise when his character discovered the hidden treasure chest."
+        },
+        {
+          "term": "Stipulate",
+          "definition": "To specify or demand a requirement or condition as part of an agreement",
+          "example": "The lease agreement stipulates that tenants must not conduct loud commercial operations on the premises."
+        },
+        {
+          "term": "Deplorable",
+          "definition": "Regrettable; deserving strong condemnation; shockingly bad",
+          "example": "Inspectors condemned the deplorable sanitary conditions found inside the unregistered food packing plant."
+        },
+        {
+          "term": "Disparate",
+          "definition": "Different; incompatible; essentially different in kind",
+          "example": "The interdisciplinary symposium brought together scholars from disparate fields such as linguistics and robotics."
+        },
+        {
+          "term": "Magnanimous",
+          "definition": "Forgiving; generous in forgiving an insult or injury",
+          "example": "In a magnanimous gesture after the contested election, the victor praised his opponent's tireless dedication."
+        },
+        {
+          "term": "Synopsis",
+          "definition": "A brief summary or overview of a longer text or event",
+          "example": "The researcher provided a concise synopsis of the eight-hundred-page environmental impact report."
+        },
+        {
+          "term": "Harrowing",
+          "definition": "Frightening or traumatic; acutely distressing",
+          "example": "Surviving three weeks stranded on the Arctic ice shelf was a harrowing ordeal for the expedition team."
+        },
+        {
+          "term": "Paucity",
+          "definition": "Scarcity or lack of; presence of something only in small or insufficient quantities",
+          "example": "A chronic paucity of independent archaeological evidence made it difficult to date the stone temple."
+        },
+        {
+          "term": "Clandestine",
+          "definition": "Done in secret; kept secret or done secretively, especially because illicit",
+          "example": "Intelligence officers monitored the clandestine meeting between the foreign spies in the abandoned warehouse."
+        },
+        {
+          "term": "Reverberate",
+          "definition": "To echo or resound repeatedly; to have a lasting impact or influence",
+          "example": "The shocking Supreme Court decision will reverberate throughout the legal system for generations to come."
+        },
+        {
+          "term": "Cursory",
+          "definition": "Not thorough; superficial; hastily done",
+          "example": "A cursory glance at the financial balance sheet failed to reveal the sophisticated embezzlement scheme."
+        },
+        {
+          "term": "Posthumous",
+          "definition": "Occurring, awarded, or appearing after one's death",
+          "example": "The courageous soldier was awarded a posthumous Medal of Honor for his selfless battlefield heroics."
+        },
+        {
+          "term": "Propensity",
+          "definition": "A tendency or natural inclination towards something",
+          "example": "The scientist exhibited a natural propensity for identifying subtle mathematical patterns in raw telemetry."
+        },
+        {
+          "term": "Municipal",
+          "definition": "Relating to the local government or administration of a city or town",
+          "example": "Citizens voted in favor of the municipal bond measure to renovate crumbling downtown bridges."
+        },
+        {
+          "term": "Supple",
+          "definition": "Flexible; bending and moving easily and gracefully",
+          "example": "The gymnast maintained supple joints and fluid reflexes through decades of rigorous yoga conditioning."
+        },
+        {
+          "term": "Replete",
+          "definition": "Completely filled or well-supplied with something",
+          "example": "The historic maritime museum was replete with model galleons, naval cannons, and navigational astrolabes."
+        },
+        {
+          "term": "Prolific",
+          "definition": "Very productive; producing much fruit, foliage, or many works",
+          "example": "Isaac Asimov was an exceptionally prolific author, publishing hundreds of science fiction novels and essays."
+        },
+        {
+          "term": "Sway",
+          "definition": "To have control or influence over someone or something; rule",
+          "example": "Lobbyists attempted to sway legislative votes by funding extensive advertising campaigns across the state."
+        },
+        {
+          "term": "Culpable",
+          "definition": "Deserving of blame; guilty of a fault or crime",
+          "example": "The internal investigation found senior managers culpable for ignoring repeated workplace safety warnings."
+        },
+        {
+          "term": "Deride",
+          "definition": "To ridicule or mock; express contempt for",
+          "example": "Arrogant theater critics were quick to deride the experimental play before it found widespread audience appeal."
+        },
+        {
+          "term": "Overt",
+          "definition": "Not hidden; obvious; done or shown openly",
+          "example": "While previous hostility had been veiled, the diplomat faced overt animosity during the bilateral summit."
+        },
+        {
+          "term": "Miser",
+          "definition": "A stingy person who hoards wealth and spends as little money as possible",
+          "example": "Charles Dickens' Ebenezer Scrooge is the quintessential literary miser who hoards pennies and shuns charity."
+        },
+        {
+          "term": "Heterodox",
+          "definition": "Contrary to or differing from established beliefs or accepted doctrines",
+          "example": "Galileo faced severe religious persecution for championing heterodox astronomical theories of heliocentrism."
+        },
+        {
+          "term": "Ornate",
+          "definition": "Elaborately or heavily decorated; complex style",
+          "example": "The Victorian ballroom featured ornate crown moldings and intricate hand-carved mahogany banisters."
+        },
+        {
+          "term": "Introspective",
+          "definition": "Meditative, thoughtful; examining one's own mental and emotional processes",
+          "example": "The poet retreated to a secluded cabin in the woods to write introspective verses about mortality and solitude."
+        },
+        {
+          "term": "Credulity",
+          "definition": "Gullibility; a tendency to be too ready to believe something without proof",
+          "example": "Fraudulent fortune tellers prey upon the credulity of grieving people seeking closure."
+        },
+        {
+          "term": "Irrefutable",
+          "definition": "Impossible to deny or disprove; incontrovertible",
+          "example": "DNA fingerprinting provided irrefutable forensic proof that the defendant was at the crime scene."
+        },
+        {
+          "term": "Amicable",
+          "definition": "Agreeable; having a spirit of friendliness; without serious disagreement",
+          "example": "Despite ending their business partnership, the cofounders reached an amicable division of commercial assets."
+        },
+        {
+          "term": "Resolute",
+          "definition": "Determined; admirably purposeful, unwavering",
+          "example": "The union leader remained resolute in defending healthcare benefits despite corporate threats of factory closures."
+        },
+        {
+          "term": "Discordant",
+          "definition": "Conflicting; disagreeable in sound; harsh or dissonant",
+          "example": "The amateur brass band produced a discordant blast of noise that startled the festival crowd."
+        },
+        {
+          "term": "Benevolent",
+          "definition": "Kind and helpful; well meaning and charitable",
+          "example": "A benevolent anonymous donor established a million-dollar endowment to support underprivileged college students."
+        },
+        {
+          "term": "Epitome",
+          "definition": "A perfect example of a particular quality or type",
+          "example": "With her graceful poise and tireless dedication, Eleanor Roosevelt was the epitome of compassionate leadership."
+        },
+        {
+          "term": "Tactful",
+          "definition": "Sensitive in dealing with others; possessing a keen sense of what to say or do to avoid giving offense",
+          "example": "The diplomat gave a tactful response that satisfied reporters without disclosing classified state secrets."
+        },
+        {
+          "term": "Paltry",
+          "definition": "Lacking in importance; trivial; petty or meager in amount",
+          "example": "The landlord offered a paltry discount of ten dollars despite the tenants enduring two weeks without heat."
+        },
+        {
+          "term": "Arduous",
+          "definition": "Involving strenuous effort; requiring a lot of work and endurance",
+          "example": "Trekking through the dense Himalayan pass in blizzard conditions was an arduous ordeal for the climbers."
+        },
+        {
+          "term": "Dispassionate",
+          "definition": "Calm; fair; not influenced by strong emotion, and so able to be rational and impartial",
+          "example": "A dispassionate judicial review ensured that the verdict was guided strictly by law rather than public outrage."
+        },
+        {
+          "term": "Elucidate",
+          "definition": "To explain or clarify; make something clear",
+          "example": "The quantum physicist used relatable analogies to elucidate complex wave-particle duality for the general audience."
+        },
+        {
+          "term": "Myriad",
+          "definition": "A vast number; countless or extremely great in number",
+          "example": "Tropical coral reefs provide shelter and sustenance to a myriad of colorful marine organisms."
+        },
+        {
+          "term": "Unpretentious",
+          "definition": "Modest; not attempting to impress others with an appearance of greater importance or elegance",
+          "example": "The Nobel laureate lived in an unpretentious bungalow and drove an old car throughout his retirement."
+        },
+        {
+          "term": "Eclectic",
+          "definition": "Getting ideas from a diverse range of sources; deriving ideas, style, or taste from a broad variety",
+          "example": "Her eclectic taste in music spanned classical chamber pieces, delta blues, and modern electronic ambient beats."
+        },
+        {
+          "term": "Candid",
+          "definition": "Direct; truthful and straightforward; frank",
+          "example": "In a candid interview, the former prime minister acknowledged strategic blunders made during the economic crisis."
+        },
+        {
+          "term": "Malleable",
+          "definition": "Capable of being shaped or formed; easily influenced",
+          "example": "Pure gold is an exceptionally malleable metal that can be hammered into gossamer-thin decorative leaf."
+        },
+        {
+          "term": "Recurrent",
+          "definition": "Occurring repeatedly or at regular intervals",
+          "example": "The patient suffered from recurrent bouts of migraine headaches brought on by chronic occupational stress."
+        },
+        {
+          "term": "Incongruous",
+          "definition": "Not corresponding or agreeing; out of place; not in harmony with surroundings",
+          "example": "A sleek ultra-modern glass skyscraper looked incongruous towering amidst the cobblestone medieval village."
+        },
+        {
+          "term": "Inadvertent",
+          "definition": "Unintentional; not resulting from deliberate planning",
+          "example": "The typo on the formal invitation was an inadvertent error made during the final rush to print."
+        },
+        {
+          "term": "Incisive",
+          "definition": "Sharpness of mind; intelligently analytical and clear-thinking",
+          "example": "The journalist's incisive questions cut through corporate obfuscation and uncovered the true source of toxic dumping."
+        },
+        {
+          "term": "Ascertain",
+          "definition": "To determine or discover with certainty",
+          "example": "Forensic investigators worked diligently to ascertain the exact sequence of events leading to the collision."
+        },
+        {
+          "term": "Coherent",
+          "definition": "Logically connected; consistent and clear",
+          "example": "The student crafted a coherent essay that logically synthesized multiple complex philosophical arguments."
+        },
+        {
+          "term": "Appraise",
+          "definition": "To estimate the value of something; assess the quality",
+          "example": "The antique dealer was hired to appraise the rare collection of seventeenth-century porcelain vases."
+        },
+        {
+          "term": "Inundate",
+          "definition": "To overwhelm; to flood with water or an abundance of things",
+          "example": "Following the sensational news broadcast, customer service hotlines were inundated with thousands of inquiries."
+        },
+        {
+          "term": "Immutable",
+          "definition": "Unchangeable; unchanging over time or unable to be altered",
+          "example": "Albert Einstein demonstrated that space and time are dynamic rather than immutable cosmic constants."
+        },
+        {
+          "term": "Accrue",
+          "definition": "To increase or to gain over time; accumulate",
+          "example": "Over several decades, interest payments began to accrue significantly on the long-term sovereign bond."
+        },
+        {
+          "term": "Hamper",
+          "definition": "To prevent the free movement or action of; hinder or obstruct",
+          "example": "Torrential monsoon rains threaten to hamper relief efforts across the flooded delta provinces."
+        },
+        {
+          "term": "Animosity",
+          "definition": "Hatred or bitter hostility; active enmity",
+          "example": "Decades of territorial warfare bred deep animosity between the feuding border clans."
+        },
+        {
+          "term": "Deleterious",
+          "definition": "Harmful to one's health, well-being, or interests",
+          "example": "Environmental toxicologists documented the deleterious impact of microplastics on marine reproductive cycles."
+        },
+        {
+          "term": "Judicious",
+          "definition": "Showing sound judgement; having or showing good sense or discretion",
+          "example": "Through judicious management of municipal funds, the town council avoided taking on high-interest municipal debt."
+        },
+        {
+          "term": "Acumen",
+          "definition": "Sharpness of judgement or insight; ability to make good decisions",
+          "example": "Her shrewd financial acumen enabled the venture capital firm to identify lucrative startups before rivals did."
+        },
+        {
+          "term": "Audacious",
+          "definition": "Bold; fearless; showing a willingness to take surprisingly large risks",
+          "example": "The explorer hatched an audacious plan to cross the Antarctic continent on foot with minimal support."
+        },
+        {
+          "term": "Nefarious",
+          "definition": "Extremely wicked, villainous, or criminal",
+          "example": "Federal cybersecurity agents thwarted a nefarious conspiracy to siphon customer data from major banking servers."
+        },
+        {
+          "term": "Brevity",
+          "definition": "Concise expression without wasted words; shortness of time",
+          "example": "The editor commended the essay for its brevity, observing that Shakespeare considered brevity the soul of wit."
+        },
+        {
+          "term": "Notoriety",
+          "definition": "The state of being famous or well known, typically for some bad quality or deed",
+          "example": "The outlaw gained international notoriety after orchestrating a string of daring railway heists."
+        },
+        {
+          "term": "Homogenous",
+          "definition": "Having the same characteristics throughout; of uniform structure or composition",
+          "example": "The suburban development consisted of homogenous brick houses with identical landscaping and rooflines."
+        },
+        {
+          "term": "Nuance",
+          "definition": "A subtle difference in or shade of meaning, expression, or sound",
+          "example": "A skilled literary translator must preserve the cultural nuances of the original Spanish poetry."
+        },
+        {
+          "term": "Obtrusive",
+          "definition": "Noticeable or imposing in an unwelcome or intrusive way",
+          "example": "The bright neon billboard was so obtrusive that historic preservationists campaigned for its removal."
+        },
+        {
+          "term": "Depreciate",
+          "definition": "To devalue; diminish in value over a period of time",
+          "example": "Brand-new automobiles tend to depreciate rapidly during the first three years of ownership."
+        },
+        {
+          "term": "Derelict",
+          "definition": "Abandoned, in very poor condition; neglectful of duty",
+          "example": "The city converted a derelict warehouse along the riverfront into an expansive public arts center."
+        },
+        {
+          "term": "Interdependent",
+          "definition": "Mutually reliant on each other; interconnected",
+          "example": "Globalized financial markets are deeply interdependent, meaning shocks in one nation reverberate worldwide."
+        },
+        {
+          "term": "Censure",
+          "definition": "To express severe disapproval of; blame or condemn officially",
+          "example": "The ethics committee voted to censure the parliamentarian for accepting undisclosed gifts from lobbyists."
+        },
+        {
+          "term": "Ambiguous",
+          "definition": "Uncertain; open to more than one interpretation; having a double meaning",
+          "example": "The treaty contained ambiguous phrasing that allowed both rival signatories to claim victory."
+        },
+        {
+          "term": "Complacent",
+          "definition": "Self-satisfied; indifferent; accepting of mediocrity without awareness of potential dangers",
+          "example": "After winning three consecutive championships, the team grew complacent and lost to an underdog rival."
+        },
+        {
+          "term": "Indisputable",
+          "definition": "Impossible to question or doubt; incontrovertible",
+          "example": "It is an indisputable scientific fact that water expands when it freezes into crystalline ice."
+        },
+        {
+          "term": "Antagonist",
+          "definition": "An adversary; a person who actively opposes or is hostile to someone or something",
+          "example": "In literature, the protagonist's goals are persistently challenged and thwarted by the antagonist."
+        },
+        {
+          "term": "Intrinsic",
+          "definition": "Belonging naturally; inherent; essential",
+          "example": "Curiosity and a thirst for knowledge are intrinsic qualities of effective scientific researchers."
+        },
+        {
+          "term": "Fortuitous",
+          "definition": "Accidental or happening by chance rather than intention; fortunate",
+          "example": "Alexander Fleming's discovery of penicillin was a fortuitous accident resulting from contaminated petri dishes."
+        },
+        {
+          "term": "Hiatus",
+          "definition": "A pause or gap in a sequence, series, or process; lapse",
+          "example": "After a three-year hiatus from the concert stage, the world-renowned pianist returned to Carnegie Hall."
+        },
+        {
+          "term": "Emulate",
+          "definition": "To imitate or strive to equal or surpass; to copy the actions of someone admirable",
+          "example": "Young musicians across the country sought to emulate the virtuosity and soulful expression of Louis Armstrong."
+        },
+        {
+          "term": "Verbose",
+          "definition": "Using or expressed in more words than are needed; wordy",
+          "example": "The legal contract was so verbose and circuitous that clients required hours to parse a single clause."
+        },
+        {
+          "term": "Assail",
+          "definition": "To attack someone physically or with vehement words and arguments",
+          "example": "Political opponents assailed the prime minister's economic budget during heated parliamentary debate."
+        },
+        {
+          "term": "Fathom",
+          "definition": "To understand a difficult problem after much thought; measure the depth of",
+          "example": "Early navigators could not fathom the immense distances separating continents across the Pacific Ocean."
+        },
+        {
+          "term": "Accost",
+          "definition": "To approach and address someone boldly or aggressively",
+          "example": "As the senator exited the courthouse, aggressive paparazzi rushed forward to accost him with shouted questions."
+        },
+        {
+          "term": "Acuity",
+          "definition": "Sharpness or keenness of thought, vision, or hearing",
+          "example": "Eagles possess extraordinary visual acuity that enables them to spot tiny rodents from thousands of feet up."
+        },
+        {
+          "term": "Extrapolate",
+          "definition": "To estimate or forecast based on existing trends or data",
+          "example": "Demographers used census figures from the past decade to extrapolate urban population growth through 2050."
+        },
+        {
+          "term": "Deferential",
+          "definition": "Showing deference; respectful and yielding to the opinion or wishes of another",
+          "example": "The apprentice maintained a deferential posture when listening to the seasoned master blacksmith's advice."
+        },
+        {
+          "term": "Paradox",
+          "definition": "A seemingly absurd or self-contradictory statement or proposition that when investigated may prove to be well founded or true",
+          "example": "The philosopher pondered the paradox that having greater technological connectivity often leaves people feeling more isolated."
+        },
+        {
+          "term": "Affinity (for)",
+          "definition": "A natural liking or attraction to something",
+          "example": "From an early age, the young naturalist felt a profound affinity for wildlife and forest ecosystems."
+        },
+        {
+          "term": "Aberration",
+          "definition": "A departure from what is normal, usual, or expected, typically one that is unwelcome",
+          "example": "The sudden spike in mercury readings during late October was a seasonal aberration in the alpine region."
+        },
+        {
+          "term": "Proscribe",
+          "definition": "To forbid; prohibit especially by law",
+          "example": "Strict municipal regulations proscribe commercial billboard advertising within designated historic districts."
+        },
+        {
+          "term": "Partition",
+          "definition": "To separate into parts; divide a country or space into discrete territories",
+          "example": "Following the war, international diplomats gathered to partition the contested province into two sovereign states."
+        },
+        {
+          "term": "Disconcerting",
+          "definition": "Causing one to feel unsettled, confused, or worried",
+          "example": "It was disconcerting for the hikers to realize their compass needle was spinning wildly near the iron deposit."
+        },
+        {
+          "term": "Atrophy",
+          "definition": "To deteriorate; waste away, typically as a result of the degeneration of cells or lack of use",
+          "example": "Muscles can rapidly atrophy if a patient remains bedridden without physical therapy during recuperation."
+        },
+        {
+          "term": "Laud",
+          "definition": "To praise highly, especially in a public context",
+          "example": "Education advocates gathered to laud the teacher who created a free literacy program for inner-city youth."
+        },
+        {
+          "term": "Dissonant",
+          "definition": "Harsh or irregular in sound; lacking harmony or agreement",
+          "example": "The avant-garde musical composition relied on dissonant chords to evoke a sense of modern urban angst."
+        }
+      ]
+    },
+    {
+      "category_name": "PrepPros SAT - Level 3 (Expert)",
+      "words": [
+        {
+          "term": "Abet",
+          "definition": "To aid, encourage, or act as an accomplice, especially in doing something wrong",
+          "example": "He refused to abet his friend's reckless scheme to hack into the university's grading database."
+        },
+        {
+          "term": "Abhor",
+          "definition": "To regard with disgust and hatred; detest or loathe",
+          "example": "Pacifists throughout history abhor violence and seek nonviolent diplomatic avenues for conflict resolution."
+        },
+        {
+          "term": "Verisimilitude",
+          "definition": "The appearance of being true or real; resemblance to reality",
+          "example": "The historical novel achieved rich verisimilitude by incorporating authentic nineteenth-century dialects and slang."
+        },
+        {
+          "term": "Conspicuous",
+          "definition": "Standing out so as to be clearly visible; attracting notice or attention",
+          "example": "The bright yellow plumage of the male goldfinch made it conspicuous among the green pine boughs."
+        },
+        {
+          "term": "Ameliorate",
+          "definition": "To make something bad or unsatisfactory better or more tolerable",
+          "example": "Installing community water filtration centers helped ameliorate sanitary conditions across the drought-stricken district."
+        },
+        {
+          "term": "Amorphous",
+          "definition": "Having no definite form or character; shapeless",
+          "example": "The artist sculpted an amorphous glass piece that captured light without conforming to geometric boundaries."
+        },
+        {
+          "term": "Tertiary",
+          "definition": "Of the third order, rank, stage, or formation; less important than primary and secondary elements",
+          "example": "While safety was paramount and cost was secondary, aesthetic styling was a tertiary consideration for the engineers."
+        },
+        {
+          "term": "Austere",
+          "definition": "Severe or strict in manner, attitude or appearance; lacking any excess or comfort",
+          "example": "The monk lived an austere existence in a mountain hermitage with only a wooden cot and a desk."
+        },
+        {
+          "term": "Citadel",
+          "definition": "A fortress, typically on high ground, protecting or dominating a city; stronghold",
+          "example": "The ancient stone citadel withstood multiple naval sieges throughout centuries of Mediterranean warfare."
+        },
+        {
+          "term": "Equivocal",
+          "definition": "Subject to two or more interpretations; of uncertain nature or classification; intentionally ambiguous",
+          "example": "The politician's equivocal remarks on tax reform left both business leaders and working families puzzled."
+        },
+        {
+          "term": "Repine",
+          "definition": "To feel or express discontent; fret or complain",
+          "example": "Rather than repine over past disappointments, the resilient athlete focused entirely on training for the next tournament."
+        },
+        {
+          "term": "Evince",
+          "definition": "To reveal the presence of a quality or feeling; indicate clearly",
+          "example": "The young prodigy's complex piano compositions evinced a musical maturity far beyond her tender years."
+        },
+        {
+          "term": "Insuperable",
+          "definition": "Impossible to overcome or surpass; insurmountable",
+          "example": "Faced with freezing blizzards and sheer glacial precipices, the mountaineers encountered insuperable obstacles."
+        },
+        {
+          "term": "Nebulous",
+          "definition": "Unclear, vague, or hazy; lacking definite form or boundaries",
+          "example": "The candidate presented nebulous economic plans that offered little concrete detail on funding allocations."
+        },
+        {
+          "term": "Demagogue",
+          "definition": "A political leader who appeals to the emotions, passions, and prejudices of the people rather than rational argument",
+          "example": "Historians warned of the demagogue who exploited societal anxieties to consolidate authoritarian control."
+        },
+        {
+          "term": "Neophyte",
+          "definition": "A person who is new to a subject, skill, or belief; beginner or novice",
+          "example": "Though a neophyte in digital programming, she rapidly grasped algorithmic concepts within her first semester."
+        },
+        {
+          "term": "Cogent",
+          "definition": "Persuasive, clear, logical, and forceful",
+          "example": "The defense counsel delivered a cogent closing argument that dismantled the prosecution's circumstantial evidence."
+        },
+        {
+          "term": "Laconic",
+          "definition": "Using very few words; brief and to the point",
+          "example": "Known for his laconic temperament, the quiet detective answered reporters with single-word replies."
+        },
+        {
+          "term": "Ineluctable",
+          "definition": "Inevitable, unable to be avoided, resisted, or escaped",
+          "example": "The aging monarch acknowledged the ineluctable decline of his once-invincible continental empire."
+        },
+        {
+          "term": "Denigrate",
+          "definition": "To criticize unfairly; ridicule; belittle the reputation of",
+          "example": "Rival critics attempted to denigrate her pioneering research simply because it challenged long-held dogmas."
+        },
+        {
+          "term": "Gratuitous",
+          "definition": "Uncalled for; lacking good reason; unwarranted; unnecessary",
+          "example": "The film critic condemned the movie for its gratuitous violence, arguing it added nothing to the narrative."
+        },
+        {
+          "term": "Mirth",
+          "definition": "Amusement, merriment, or joy, especially as expressed in laughter",
+          "example": "The holiday feast was filled with warm mirth, joyous storytelling, and spirited family laughter."
+        },
+        {
+          "term": "Demur",
+          "definition": "To raise doubts or objections; to object politely",
+          "example": "While most colleagues applauded the hasty corporate merger, the chief risk officer felt compelled to demur."
+        },
+        {
+          "term": "Superfluous",
+          "definition": "Exceeding what is necessary or required; extra and unnecessary",
+          "example": "The editor excised three chapters of superfluous exposition to keep the thriller suspenseful and brisk."
+        },
+        {
+          "term": "Equivocate",
+          "definition": "To use ambiguous language so as to conceal the truth or avoid committing oneself; not upfront",
+          "example": "When pressed by reporters about upcoming budget cuts, the governor continued to equivocate without giving numbers."
+        },
+        {
+          "term": "Fastidious",
+          "definition": "Very attentive to and concerned about accuracy and detail; meticulous",
+          "example": "The watchmaker was exceptionally fastidious, inspecting each microscopic gear under high-power magnification."
+        },
+        {
+          "term": "Adulation",
+          "definition": "Excessive admiration or high praise; flattery",
+          "example": "Despite the deafening adulation of adoring stadium crowds, the humble athlete remained grounded."
+        },
+        {
+          "term": "Guile",
+          "definition": "Sly or cunning intelligence; deception or skillful deceit",
+          "example": "In Greek myth, Odysseus used ingenious guile to construct the Trojan Horse and infiltrate the fortress."
+        },
+        {
+          "term": "Induce",
+          "definition": "To bring about or cause a particular response, action, or condition",
+          "example": "High levels of stress hormones can induce severe tension headaches and chronic fatigue in patients."
+        },
+        {
+          "term": "Prodigious",
+          "definition": "Remarkably or impressively great in extent, size, or degree; causing amazement or wonder",
+          "example": "Wolfgang Amadeus Mozart demonstrated a prodigious musical talent, composing complex concertos while still a child."
+        },
+        {
+          "term": "Hedonism",
+          "definition": "The pursuit of pleasure and self-indulgence as the primary goal of life",
+          "example": "Philosophers contrasted ancient Stoic virtue with the unrestrained hedonism popularized by decadent Roman emperors."
+        },
+        {
+          "term": "Demure",
+          "definition": "Modest, shy, and reserved (often artificially or falsely so)",
+          "example": "Behind her quiet, demure demeanor lay the shrewd tactical mind of a ruthless corporate strategist."
+        },
+        {
+          "term": "Scrupulous",
+          "definition": "Diligent, thorough, and extremely attentive to details; strictly moral",
+          "example": "The forensic accountant conducted a scrupulous audit of all transaction ledgers spanning the past decade."
+        },
+        {
+          "term": "Terse",
+          "definition": "Sparing in the use of words; brief and abrupt",
+          "example": "The military commander sent a terse telegram containing only three words: 'Objective secured successfully.'"
+        },
+        {
+          "term": "Clamor",
+          "definition": "A loud and confused noise, especially that of people shouting vehemently",
+          "example": "A rising clamor of protest echoed through the cobblestone streets as citizens gathered outside parliament."
+        },
+        {
+          "term": "Colloquial",
+          "definition": "Used in ordinary or familiar conversation; informal rather than literary or formal",
+          "example": "Mark Twain famously captured the vibrant colloquial idioms of nineteenth-century Mississippi River towns."
+        },
+        {
+          "term": "Acquiesce",
+          "definition": "To accept something reluctantly but without protest; submit passively",
+          "example": "Faced with overwhelming public opposition, the mayor had no choice but to acquiesce to the residents' demands."
+        },
+        {
+          "term": "Irreproachable",
+          "definition": "Beyond criticism or fault; perfect or faultless in behavior or actions",
+          "example": "Throughout four decades of public service, the respected jurist maintained an irreproachable ethical reputation."
+        },
+        {
+          "term": "Loquacious",
+          "definition": "Tending to talk a great deal; talkative; garrulous",
+          "example": "The loquacious tour guide kept visitors entertained with an unending stream of historical trivia and jokes."
+        },
+        {
+          "term": "Deft",
+          "definition": "Neatly skillful and quick in one's movements; adept",
+          "example": "With a series of deft strokes, the master surgeon repaired the delicate arterial tear within minutes."
+        },
+        {
+          "term": "Idiosyncratic",
+          "definition": "Peculiar or individual; having distinctive individual characteristics",
+          "example": "The eccentric author had an idiosyncratic writing routine that required working only by candlelight at dawn."
+        },
+        {
+          "term": "Bereft",
+          "definition": "Deprived of or lacking something, especially a non-material asset; lonely and abandoned",
+          "example": "Following the sudden shutdown of the company, the laid-off workers felt bereft of hope and financial security."
+        },
+        {
+          "term": "Curt",
+          "definition": "Rudely brief in speech or abrupt in manner",
+          "example": "The receptionist gave a curt dismissal that offended the prospective clients waiting in the lobby."
+        },
+        {
+          "term": "Rancor",
+          "definition": "Bitterness or spitefulness; long-standing resentment",
+          "example": "The two former political allies parted with immense rancor that persisted throughout their remaining careers."
+        },
+        {
+          "term": "Belligerent",
+          "definition": "Hostile and aggressive; engaged in warfare",
+          "example": "The diplomat worked through the night to dissuade the belligerent generals from launching a preemptive strike."
+        },
+        {
+          "term": "Contrite",
+          "definition": "Feeling or expressing remorse at the recognition that one has done wrong; affected by guilt",
+          "example": "The disgraced executive appeared contrite during sentencing, offering an emotional apology to defrauded investors."
+        },
+        {
+          "term": "Omniscient",
+          "definition": "Knowing everything; having infinite awareness, understanding, and insight",
+          "example": "Nineteenth-century novels frequently utilized an omniscient narrator who understood the secret thoughts of every character."
+        },
+        {
+          "term": "Orthodox",
+          "definition": "Conforming to what is generally or traditionally accepted as right or true; established beliefs",
+          "example": "The medical clinic combined orthodox pharmacological treatments with complementary lifestyle medicine."
+        },
+        {
+          "term": "Decorous",
+          "definition": "Marked by good behavior, propriety, and good taste; polite and restrained",
+          "example": "The guests maintained decorous conduct throughout the state dinner hosted in honor of visiting foreign dignitaries."
+        },
+        {
+          "term": "Pertinent",
+          "definition": "Relevant or applicable to a particular matter; apposite",
+          "example": "The legal brief cited only evidence directly pertinent to the constitutional question under deliberation."
+        },
+        {
+          "term": "Banal",
+          "definition": "So lacking in originality as to be obvious and boring; commonplace",
+          "example": "The commencement address was marred by banal cliches about chasing dreams rather than practical wisdom."
+        },
+        {
+          "term": "Allay",
+          "definition": "To diminish or put at rest fear, suspicion, or worry; lessen or soothe",
+          "example": "The public health commissioner held a press conference to allay community fears regarding the localized outbreak."
+        },
+        {
+          "term": "Surreptitious",
+          "definition": "Kept secret, especially because it would not be approved of; stealthy",
+          "example": "The investigator snapped surreptitious photographs of the suspect exchanging illicit briefcases in the park."
+        },
+        {
+          "term": "Bilk",
+          "definition": "To obtain or withhold money from someone by deceit or cheat; swindle",
+          "example": "The corrupt financial manager orchestrated an elaborate Ponzi scheme to bilk elderly retirees of their life savings."
+        },
+        {
+          "term": "Egregious",
+          "definition": "Outstandingly bad; shocking; obviously offensive",
+          "example": "Failing to sterilize surgical instruments was an egregious violation of basic hospital sanitary regulations."
+        },
+        {
+          "term": "Antipathy",
+          "definition": "A deep-seated feeling of dislike; aversion or extreme hostility",
+          "example": "Historical grievances fostered enduring antipathy between the two neighboring Balkan principalities."
+        },
+        {
+          "term": "Acrimony",
+          "definition": "Bitterness or ill feeling; harsh hostility in speech or manner",
+          "example": "The divorce proceedings dragged on for two contentious years amid escalating personal acrimony."
+        },
+        {
+          "term": "Disparage",
+          "definition": "Regard or represent as being of little worth; belittle; speak down to someone",
+          "example": "It is unprofessional for established scholars to disparage the legitimate questions raised by graduate students."
+        },
+        {
+          "term": "Fervent",
+          "definition": "Having or displaying a passionate intensity; zealous",
+          "example": "She harbored a fervent desire to protect endangered marine ecosystems from industrial pollution."
+        },
+        {
+          "term": "Dubious",
+          "definition": "Hesitating or doubting; not to be relied upon; suspect",
+          "example": "The financial auditor looked with dubious eyes upon the company's unsubstantiated tax write-offs."
+        },
+        {
+          "term": "Venerable",
+          "definition": "Accorded a great deal of respect, especially because of age, wisdom, or character",
+          "example": "Students gathered in quiet reverence to listen to the venerable ninety-year-old civil rights leader speak."
+        },
+        {
+          "term": "Curmudgeon",
+          "definition": "A bad-tempered or surly person, especially an old one",
+          "example": "Beneath his outward reputation as a cantankerous old curmudgeon, the retired shopkeeper was secretly generous."
+        },
+        {
+          "term": "Convivial",
+          "definition": "Friendly, lively, and enjoyable; festive and sociable",
+          "example": "The holiday banquet was a convivial gathering filled with laughter, warm toasts, and lively conversation."
+        },
+        {
+          "term": "Extol",
+          "definition": "To praise enthusiastically and lavishly; commend",
+          "example": "Health experts extol the physiological benefits of a Mediterranean diet rich in fresh vegetables and olive oil."
+        },
+        {
+          "term": "Admonish",
+          "definition": "To warn or reprimand someone firmly; caution against",
+          "example": "The professor felt compelled to admonish students who consistently arrived late and disrupted lectures."
+        },
+        {
+          "term": "Partite",
+          "definition": "Divided into parts or sections",
+          "example": "The international peace treaty was a tripartite agreement negotiated among three neighboring sovereign states."
+        },
+        {
+          "term": "Dogmatic",
+          "definition": "Inclined to lay down principles as incontrovertibly true; inflexible and rigid in one's beliefs",
+          "example": "Science thrives on open empirical inquiry rather than dogmatic adherence to outdated theoretical models."
+        },
+        {
+          "term": "Accretion",
+          "definition": "The process of growth or increase, typically by the gradual accumulation of additional layers or matter",
+          "example": "Planetary bodies formed billions of years ago through the gradual accretion of cosmic dust and rocky debris."
+        },
+        {
+          "term": "Omnipresent",
+          "definition": "Widely or constantly encountered; present everywhere at the same time",
+          "example": "In the modern digital age, smartphones and wireless networks have become practically omnipresent."
+        },
+        {
+          "term": "Extemporaneous",
+          "definition": "Spoken or done without preparation; improvised or spontaneous",
+          "example": "Called upon unexpectedly to deliver the keynote address, the senator gave a brilliant extemporaneous speech."
+        },
+        {
+          "term": "Inviolable",
+          "definition": "Never to be broken, infringed, or dishonored; sacred",
+          "example": "Democratic constitutions view fundamental human rights and freedom of expression as inviolable principles."
+        },
+        {
+          "term": "Untoward",
+          "definition": "Unexpected and inappropriate or inconvenient; unfavorable",
+          "example": "Despite fears of stormy weather, the space shuttle launch proceeded without any untoward incidents."
+        },
+        {
+          "term": "Assent",
+          "definition": "The expression of approval or agreement; to agree to a proposal",
+          "example": "The parliament gave formal assent to the international climate treaty by an overwhelming majority."
+        },
+        {
+          "term": "Taciturn",
+          "definition": "Reserved or uncommunicative in speech; saying little; quiet",
+          "example": "The taciturn rancher preferred the quiet solitude of the open range to bustling town social gatherings."
+        },
+        {
+          "term": "Trite",
+          "definition": "Overused, commonplace, having no freshness or appeal; hackneyed",
+          "example": "The essay suffered from trite expressions that failed to engage the admissions reader's imagination."
+        },
+        {
+          "term": "Hew",
+          "definition": "To cut or shape with an ax or other tool; conform or adhere to",
+          "example": "Early pioneers had to hew sturdy cedar logs from the forest to construct log cabins before winter set in."
+        },
+        {
+          "term": "Profligate",
+          "definition": "Recklessly extravagant or wasteful in the use of resources",
+          "example": "The imperial court's profligate spending on lavish banquets emptied the state treasury and provoked unrest."
+        },
+        {
+          "term": "Adroit",
+          "definition": "Clever or skillful in using the hands or mind; highly competent",
+          "example": "Through adroit diplomatic maneuvering, the prime minister averted a costly regional trade war."
+        },
+        {
+          "term": "Castigate",
+          "definition": "To reprimand someone severely; punish harshly",
+          "example": "Editorials across the political spectrum castigated the company for concealing known chemical hazards."
+        },
+        {
+          "term": "Brusque",
+          "definition": "Abrupt or offhand in speech or manner; rudely concise",
+          "example": "The stressed conductor gave a brusque command to clear the platform before the express train departed."
+        },
+        {
+          "term": "Secular",
+          "definition": "Denoting attitudes, activities, or other things that have no religious or spiritual basis; worldly",
+          "example": "Modern democratic states generally maintain secular public education systems separate from ecclesiastical control."
+        },
+        {
+          "term": "Pious",
+          "definition": "Devoutly religious; very observant of religious practices",
+          "example": "The pious pilgrim walked barefoot for miles to pray at the sacred mountaintop shrine."
+        },
+        {
+          "term": "Furtive",
+          "definition": "Attempting to avoid notice or attention, typically because of guilt; sneaky or sly",
+          "example": "The spy cast a furtive glance over his shoulder before ducking into the dark alleyway."
+        },
+        {
+          "term": "Edify",
+          "definition": "Instruct or improve someone morally or intellectually; enlighten",
+          "example": "Classical philosophical dialogues were composed not merely to entertain, but to edify the young citizen."
+        },
+        {
+          "term": "Assiduous",
+          "definition": "Showing great care and perseverance; diligent; hard working",
+          "example": "Through assiduous archival research, the historian pieced together the forgotten biographies of female astronomers."
+        },
+        {
+          "term": "Heretic",
+          "definition": "A person holding opinions at odds with what is generally accepted or orthodox; untraditional or blasphemous opinions",
+          "example": "In sixteenth-century Europe, anyone who challenged accepted religious dogma was branded a dangerous heretic."
+        },
+        {
+          "term": "Incorrigible",
+          "definition": "Not able to be corrected, improved, or reformed",
+          "example": "Despite repeated detentions and warnings, the mischievous prankster proved delightfully incorrigible."
+        },
+        {
+          "term": "Auspicious",
+          "definition": "Conducive to success; favorable; promising",
+          "example": "Sunny skies and calm ocean currents provided an auspicious beginning to the transatlantic voyage."
+        },
+        {
+          "term": "Egalitarian",
+          "definition": "Believing in or based on the principle that all people are equal and deserve equal rights; equal for all",
+          "example": "The commune operated on egalitarian principles, sharing agricultural work and communal grain stores equally."
+        },
+        {
+          "term": "Circumspect",
+          "definition": "Wary and unwilling to take risks; careful to consider all circumstances and consequences",
+          "example": "Given the volatile geopolitical climate, the ambassador chose circumspect phrasing in her public addresses."
+        },
+        {
+          "term": "Byzantine",
+          "definition": "Excessively complicated, and typically involving a great deal of administrative detail; intricate",
+          "example": "Navigating the byzantine tax code required small business owners to hire specialized accountants."
+        },
+        {
+          "term": "Feckless",
+          "definition": "Lacking initiative or strength of character; weak; ineffective; incompetent",
+          "example": "The military commander was dismissed after a series of feckless decisions resulted in retreat."
+        },
+        {
+          "term": "Ardent",
+          "definition": "Enthusiastic or passionate; burning glowing",
+          "example": "An ardent advocate of public libraries, she raised thousands of dollars to restore historic book collections."
+        },
+        {
+          "term": "Expedient",
+          "definition": "Convenient and practical, although possibly improper or immoral; suitable for achieving a particular end",
+          "example": "The politician chose a politically expedient compromise rather than defending the controversial moral truth."
+        },
+        {
+          "term": "Ascetic",
+          "definition": "Characterized by severe self-discipline and abstention from all forms of indulgence; self-denying",
+          "example": "The desert hermit lived an ascetic life, subsisting on simple dates and spring water."
+        },
+        {
+          "term": "Onerous",
+          "definition": "Involving an amount of effort and difficulty that is oppressively burdensome",
+          "example": "Filing hundreds of pages of compliance documentation placed an onerous administrative burden on the medical staff."
+        },
+        {
+          "term": "Sagacious",
+          "definition": "Having or showing keen mental discernment and good judgment; wise",
+          "example": "The young king relied on the sagacious counsel of his experienced chief minister during times of crisis."
+        },
+        {
+          "term": "Indelible",
+          "definition": "Making marks that cannot be removed; not able to be forgotten or removed; lasting",
+          "example": "The historic civil rights march left an indelible impression upon the collective consciousness of the nation."
+        },
+        {
+          "term": "Aspersion",
+          "definition": "An attack on the reputation or integrity of someone or something; a false rumor or damaging report",
+          "example": "The candidate refused to cast aspersions on her rival's personal integrity during the debate."
+        },
+        {
+          "term": "Innocuous",
+          "definition": "Not harmful or offensive; harmless",
+          "example": "What appeared to be an innocuous clerical error in the lab led to a groundbreaking accidental discovery."
+        },
+        {
+          "term": "Impious",
+          "definition": "Not showing respect or reverence, especially for a god; irreverent; disrespectful",
+          "example": "Ancient scribes regarded defacing temple walls as an impious crime punishable by exile."
+        },
+        {
+          "term": "Assuage",
+          "definition": "Make an unpleasant feeling less intense; soothe or pacify",
+          "example": "The company president issued a swift public apology to assuage the anger of frustrated consumers."
+        },
+        {
+          "term": "Perspicacious",
+          "definition": "Having a ready insight into and understanding of things; very perceptive or discerning",
+          "example": "The perspicacious detective immediately noticed that the clock had been wound backward to fabricate an alibi."
+        },
+        {
+          "term": "Abstruse",
+          "definition": "Difficult to understand; complex; obscure",
+          "example": "Theoretical astrophysics treatises often deal with abstruse mathematics far beyond ordinary comprehension."
+        },
+        {
+          "term": "Petulant",
+          "definition": "Childishly sulky or bad-tempered; irritable",
+          "example": "When denied his favorite seat at the banquet, the spoiled prince threw a petulant tantrum."
+        },
+        {
+          "term": "Abase",
+          "definition": "Behave in a way that belittles or degrades someone; humble",
+          "example": "The vanquished general refused to abase himself before his captors, demanding to be treated with dignity."
+        },
+        {
+          "term": "Abdicate",
+          "definition": "Renounce one's throne; formally relinquish a high responsibility or duty",
+          "example": "Faced with imminent civil uprising, the king decided to abdicate the throne in favor of his progressive son."
+        },
+        {
+          "term": "Obstreperous",
+          "definition": "Noisy and difficult to control; unruly",
+          "example": "The teacher struggled to quiet the obstreperous class after the fire alarm went off unexpectedly."
+        },
+        {
+          "term": "Harbinger",
+          "definition": "A person or thing that announces or signals the approach of another; forerunner or omen",
+          "example": "The blooming of yellow forsythia blossoms is celebrated as an early harbinger of springtime."
+        },
+        {
+          "term": "Beguile",
+          "definition": "Charm or enchant someone, sometimes in a deceptive way; to deceive",
+          "example": "The charismatic con artist managed to beguile wealthy art patrons into purchasing worthless lithographs."
+        },
+        {
+          "term": "Irreverent",
+          "definition": "Showing a lack of respect for people or things that are generally taken seriously; lacking respect",
+          "example": "The satirical comic publication featured irreverent caricatures mocking royal protocol."
+        },
+        {
+          "term": "Parity",
+          "definition": "The state or condition of being equal, especially regarding status, value, or pay",
+          "example": "Female athletes campaigned tirelessly for salary and sponsorship parity with their male counterparts."
+        },
+        {
+          "term": "Callow",
+          "definition": "Inexperienced and immature; lacking adult sophistication",
+          "example": "As a callow college freshman, he had lofty ambitions but little understanding of practical research demands."
+        },
+        {
+          "term": "Dearth",
+          "definition": "A scarcity or lack of something; deficiency",
+          "example": "A severe dearth of precipitation throughout the summer decimated wheat yields across the breadbasket."
+        },
+        {
+          "term": "Enigma",
+          "definition": "A person or thing that is mysterious, puzzling, or difficult to understand",
+          "example": "The sudden vanishing of the prehistoric Anasazi civilization remains an archaeological enigma."
+        },
+        {
+          "term": "Amiable",
+          "definition": "Having or displaying a friendly and pleasant manner; good-natured",
+          "example": "The innkeeper was an amiable host who greeted weary travelers with hot cider and cheerful hospitality."
+        },
+        {
+          "term": "Eminent",
+          "definition": "Famous and respected within a particular sphere; prominent; distinguished",
+          "example": "Several eminent neuroscientists gathered at the international colloquium to present Alzheimer's findings."
+        },
+        {
+          "term": "Iconoclast",
+          "definition": "A person who attacks cherished beliefs or institutions; someone who opposes established customs",
+          "example": "Steve Jobs was considered a modern technological iconoclast who revolutionized personal computing and music."
+        },
+        {
+          "term": "Penitent",
+          "definition": "Feeling or showing sorrow and regret for having done wrong; remorseful",
+          "example": "The penitent thief returned the stolen heirloom along with a handwritten letter expressing sincere remorse."
+        },
+        {
+          "term": "Magnate",
+          "definition": "A wealthy and influential person, especially in business or industry",
+          "example": "The nineteenth-century steel magnate donated tens of millions of dollars to build free public libraries."
+        },
+        {
+          "term": "Gregarious",
+          "definition": "Fond of company; sociable; enjoying the company of others",
+          "example": "Dolphins are gregarious marine mammals that navigate oceans in complex, communicative pods."
+        },
+        {
+          "term": "Languid",
+          "definition": "Displaying or having a disinclination for physical exertion or effort; slow, relaxed, or exhausted",
+          "example": "On hot, humid summer afternoons, the farm dogs spent languid hours resting beneath the shaded porch."
+        },
+        {
+          "term": "Affable",
+          "definition": "Friendly, good-natured, or easy to talk to",
+          "example": "The university dean was surprisingly affable, welcoming nervous freshmen into his office for tea."
+        },
+        {
+          "term": "Hapless",
+          "definition": "Unfortunate; unlucky; ill-fated",
+          "example": "The hapless tourist dropped his camera into the Venetian canal on the very first morning of his vacation."
+        },
+        {
+          "term": "Palliate",
+          "definition": "Make a disease or its symptoms less severe or unpleasant without removing the cause; to soothe or mitigate",
+          "example": "Doctors administered palliative morphine to palliate the severe pain of the terminally ill cancer patient."
+        }
       ]
     }
   ]
