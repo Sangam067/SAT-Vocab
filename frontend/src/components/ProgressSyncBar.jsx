@@ -54,21 +54,9 @@ export default function ProgressSyncBar({ userId, onDataUpdated }) {
   };
 
   return (
-    <div
-      className="pro-card"
-      style={{
-        padding: '16px 20px',
-        marginBottom: '20px',
-        display: 'flex',
-        flexWrap: 'wrap',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        gap: '12px',
-        backgroundColor: 'var(--bg-muted)',
-      }}
-    >
-      <div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+    <div className="pro-card sync-bar-card">
+      <div className="sync-bar-info">
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
           <strong style={{ fontSize: '13px', color: 'var(--text-main)' }}>
             💾 Progress Backup & Cloud Sync
           </strong>
@@ -81,23 +69,21 @@ export default function ProgressSyncBar({ userId, onDataUpdated }) {
         </p>
       </div>
 
-      <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+      <div className="sync-bar-actions">
         <button
           onClick={handleExport}
           disabled={loading}
           className="btn-secondary"
-          style={{ fontSize: '12px', padding: '6px 14px' }}
         >
-          ⬇ Save Progress File
+          ⬇ Save Progress
         </button>
 
         <button
           onClick={() => fileInputRef.current && fileInputRef.current.click()}
           disabled={loading}
           className="btn-primary"
-          style={{ fontSize: '12px', padding: '6px 14px' }}
         >
-          ⬆ Upload Progress File
+          ⬆ Upload File
         </button>
 
         <input

@@ -86,7 +86,7 @@ export default function Dashboard({ userId, onOpenSubmitWord }) {
         {/* Left Column: Target Vocabulary Program */}
         <div className="pro-card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
           <div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+            <div className="dash-section-header">
               <div>
                 <h2 style={{ fontSize: '15px', fontWeight: '700', color: 'var(--text-main)' }}>
                   Active Learning Program
@@ -95,11 +95,11 @@ export default function Dashboard({ userId, onOpenSubmitWord }) {
                   High-probability words from recent SAT tests
                 </p>
               </div>
-              <div style={{ display: 'flex', gap: '10px' }}>
+              <div className="dash-section-actions">
                 <button
                   onClick={onOpenSubmitWord}
                   className="btn-secondary"
-                  style={{ fontSize: '11px', padding: '4px 10px' }}
+                  style={{ fontSize: '11px', padding: '5px 12px' }}
                 >
                   + Add Your Word
                 </button>
@@ -122,11 +122,11 @@ export default function Dashboard({ userId, onOpenSubmitWord }) {
               <tbody>
                 {focusWords.map((word) => (
                   <tr key={word.term}>
-                    <td style={{ fontWeight: '700', color: 'var(--text-main)' }}>{word.term}</td>
+                    <td style={{ fontWeight: '700', color: 'var(--text-main)', whiteSpace: 'nowrap' }}>{word.term}</td>
                     <td>
                       <span className="badge-tag">{word.category.split('(')[0].trim()}</span>
                     </td>
-                    <td style={{ maxWidth: '280px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                    <td className="table-def-cell">
                       {word.definition}
                     </td>
                     <td style={{ textAlign: 'right' }}>
@@ -141,7 +141,7 @@ export default function Dashboard({ userId, onOpenSubmitWord }) {
             </div>
           </div>
 
-          <div style={{ borderTop: '1px solid var(--border-subtle)', paddingTop: '14px', marginTop: '16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '12px' }}>
+          <div className="dash-card-footer">
             <span style={{ color: 'var(--text-muted)' }}>Showing top focus terms</span>
             <Link to="/quiz" style={{ color: 'var(--accent-blue)', fontWeight: '600', textDecoration: 'none' }}>
               Test your recall on these words ↗
@@ -150,7 +150,7 @@ export default function Dashboard({ userId, onOpenSubmitWord }) {
         </div>
 
         {/* Right Column: Mastery Status Overview */}
-        <div className="pro-card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+        <div className="pro-card mastery-card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
           <div>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
               <h2 style={{ fontSize: '15px', fontWeight: '700', color: 'var(--text-main)' }}>
@@ -159,9 +159,9 @@ export default function Dashboard({ userId, onOpenSubmitWord }) {
               <span className="badge-tag">Status</span>
             </div>
 
-            {/* Circular Progress */}
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '16px 0' }}>
-              <div style={{ position: 'relative', width: '150px', height: '150px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            {/* Circular Progress & Breakdown */}
+            <div className="mastery-content">
+              <div style={{ position: 'relative', width: '140px', height: '140px', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                 <svg style={{ width: '100%', height: '100%', transform: 'rotate(-90deg)' }} viewBox="0 0 100 100">
                   <circle
                     cx="50"
@@ -185,7 +185,7 @@ export default function Dashboard({ userId, onOpenSubmitWord }) {
                   />
                 </svg>
                 <div style={{ position: 'absolute', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                  <span style={{ fontSize: '28px', fontWeight: '800', color: 'var(--text-main)' }}>
+                  <span style={{ fontSize: '26px', fontWeight: '800', color: 'var(--text-main)' }}>
                     {masteredCount}
                   </span>
                   <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>
@@ -195,8 +195,8 @@ export default function Dashboard({ userId, onOpenSubmitWord }) {
               </div>
 
               {/* Progress Breakdown */}
-              <div style={{ width: '100%', marginTop: '16px', display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '12px' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <div className="mastery-breakdown">
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                     <span style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: 'var(--accent-blue)' }}></span>
                     <span style={{ color: 'var(--text-sub)' }}>Mastered Words</span>
@@ -204,18 +204,26 @@ export default function Dashboard({ userId, onOpenSubmitWord }) {
                   <strong style={{ color: 'var(--text-main)' }}>{masteredCount}</strong>
                 </div>
 
-                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                     <span style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: 'var(--bg-muted)', border: '1px solid var(--border-card)' }}></span>
                     <span style={{ color: 'var(--text-sub)' }}>Remaining to Study</span>
                   </div>
                   <strong style={{ color: 'var(--text-main)' }}>{totalWords - masteredCount}</strong>
                 </div>
+
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <span style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: 'var(--color-success)' }}></span>
+                    <span style={{ color: 'var(--text-sub)' }}>Mastery Rate</span>
+                  </div>
+                  <strong style={{ color: 'var(--color-success)' }}>{masteryPct}%</strong>
+                </div>
               </div>
             </div>
           </div>
 
-          <Link to="/flashcards" className="btn-primary" style={{ width: '100%', marginTop: '12px' }}>
+          <Link to="/flashcards" className="btn-primary" style={{ width: '100%', marginTop: '16px' }}>
             Continue Flashcards Session
           </Link>
         </div>
@@ -235,47 +243,50 @@ export default function Dashboard({ userId, onOpenSubmitWord }) {
           <div className="learning-modes-grid">
             <Link
               to="/flashcards"
-              className="pro-card"
-              style={{ padding: '16px', textDecoration: 'none', backgroundColor: 'var(--bg-muted)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: '12px' }}
+              className="pro-card learning-mode-item"
             >
-              <div>
-                <div style={{ width: '32px', height: '32px', borderRadius: '8px', backgroundColor: 'var(--accent-blue-light)', color: 'var(--accent-blue)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: '800', fontSize: '12px', marginBottom: '10px' }}>
+              <div className="learning-mode-body">
+                <div className="learning-mode-icon">
                   FC
                 </div>
-                <div style={{ fontWeight: '700', fontSize: '13px', color: 'var(--text-main)' }}>3D Flashcards</div>
-                <div style={{ fontSize: '11px', color: 'var(--text-muted)', marginTop: '4px' }}>Flip for definitions and contextual sentences</div>
+                <div>
+                  <div style={{ fontWeight: '700', fontSize: '13px', color: 'var(--text-main)' }}>3D Flashcards</div>
+                  <div className="learning-mode-sub">Flip for definitions and contextual sentences</div>
+                </div>
               </div>
-              <span style={{ fontSize: '12px', fontWeight: '600', color: 'var(--accent-blue)' }}>Start Review →</span>
+              <span className="learning-mode-cta">Start Review →</span>
             </Link>
 
             <Link
               to="/quiz"
-              className="pro-card"
-              style={{ padding: '16px', textDecoration: 'none', backgroundColor: 'var(--bg-muted)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: '12px' }}
+              className="pro-card learning-mode-item"
             >
-              <div>
-                <div style={{ width: '32px', height: '32px', borderRadius: '8px', backgroundColor: 'var(--accent-blue-light)', color: 'var(--accent-blue)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: '800', fontSize: '12px', marginBottom: '10px' }}>
+              <div className="learning-mode-body">
+                <div className="learning-mode-icon">
                   QZ
                 </div>
-                <div style={{ fontWeight: '700', fontSize: '13px', color: 'var(--text-main)' }}>Quiz Mode</div>
-                <div style={{ fontSize: '11px', color: 'var(--text-muted)', marginTop: '4px' }}>Multiple choice exams with SQLite score storage</div>
+                <div>
+                  <div style={{ fontWeight: '700', fontSize: '13px', color: 'var(--text-main)' }}>Quiz Mode</div>
+                  <div className="learning-mode-sub">Multiple choice exams with SQLite score storage</div>
+                </div>
               </div>
-              <span style={{ fontSize: '12px', fontWeight: '600', color: 'var(--accent-blue)' }}>Take Quiz →</span>
+              <span className="learning-mode-cta">Take Quiz →</span>
             </Link>
 
             <Link
               to="/browse"
-              className="pro-card"
-              style={{ padding: '16px', textDecoration: 'none', backgroundColor: 'var(--bg-muted)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: '12px' }}
+              className="pro-card learning-mode-item"
             >
-              <div>
-                <div style={{ width: '32px', height: '32px', borderRadius: '8px', backgroundColor: 'var(--accent-blue-light)', color: 'var(--accent-blue)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: '800', fontSize: '12px', marginBottom: '10px' }}>
+              <div className="learning-mode-body">
+                <div className="learning-mode-icon">
                   BR
                 </div>
-                <div style={{ fontWeight: '700', fontSize: '13px', color: 'var(--text-main)' }}>Browse & Search</div>
-                <div style={{ fontSize: '11px', color: 'var(--text-muted)', marginTop: '4px' }}>Search and filter vocabulary dictionary</div>
+                <div>
+                  <div style={{ fontWeight: '700', fontSize: '13px', color: 'var(--text-main)' }}>Browse & Search</div>
+                  <div className="learning-mode-sub">Search and filter vocabulary dictionary</div>
+                </div>
               </div>
-              <span style={{ fontSize: '12px', fontWeight: '600', color: 'var(--accent-blue)' }}>Explore →</span>
+              <span className="learning-mode-cta">Explore →</span>
             </Link>
           </div>
         </div>
@@ -299,15 +310,7 @@ export default function Dashboard({ userId, onOpenSubmitWord }) {
                   return (
                     <div
                       key={q.id}
-                      style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                        padding: '10px 12px',
-                        borderRadius: '8px',
-                        backgroundColor: 'var(--bg-muted)',
-                        fontSize: '12px',
-                      }}
+                      className="recent-quiz-item"
                     >
                       <div>
                         <div style={{ fontWeight: '700', color: 'var(--text-main)' }}>

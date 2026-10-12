@@ -89,7 +89,7 @@ export default function Header({ onOpenAuth, onToggleSidebar }) {
           </button>
         )}
 
-        <button onClick={() => navigate('/quiz')} className="btn-primary">
+        <button onClick={() => navigate('/quiz')} className="btn-primary header-quiz-btn">
           Quick Quiz
         </button>
       </div>

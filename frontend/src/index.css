@@ -535,14 +535,14 @@ body {
   border-color: var(--accent-blue);
 }
 
-/* Dashboard learning modes grid — CSS class for responsive override */
+/* Dashboard learning modes grid */
 .learning-modes-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 14px;
 }
 
-/* Browse vocabulary word grid — CSS class for responsive override */
+/* Browse vocabulary word grid */
 .browse-word-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -554,6 +554,150 @@ body {
   width: 100%;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
+  border-radius: 8px;
+}
+
+/* Progress sync bar container & actions */
+.sync-bar-card {
+  padding: 16px 20px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  background-color: var(--bg-muted);
+}
+
+.sync-bar-info {
+  flex: 1 1 280px;
+}
+
+.sync-bar-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* Dashboard section headers & footers */
+.dash-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  gap: 12px;
+}
+
+.dash-section-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.table-def-cell {
+  max-width: 280px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dash-card-footer {
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 14px;
+  margin-top: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* Mastery overview component */
+.mastery-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px 0;
+  gap: 16px;
+}
+
+.mastery-breakdown {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 12px;
+}
+
+/* Learning mode interactive item */
+.learning-mode-item {
+  padding: 16px;
+  text-decoration: none;
+  background-color: var(--bg-muted);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 12px;
+  border-radius: 12px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.learning-mode-item:hover {
+  border-color: var(--accent-blue);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.08);
+}
+
+.learning-mode-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.learning-mode-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  background-color: var(--accent-blue-light);
+  color: var(--accent-blue);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+
+.learning-mode-sub {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 4px;
+  line-height: 1.35;
+}
+
+.learning-mode-cta {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--accent-blue);
+}
+
+/* Recent quiz item */
+.recent-quiz-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background-color: var(--bg-muted);
+  font-size: 12px;
+  gap: 10px;
+  transition: background-color 0.15s ease;
+}
+
+.recent-quiz-item:hover {
+  background-color: var(--accent-blue-light);
 }
 
 /* ── Tablet & small laptop (≤1024px) ─────────────────────────────── */
@@ -602,9 +746,23 @@ body {
     gap: 20px;
   }
 
-  /* Learning modes → 2 columns */
+  /* Mastery overview on tablet: circular progress & breakdown side-by-side */
+  .mastery-content {
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    padding: 18px 24px;
+    gap: 28px;
+  }
+
+  .mastery-breakdown {
+    max-width: 320px;
+  }
+
+  /* Learning modes → 3 columns on tablet for clean balance */
   .learning-modes-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
   }
 
   /* Header adjustments */
@@ -636,33 +794,117 @@ body {
 
 /* ── Mobile (≤640px) ─────────────────────────────────────────────── */
 @media (max-width: 640px) {
-  /* KPI grid → 2 columns, compact */
+  /* Progress backup sync bar */
+  .sync-bar-card {
+    padding: 14px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .sync-bar-actions {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .sync-bar-actions button {
+    width: 100%;
+    padding: 7px 10px;
+    font-size: 11px;
+    white-space: nowrap;
+    text-align: center;
+    justify-content: center;
+  }
+
+  /* KPI grid → 2 columns, compact & clear */
   .kpi-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;
   }
 
   .kpi-card {
-    padding: 14px 16px;
-    min-height: 90px;
+    padding: 12px 14px;
+    min-height: 82px;
+    border-radius: 10px;
   }
 
   .kpi-value {
-    font-size: 24px;
-    margin: 6px 0 4px 0;
+    font-size: 22px;
+    margin: 4px 0 2px 0;
   }
 
   .kpi-label {
     font-size: 10px;
+    gap: 4px;
+    flex-wrap: wrap;
   }
 
   .kpi-subtext {
-    font-size: 11px;
+    font-size: 10px;
+    line-height: 1.25;
   }
 
-  /* Learning modes → single column */
+  /* Dashboard section headers stack nicely on mobile */
+  .dash-section-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .dash-section-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  /* Mastery overview back to vertical column */
+  .mastery-content {
+    flex-direction: column;
+    padding: 12px 0;
+    gap: 16px;
+  }
+
+  .mastery-breakdown {
+    max-width: 100%;
+  }
+
+  /* Learning modes → sleek horizontal cards */
   .learning-modes-grid {
     grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .learning-mode-item {
+    flex-direction: row;
+    align-items: center;
+    padding: 10px 14px;
+    gap: 10px;
+    border-radius: 10px;
+  }
+
+  .learning-mode-body {
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .learning-mode-icon {
+    margin-bottom: 0;
+    width: 30px;
+    height: 30px;
+    font-size: 11px;
+    flex-shrink: 0;
+  }
+
+  .learning-mode-sub {
+    display: none;
+  }
+
+  .learning-mode-cta {
+    white-space: nowrap;
+    flex-shrink: 0;
+    font-size: 11px;
   }
 
   /* Browse grid → single column */
@@ -671,7 +913,7 @@ body {
     gap: 12px;
   }
 
-  /* Header: more compact */
+  /* Header: compact & clean */
   .app-header {
     padding: 0 14px;
     height: 56px;
@@ -687,6 +929,12 @@ body {
 
   .header-search {
     display: none;
+  }
+
+  .header-quiz-btn {
+    padding: 6px 12px;
+    font-size: 12px;
+    white-space: nowrap;
   }
 
   /* Hide theme toggle & login in header on mobile (available in sidebar) */
@@ -718,10 +966,18 @@ body {
     border-radius: 12px;
   }
 
-  /* Table: enforce min-width so it scrolls in .table-responsive */
+  /* Table: touch scrolling with readable bounds */
+  .table-responsive {
+    margin: 0 -2px;
+  }
+
   .pro-table {
     font-size: 12px;
-    min-width: 500px;
+    min-width: 440px;
+  }
+
+  .table-def-cell {
+    max-width: 170px;
   }
 
   .pro-table th {
@@ -749,25 +1005,39 @@ body {
 
 /* ── Very small screens (≤380px) ─────────────────────────────────── */
 @media (max-width: 380px) {
-  .kpi-grid {
+  .sync-bar-actions {
     grid-template-columns: 1fr;
   }
 
+  .kpi-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+
+  .kpi-card {
+    padding: 10px 12px;
+  }
+
   .kpi-value {
-    font-size: 22px;
+    font-size: 20px;
   }
 
   .app-header {
-    padding: 0 12px;
+    padding: 0 10px;
     height: 52px;
   }
 
   .header-greeting-title {
-    font-size: 13px;
+    font-size: 12px;
+  }
+
+  .header-quiz-btn {
+    padding: 5px 10px;
+    font-size: 11px;
   }
 
   .app-content {
-    padding: 12px;
+    padding: 10px;
   }
 
   .fc-card-stage {
