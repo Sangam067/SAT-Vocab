@@ -43,7 +43,7 @@ export default function ProgressSyncBar({ userId, onDataUpdated }) {
         setSyncStatus({ type: 'success', message: res.message });
         if (onDataUpdated) onDataUpdated();
         setTimeout(() => setSyncStatus(null), 5000);
-      } catch (err) {
+      } catch {
         setSyncStatus({ type: 'error', message: 'Invalid progress file format.' });
       } finally {
         setLoading(false);

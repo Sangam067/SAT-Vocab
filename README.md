@@ -73,7 +73,7 @@ cp .env.example .env
 | `TURSO_DATABASE_URL` | Turso DB connection URL (`libsql://...`) | *(Optional; falls back to local SQLite)* |
 | `TURSO_AUTH_TOKEN` | Turso DB authentication token | *(Optional)* |
 
-> 💡 **Note**: If `TURSO_DATABASE_URL` is omitted, the app will automatically use the local SQLite database stored in `backend/data/sat_vocab.db` with all 120+ pre-seeded SAT words.
+> 💡 **Note**: If `TURSO_DATABASE_URL` is omitted, the app will automatically use the local SQLite database stored in `backend/data/sat_vocab.db` with all 500+ pre-seeded SAT words.
 
 ### 4. Run Development Servers
 

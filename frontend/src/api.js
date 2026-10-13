@@ -96,7 +96,7 @@ export async function fetchStats(userId) {
     const reviewedToday = (reviews[todayDate] || []).length;
 
     return {
-      totalWords: words.length || 122,
+      totalWords: words.length || 512,
       masteredCount,
       averageScore: avgScore,
       recentQuizzes: quizzes.slice(0, 10),
@@ -190,7 +190,7 @@ export async function fetchDailyGoal(userId) {
       reviewed_today: reviewedToday,
       quizzes_today: quizzesToday,
       batch_mastered: batchMasteredCount,
-      total_words: allWords.length || 122,
+      total_words: allWords.length || 512,
       total_mastered: masteredCount,
       is_goal_met: batchMasteredCount >= goal || (reviewedToday >= goal && quizzesToday >= 1),
     };

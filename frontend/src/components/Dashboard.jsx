@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { fetchStats, fetchWords } from '../api';
 import ProgressSyncBar from './ProgressSyncBar';
@@ -8,7 +8,7 @@ export default function Dashboard({ userId, onOpenSubmitWord }) {
   const [focusWords, setFocusWords] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const loadDashboardData = () => {
+  const loadDashboardData = useCallback(() => {
     if (!userId) return;
     Promise.all([fetchStats(userId), fetchWords()])
       .then(([statsData, wordsData]) => {
@@ -17,11 +17,11 @@ export default function Dashboard({ userId, onOpenSubmitWord }) {
         setLoading(false);
       })
       .catch(() => setLoading(false));
-  };
+  }, [userId]);
 
   useEffect(() => {
     loadDashboardData();
-  }, [userId]);
+  }, [loadDashboardData]);
 
   if (loading) {
     return (
@@ -31,7 +31,7 @@ export default function Dashboard({ userId, onOpenSubmitWord }) {
     );
   }
 
-  const totalWords = stats?.totalWords || 122;
+  const totalWords = stats?.totalWords || 512;
   const masteredCount = stats?.masteredCount || 0;
   const avgScore = stats?.averageScore || 0;
   const reviewedToday = stats?.reviewedToday || 0;
